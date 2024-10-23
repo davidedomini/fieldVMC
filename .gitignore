@@ -6,3 +6,5 @@ build/
 charts/
 data_summary_*
 timeprocessed
+.DS_Store
+.env
