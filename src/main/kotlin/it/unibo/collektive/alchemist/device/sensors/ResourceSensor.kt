@@ -2,6 +2,7 @@ package it.unibo.collektive.alchemist.device.sensors
 
 interface ResourceSensor {
     val resourceLowerBound: Double
+    val maxResource: Double
 
     /**
      * Get the value of the resource layer at a given position.

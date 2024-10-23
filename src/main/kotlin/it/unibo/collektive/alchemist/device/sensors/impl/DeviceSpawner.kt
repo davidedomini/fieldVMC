@@ -4,6 +4,7 @@ import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.NodeProperty
 import it.unibo.alchemist.model.Position
+import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.alchemist.model.times.DoubleTime
 import it.unibo.alchemist.util.RandomGenerators.nextDouble
 import it.unibo.collektive.aggregate.api.Aggregate
@@ -22,11 +23,13 @@ class DeviceSpawner<T, P : Position<P>> @JvmOverloads constructor(
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> =
         DeviceSpawner(randomGenerator, environment, node, cloningRange, maxChildren, minSpawnWait)
 
+    @Suppress("UNCHECKED_CAST")
     override fun spawn(
         coordinate: Pair<Double, Double>,
     ): Double {
         val spawningTime = environment.simulation.time + DoubleTime(randomGenerator.nextDouble(0.0.nextUp(), 0.1))
         val cloneOfThis = node.cloneNode(spawningTime)
+        cloneOfThis.setConcentration(SimpleMolecule("leader"), false as T)
         val updatedPosition = environment.makePosition(*coordinate.toList().toTypedArray())
         environment.addNode(cloneOfThis, updatedPosition)
         return spawningTime.toDouble()

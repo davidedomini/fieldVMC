@@ -11,10 +11,11 @@ class ResourceSensorProperty<T, P : Position<P>>(
     private val environment: Environment<T, P>,
     override val node: Node<T>,
     override val resourceLowerBound: Double,
+    override val maxResource: Double,
 ) : ResourceSensor, NodeProperty<T> {
 
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> =
-        ResourceSensorProperty(environment, node, resourceLowerBound)
+        ResourceSensorProperty(environment, node, resourceLowerBound, maxResource)
 
     override fun getResource(): Double =
         when (val layerValue = environment.getLayer(localResource).get().getValue(environment.getPosition(node))) {
