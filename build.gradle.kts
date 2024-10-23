@@ -132,6 +132,9 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
         runAllBatch.dependsOn(batch)
     }
 
-tasks.withType(KotlinCompile::class).all {
-    kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
+tasks.withType<KotlinCompile>().all {
+    compilerOptions {
+        allWarningsAsErrors.set(false)
+        freeCompilerArgs.add("-Xcontext-receivers")
+    }
 }
