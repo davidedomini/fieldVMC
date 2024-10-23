@@ -155,22 +155,3 @@ fun Aggregate<Int>.vmc(spawner: Spawner): Double {
 }
 
 typealias Spawner = context(DeviceSpawn, LocationSensor) Aggregate<Int>.(potential: Double, localSuccess: Double, success: Double, localResource: Double) -> Unit
-
-operator fun Pair<Double, Double>.minus(other: Pair<Double, Double>): Pair<Double, Double> =
-    first - other.first to second - other.second
-operator fun Pair<Double, Double>.plus(other: Pair<Double, Double>): Pair<Double, Double> =
-    first + other.first to second + other.second
-
-context(RandomGenerator)
-fun <T> Iterable<T>.randomElementWeighted(by: T.() -> Double): T {
-    val total = fold(0.0) { acc, element -> acc + by(element) }
-    val selector: Double = nextRandomDouble(0.0..total)
-    var accumulator = 0.0
-    for (element in this) {
-        accumulator += by(element)
-        if (accumulator >= selector) {
-            return element
-        }
-    }
-    return last()
-}
