@@ -1,0 +1,76 @@
+variables:
+  seed: &seed
+    min: 0
+    max: 20
+    step: 1
+    default: 0
+  radius: &leaderRadius
+    100.0
+  maxResource: &maxResource
+    1000.0
+  initialNodes: &initialNodes
+    100
+  killingRange: &killingRange
+    5.0
+  layerX: &layerX
+    10
+  width: &width
+    20
+  height: &height
+    20
+  maxY: &maxY
+    20
+  minY: &minY
+    0
+  maxSuccess: &maxSuccess
+    formula: *maxResource
+  gaussianShape: &gaussianShape
+    5
+
+network-model:
+  type: ConnectWithinDistance
+  parameters: [3.50]
+
+seeds:
+  scenario: *seed
+  simulation: *seed
+
+layers:
+  - type: BidimensionalGaussianLayer
+    parameters: [*layerX, *minY, *maxSuccess, *gaussianShape]
+    molecule: successSource
+  - type: BidimensionalGaussianLayer
+    parameters: [*layerX, *maxY, *maxResource, *gaussianShape]
+    molecule: localResource
+
+incarnation: collektive
+
+_pool: &program
+  - time-distribution: 1
+    type: Event
+    actions:
+      - type: RunCollektiveProgram
+        parameters: [ it.unibo.collektive.vmc.VMCWithoutSpawningKt.withoutSpawning ]
+  - time-distribution:
+      type: Trigger
+      parameters: [ 500 ]
+    type: Event
+    actions:
+      - type: RemoveNodes
+        parameters: [ *killingRange, 0, *width, *height ]
+
+deployments:
+  - type: Rectangle
+    parameters: [*initialNodes, 0, 0, *width, *height]
+    programs:
+      - *program
+    properties:
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
+        parameters: [ *maxSuccess ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LeaderSensorProperty
+        parameters: [ *leaderRadius ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
+        parameters: [ *maxResource ]

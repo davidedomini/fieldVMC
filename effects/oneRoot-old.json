@@ -1,0 +1,210 @@
+[
+  {
+    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawShape",
+    "curIncarnation": "collektive",
+    "mode": "FILL_RECTANGLE",
+    "red": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "blue": {
+      "max": 255,
+      "min": 0,
+      "val": 0
+    },
+    "green": {
+      "max": 255,
+      "min": 0,
+      "val": 0
+    },
+    "alpha": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "scaleFactor": {
+      "max": 100,
+      "min": 0,
+      "val": 50
+    },
+    "size": {
+      "max": 100,
+      "min": 0,
+      "val": 38
+    },
+    "molFilter": true,
+    "molString": "leader",
+    "molPropertyFilter": true,
+    "property": "if (it \u003d\u003d true) 1 else 0",
+    "writingPropertyValue": false,
+    "c": "ALPHA",
+    "reverse": false,
+    "propoom": {
+      "max": 10,
+      "min": -10,
+      "val": 0
+    },
+    "minprop": {
+      "max": 10,
+      "min": -10,
+      "val": 0
+    },
+    "maxprop": {
+      "max": 10,
+      "min": -10,
+      "val": 1
+    },
+    "colorCache": {
+      "value": -65536
+    }
+  },
+  {
+    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawShape",
+    "curIncarnation": "collektive",
+    "mode": "FILL_ELLIPSE",
+    "red": {
+      "max": 255,
+      "min": 0,
+      "val": 0
+    },
+    "blue": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "green": {
+      "max": 255,
+      "min": 0,
+      "val": 0
+    },
+    "alpha": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "scaleFactor": {
+      "max": 100,
+      "min": 0,
+      "val": 50
+    },
+    "size": {
+      "max": 100,
+      "min": 0,
+      "val": 22
+    },
+    "molFilter": true,
+    "molString": "resource",
+    "molPropertyFilter": true,
+    "property": "\"%.2f\".format(it).toDouble()",
+    "writingPropertyValue": true,
+    "c": "HUE",
+    "reverse": true,
+    "propoom": {
+      "max": 10,
+      "min": -10,
+      "val": 1
+    },
+    "minprop": {
+      "max": 10,
+      "min": -10,
+      "val": -1
+    },
+    "maxprop": {
+      "max": 10,
+      "min": -10,
+      "val": 10
+    },
+    "colorCache": {
+      "value": -16776961
+    }
+  },
+  {
+    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawBidimensionalGaussianLayersGradient",
+    "samples": {
+      "max": 400,
+      "min": 10,
+      "val": 200
+    },
+    "minLayerValue": "0.1",
+    "maxLayerValue": "1000.0",
+    "minLayerValueCached": "0.1",
+    "maxLayerValueCached": "1000.0",
+    "minLayerValueDouble": 0.1,
+    "maxLayerValueDouble": 2000.0,
+    "mapper": {
+      "type": "class it.unibo.alchemist.boundary.gui.effects.BidimensionalGaussianLayersMapper",
+      "minAndMaxToBeSet": false
+    },
+    "layerFilter": true,
+    "molString": "successSource",
+    "alpha": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "red": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "green": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "blue": {
+      "max": 255,
+      "min": 0,
+      "val": 0
+    },
+    "colorCache": {
+      "value": -256
+    },
+    "markerNodeID": 385
+  },
+  {
+    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawBidimensionalGaussianLayersGradient",
+    "samples": {
+      "max": 500,
+      "min": 10,
+      "val": 200
+    },
+    "minLayerValue": "0.1",
+    "maxLayerValue": "1000.0",
+    "minLayerValueCached": "0.1",
+    "maxLayerValueCached": "1000.0",
+    "minLayerValueDouble": 0.1,
+    "maxLayerValueDouble": 2000.0,
+    "mapper": {
+      "type": "class it.unibo.alchemist.boundary.gui.effects.BidimensionalGaussianLayersMapper",
+      "minAndMaxToBeSet": false
+    },
+    "layerFilter": true,
+    "molString": "localResource",
+    "alpha": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "red": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "green": {
+      "max": 255,
+      "min": 0,
+      "val": 0
+    },
+    "blue": {
+      "max": 255,
+      "min": 0,
+      "val": 0
+    },
+    "colorCache": {
+      "value": -65536
+    },
+    "markerNodeID": 302
+  }
+]

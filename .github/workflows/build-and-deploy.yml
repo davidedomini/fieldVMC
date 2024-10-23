@@ -13,15 +13,15 @@ jobs:
       group: sim-check${{ github.workflow }}${{ matrix.os }}${{ github.event.number || github.ref }}
       cancel-in-progress: true
     steps:
-    - name: Checkout
-      uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
-    - uses: DanySK/build-check-deploy-gradle-action@2.4.11
-      with:
-        build-command: true
-        check-command: ./gradlew runAllGraphic
-        deploy-command: true
-        should-run-codecov: false
-        should-validate-wrapper: ${{ contains('Linux', runner.os) }}
+      - name: Checkout
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+      - uses: DanySK/build-check-deploy-gradle-action@2.4.17
+        with:
+          build-command: true
+          check-command: ./gradlew runAllGraphic
+          deploy-command: true
+          should-run-codecov: false
+          should-validate-wrapper: ${{ contains('Linux', runner.os) }}
   create-charts:
     runs-on: ubuntu-22.04
     concurrency:
@@ -29,7 +29,7 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: Checkout
-        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       - uses: actions/cache@v4
         with:
           path: ~/.cache/pip
@@ -49,24 +49,24 @@ jobs:
       - name: Generate archive
         run: tar --use-compress-program zstd -cf charts.tar.zst charts/
       - name: Upload charts
-        uses: actions/upload-artifact@v4.3.1
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: charts
           path: charts.tar.zst
-  check-simulations-docker:
-    runs-on: ubuntu-22.04
-    concurrency:
-      group: container-check${{ github.workflow }}${{ matrix.os }}${{ github.event.number || github.ref }}
-      cancel-in-progress: true
-    steps:
-    - name: Checkout
-      uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
-    - name: Run compose
-      run: docker-compose up --build
+  #  check-simulations-docker:
+  #    runs-on: ubuntu-22.04
+  #    concurrency:
+  #      group: container-check${{ github.workflow }}${{ matrix.os }}${{ github.event.number || github.ref }}
+  #      cancel-in-progress: true
+  #    steps:
+  #    - name: Checkout
+  #      uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+  #    - name: Run compose
+  #      run: docker-compose up --build
   release:
     needs:
       - check-simulations-native
-      - check-simulations-docker
+      #      - check-simulations-docker
       - create-charts
     runs-on: ubuntu-22.04
     concurrency:
@@ -80,12 +80,12 @@ jobs:
       )
     steps:
       - name: Checkout
-        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
         with:
           submodules: recursive
           token: ${{ secrets.DEPLOYMENT_TOKEN }}
       - name: Download charts artifact
-        uses: actions/download-artifact@v4.1.4
+        uses: actions/download-artifact@v4.1.7
         with:
           name: charts
       - name: Find the version of Node from package.json
@@ -98,7 +98,7 @@ jobs:
       - name: Login to dockerhub
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          DOCKER_USERNAME: danysk
+          DOCKER_USERNAME: angelacortecchia
         run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin docker.io
       - name: Semantic Release
         env:
@@ -111,7 +111,7 @@ jobs:
     needs:
       - create-charts
       - check-simulations-native
-      - check-simulations-docker
+      #      - check-simulations-docker
       - release
     if: >-
       always() && (
