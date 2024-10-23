@@ -1,3 +1,21 @@
+## 1.0.0 (2024-10-23)
+
+
+### Features
+
+* first fieldVMC implementation proposed at ACSOS 2024 ([57f7c85](https://github.com/angelacorte/fieldVMC/commit/57f7c85e30c3a8dfbe06e0b23f5d9bc9e4b2ca28))
+
+
+### Build and continuous integration
+
+* temporary remove dockerhub login ([1fa0c35](https://github.com/angelacorte/fieldVMC/commit/1fa0c35812307f9acbe412086e68fd9eb9a0680f))
+
+
+### General maintenance
+
+* update gitignore ([741ec24](https://github.com/angelacorte/fieldVMC/commit/741ec247befcf8eaea79f9c9ddd91da034ab7b90))
+* update project name ([427b68e](https://github.com/angelacorte/fieldVMC/commit/427b68e44fa9facb6948f30ff146aae4e3ddb856))
+
 ## [1.3.2](https://github.com/angelacorte/vmc-experiments/compare/1.3.1...1.3.2) (2024-08-02)
 
 
