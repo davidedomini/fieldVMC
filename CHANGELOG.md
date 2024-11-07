@@ -1,3 +1,35 @@
+## [1.1.0](https://github.com/angelacorte/fieldVMC/compare/1.0.0...1.1.0) (2024-11-07)
+
+
+### Features
+
+* add field vmc that spawns node from a fixed root with fixed resources ([fc071ca](https://github.com/angelacorte/fieldVMC/commit/fc071cad51319a4f7eb4c9a8c4ad024110edf9e8))
+* add maximum resource and fixed leader to skip election in new vmc function ([9d49494](https://github.com/angelacorte/fieldVMC/commit/9d49494fe6327b2bccadd15a60262819d5ee1892))
+* add new simulation yaml for fixed leader simulation ([7949e69](https://github.com/angelacorte/fieldVMC/commit/7949e693025911cf5b80f6287a9c6a0b11e4dde4))
+
+
+### Bug Fixes
+
+* mergify bot account ([9c1aec6](https://github.com/angelacorte/fieldVMC/commit/9c1aec644a0177591a8e685a18ecde387bd2b300))
+* typo in mergify bot account ([d2b52ca](https://github.com/angelacorte/fieldVMC/commit/d2b52ca6ef55c467a76563dcc50ab46677ac067f))
+
+
+### General maintenance
+
+* **build:** build only the experiment with fixed leader ([bbbe240](https://github.com/angelacorte/fieldVMC/commit/bbbe240eac6d8169d5674293b0fc565b87240e12))
+* **build:** remove warning as error ([6618f87](https://github.com/angelacorte/fieldVMC/commit/6618f871979aa10543b5a28129ce66874ef8fd61))
+* **libs:** update libs versions ([787851b](https://github.com/angelacorte/fieldVMC/commit/787851b1674a7780f501bfd6bc33c561d332f929))
+* **release:** update gradle.properties .env versions to 1.0.0 [skip ci] ([cfcdb21](https://github.com/angelacorte/fieldVMC/commit/cfcdb212d2e2ddc0e99d612377ebfd0a9fec1de8))
+* temporary comment old YAMLs ([da02931](https://github.com/angelacorte/fieldVMC/commit/da02931e968fc34ba8567603beb4c68827a53eca))
+* update mergify config ([5c0552d](https://github.com/angelacorte/fieldVMC/commit/5c0552d5fee322580b09147d17c296fb51b102ff))
+* use Collektive's renovate configuration ([0204241](https://github.com/angelacorte/fieldVMC/commit/0204241fefebc592195c5521c8d62a191bfbaae8))
+
+
+### Refactoring
+
+* move utils functions in proper file ([5d3eec2](https://github.com/angelacorte/fieldVMC/commit/5d3eec214a67cd8485172f51bad5db3e37d650a4))
+* use stdlib functions ([eb15dbd](https://github.com/angelacorte/fieldVMC/commit/eb15dbdec574a26aaea4344ca9581b5e3cd0633a))
+
 ## 1.0.0 (2024-10-23)
 
 
