@@ -1,3 +1,15 @@
+## [1.1.1](https://github.com/angelacorte/fieldVMC/compare/1.1.0...1.1.1) (2024-11-07)
+
+
+### Dependency updates
+
+* **core-deps:** update collektive to v10.5.3 ([#1](https://github.com/angelacorte/fieldVMC/issues/1)) ([d4f104d](https://github.com/angelacorte/fieldVMC/commit/d4f104d667e4f02b49d0264cdec5f7aa3c478e03))
+
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.0 [skip ci] ([673d88d](https://github.com/angelacorte/fieldVMC/commit/673d88dc68e71a27f0017bf4729a0f252c4513ab))
+
 ## [1.1.0](https://github.com/angelacorte/fieldVMC/compare/1.0.0...1.1.0) (2024-11-07)
 
 
