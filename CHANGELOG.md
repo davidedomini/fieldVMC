@@ -1,3 +1,25 @@
+## [1.1.3](https://github.com/angelacorte/fieldVMC/compare/1.1.2...1.1.3) (2024-11-07)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v10.7.0 ([f18351d](https://github.com/angelacorte/fieldVMC/commit/f18351d6301e6f27f5aea9b9ab2901ff558f728d))
+* **deps:** update dependency gradle to v8.10.2 ([8a1a064](https://github.com/angelacorte/fieldVMC/commit/8a1a06409adbb9685a6f1eebe47f2e31ced46183))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.114 ([#5](https://github.com/angelacorte/fieldVMC/issues/5)) ([64e4456](https://github.com/angelacorte/fieldVMC/commit/64e445640193bb6bebfad76febc4cc87a2db37b8))
+* **deps:** update node.js to v22 ([#27](https://github.com/angelacorte/fieldVMC/issues/27)) ([fd9f720](https://github.com/angelacorte/fieldVMC/commit/fd9f720d3079660a6f6c214621909c4e762a4be4))
+* **deps:** update plugin com.gradle.enterprise to v3.18.1 ([3628423](https://github.com/angelacorte/fieldVMC/commit/3628423076c19c10204d0356a79e80c5fe85489f))
+* **deps:** update plugin kotlin-qa to v0.61.1 ([#7](https://github.com/angelacorte/fieldVMC/issues/7)) ([4c825f5](https://github.com/angelacorte/fieldVMC/commit/4c825f54348960ed53f89c1c4958d20765260073))
+* **deps:** update plugin kotlin-qa to v0.69.0 ([7d139c5](https://github.com/angelacorte/fieldVMC/commit/7d139c5e8d353f1572e6821e2cbe7a7be80c0cf6))
+
+### Build and continuous integration
+
+* **deps:** update actions/download-artifact action to v4.1.8 ([12173ee](https://github.com/angelacorte/fieldVMC/commit/12173ee4376299dbbcf00579e847e522b1b1d313))
+* **deps:** update actions/setup-python action to v5.3.0 ([0def8f0](https://github.com/angelacorte/fieldVMC/commit/0def8f088d3ffd57d2d63125455869a8135166cb))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3 ([015c115](https://github.com/angelacorte/fieldVMC/commit/015c115d959fa1f66e671b217abce5e6e33823d4))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.2 [skip ci] ([a324167](https://github.com/angelacorte/fieldVMC/commit/a324167ed3715b2669dd2548227472541982ee10))
+
 ## [1.1.2](https://github.com/angelacorte/fieldVMC/compare/1.1.1...1.1.2) (2024-11-07)
 
 
