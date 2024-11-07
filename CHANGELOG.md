@@ -1,3 +1,32 @@
+## [1.1.2](https://github.com/angelacorte/fieldVMC/compare/1.1.1...1.1.2) (2024-11-07)
+
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin.jvm to v2.0.21 ([d0bce08](https://github.com/angelacorte/fieldVMC/commit/d0bce08f0f85938f1bd3a167d5fb3a1a76cc0097))
+* **deps:** update alchemist to v34.1.12 ([93ecc76](https://github.com/angelacorte/fieldVMC/commit/93ecc76309c8c3e5e77f37729e987a99237d7345))
+* **deps:** update dependency matplotlib to v3.9.2 ([a8e990d](https://github.com/angelacorte/fieldVMC/commit/a8e990dd058379f12fd597e716bf6b0584841878))
+* **deps:** update dependency xarray to v2024.10.0 ([565d130](https://github.com/angelacorte/fieldVMC/commit/565d130361770610084d7f49dfae6121b4343f71))
+* **deps:** update node.js to 20.18 ([b42fbd3](https://github.com/angelacorte/fieldVMC/commit/b42fbd3e2f1d41c4a6efd347fa18d539befac1b3))
+* **deps:** update plugin gitsemver to v3.1.7 ([292db26](https://github.com/angelacorte/fieldVMC/commit/292db261f2dd4471ade76547bec1e71ef95cc232))
+* **deps:** update plugin tasktree to v4 ([#30](https://github.com/angelacorte/fieldVMC/issues/30)) ([b04d25e](https://github.com/angelacorte/fieldVMC/commit/b04d25ea8038559a285e5503dac0893ec7266b84))
+* **deps:** update python docker tag to v3.13.0 ([#22](https://github.com/angelacorte/fieldVMC/issues/22)) ([05249b1](https://github.com/angelacorte/fieldVMC/commit/05249b192a66b68f9302bf178399fa0f100942ed))
+
+
+### Build and continuous integration
+
+* **deps:** update actions/checkout action to v4.2.2 ([2fce0a0](https://github.com/angelacorte/fieldVMC/commit/2fce0a0368a1b676354b331b8bfe55b8e9ad03bd))
+* **deps:** update actions/setup-node action to v4.0.4 ([f471a00](https://github.com/angelacorte/fieldVMC/commit/f471a00fee8f1b4b6ce8183de8abd27d60760fa1))
+* **deps:** update actions/setup-node action to v4.1.0 ([3fb7ff4](https://github.com/angelacorte/fieldVMC/commit/3fb7ff4ee0724715d31d9dfad29a5f7cf69da61b))
+* **deps:** update actions/setup-python action to v5.1.1 ([#12](https://github.com/angelacorte/fieldVMC/issues/12)) ([3b7a10d](https://github.com/angelacorte/fieldVMC/commit/3b7a10da596515e535fb85de16cb1f36a9a74201))
+* **deps:** update actions/upload-artifact action to v4.4.3 ([1ecb6b2](https://github.com/angelacorte/fieldVMC/commit/1ecb6b2c7d1db6d49ae8e38eabdb25f5ccb341a6))
+* **deps:** update dependency ubuntu to v24 ([0223ca5](https://github.com/angelacorte/fieldVMC/commit/0223ca56adfaf8b29fb0984c5a4d2897380f84e7))
+
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.1 [skip ci] ([16e08d3](https://github.com/angelacorte/fieldVMC/commit/16e08d31b674a87526aa03fed510626dc84987d8))
+
 ## [1.1.1](https://github.com/angelacorte/fieldVMC/compare/1.1.0...1.1.1) (2024-11-07)
 
 
