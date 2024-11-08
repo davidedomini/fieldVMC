@@ -1,3 +1,14 @@
+## [1.1.4](https://github.com/angelacorte/fieldVMC/compare/1.1.3...1.1.4) (2024-11-08)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v10.9.0 ([fcffeb6](https://github.com/angelacorte/fieldVMC/commit/fcffeb617086d7dac6da52ce0f58b76d73aee3c5))
+* **deps:** update plugin multijvmtesting to v1 ([98e63cb](https://github.com/angelacorte/fieldVMC/commit/98e63cbc85cc62987248e1627e12f6da128c95c8))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.3 [skip ci] ([c1e6f57](https://github.com/angelacorte/fieldVMC/commit/c1e6f574595e30a5a998b480f06b90037fb65c92))
+
 ## [1.1.3](https://github.com/angelacorte/fieldVMC/compare/1.1.2...1.1.3) (2024-11-07)
 
 ### Dependency updates
