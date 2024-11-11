@@ -1,3 +1,16 @@
+## [1.1.5](https://github.com/angelacorte/fieldVMC/compare/1.1.4...1.1.5) (2024-11-11)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v10.10.0 ([68d4a8f](https://github.com/angelacorte/fieldVMC/commit/68d4a8f504af7dfce776f34e8d167a9759459de7))
+* **deps:** update alchemist to v34.1.14 ([68d8f9f](https://github.com/angelacorte/fieldVMC/commit/68d8f9fd51a787f482b5f49277899bf29829e3d3))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.115 ([8c38608](https://github.com/angelacorte/fieldVMC/commit/8c38608b2420ebbc2cd79990dcb914bb23c45192))
+* **deps:** update plugin multijvmtesting to v1.3.0 ([ea36123](https://github.com/angelacorte/fieldVMC/commit/ea3612384d3463447731b70fca43dd295afa8d64))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.4 [skip ci] ([0919444](https://github.com/angelacorte/fieldVMC/commit/0919444cd20f083817019ff881aea869bb1707a3))
+
 ## [1.1.4](https://github.com/angelacorte/fieldVMC/compare/1.1.3...1.1.4) (2024-11-08)
 
 ### Dependency updates
