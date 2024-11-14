@@ -1,3 +1,20 @@
+## [1.1.7](https://github.com/angelacorte/fieldVMC/compare/1.1.6...1.1.7) (2024-11-14)
+
+### Dependency updates
+
+* **core-deps:** update dependency it.unibo.collektive.collektive-plugin to v10.11.1 ([cddaf12](https://github.com/angelacorte/fieldVMC/commit/cddaf1210e98fc67f5a95230167014d1abcc2238))
+* **deps:** update alchemist to v35 ([79daca0](https://github.com/angelacorte/fieldVMC/commit/79daca0966f28a688da788f055fc8c71881027b3))
+* **deps:** update plugin com.gradle.enterprise to v3.18.2 ([8d84014](https://github.com/angelacorte/fieldVMC/commit/8d840146479c6b047ed4b02121952dd3adcf05e7))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.13 ([3a43b54](https://github.com/angelacorte/fieldVMC/commit/3a43b549332c36104a238b5b62a05b4449b56821))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.14 ([aa49c30](https://github.com/angelacorte/fieldVMC/commit/aa49c3023b76967ea0f6188426ff0b81c3e689d5))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.6 [skip ci] ([2b0b6e2](https://github.com/angelacorte/fieldVMC/commit/2b0b6e2adb2ca69791f942c4dc411768835ff942))
+
 ## [1.1.6](https://github.com/angelacorte/fieldVMC/compare/1.1.5...1.1.6) (2024-11-12)
 
 ### Dependency updates
