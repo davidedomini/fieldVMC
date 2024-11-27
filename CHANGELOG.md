@@ -1,3 +1,44 @@
+## [1.1.8](https://github.com/angelacorte/fieldVMC/compare/1.1.7...1.1.8) (2024-11-27)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v11 ([cfabec6](https://github.com/angelacorte/fieldVMC/commit/cfabec67a3a68d53271939320b172b8cb6ef115b))
+* **deps:** update dependency gradle to v8.11 ([b8cef7c](https://github.com/angelacorte/fieldVMC/commit/b8cef7ce38bd6e931e76ca7b41a4d737647a0a05))
+* **deps:** update dependency gradle to v8.11.1 ([31069e3](https://github.com/angelacorte/fieldVMC/commit/31069e3abffdfb402ba7b237c5ae6ed189d2ef14))
+* **deps:** update dependency it.unibo.alchemist:alchemist to v35.0.1 ([694c419](https://github.com/angelacorte/fieldVMC/commit/694c419f18179b26a61818eeb190d325107e92b4))
+* **deps:** update dependency it.unibo.alchemist:alchemist-euclidean-geometry to v35.0.2 ([cfc6d64](https://github.com/angelacorte/fieldVMC/commit/cfc6d643449a35270092541e3b7c43cbfccc35c2))
+* **deps:** update dependency it.unibo.alchemist:alchemist-swingui to v36 ([b2f2dad](https://github.com/angelacorte/fieldVMC/commit/b2f2dadd59f5a4a8cd7807206155ddc9f223ff74))
+* **deps:** update dependency it.unibo.alchemist:alchemist-ui-tooling to v35.0.3 ([6fefa6e](https://github.com/angelacorte/fieldVMC/commit/6fefa6ea973c7f4be4a7a2d8387123af1b137c65))
+* **deps:** update dependency xarray to v2024.11.0 ([e7e9e3a](https://github.com/angelacorte/fieldVMC/commit/e7e9e3a8c65e514eef862a15fe08eaa55b6b5002))
+* **deps:** update plugin kotlin-qa to v0.70.0 ([fe16453](https://github.com/angelacorte/fieldVMC/commit/fe164537e28f016cf3e0b80008136195f81f2217))
+* **deps:** update plugin kotlin-qa to v0.70.1 ([b5f327a](https://github.com/angelacorte/fieldVMC/commit/b5f327a73453e57c4f3413423a28a983832645a3))
+* **deps:** update plugin kotlin-qa to v0.70.2 ([a758ac4](https://github.com/angelacorte/fieldVMC/commit/a758ac465a80a96652f68c766e13d3c998a57467))
+* **deps:** update plugin kotlin-qa to v0.71.0 ([e25d951](https://github.com/angelacorte/fieldVMC/commit/e25d9517d207444ff63c13efe6d20fac2247c2b7))
+* **deps:** update plugin kotlin-qa to v0.73.0 ([03cf253](https://github.com/angelacorte/fieldVMC/commit/03cf253d616544014f81d1c2265358eaf9a098b5))
+* **deps:** update plugin kotlin-qa to v0.74.0 ([ca47910](https://github.com/angelacorte/fieldVMC/commit/ca4791079fbfcc0b538c5e6f5d9bd9d489a7c8fe))
+* **deps:** update plugin multijvmtesting to v1.3.1 ([5a867df](https://github.com/angelacorte/fieldVMC/commit/5a867dfd1501bf339f8e184001387183266b10a5))
+* **deps:** update plugin multijvmtesting to v1.3.2 ([b096e11](https://github.com/angelacorte/fieldVMC/commit/b096e111e73427a41781d2db0f392635296c86e0))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.15 ([42c3e73](https://github.com/angelacorte/fieldVMC/commit/42c3e737338f8cb60b1c2f16f82cb48cd3893e69))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.16 ([77d5427](https://github.com/angelacorte/fieldVMC/commit/77d542712618d3e08d783a7b4f3490d70ac2d6b5))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.17 ([71109f9](https://github.com/angelacorte/fieldVMC/commit/71109f93965e7f5e2dcfca3e51d20369fc5e6924))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.18 ([419745e](https://github.com/angelacorte/fieldVMC/commit/419745e7f04c1d59fd5abc22ad5cacd88093496a))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.19 ([00e8a7f](https://github.com/angelacorte/fieldVMC/commit/00e8a7f5b6acb81c2bba5ee34bba3130d25b6aa7))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.20 ([34dd5e6](https://github.com/angelacorte/fieldVMC/commit/34dd5e6f873af451fff36e0d50d5eea37fc087fc))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.21 ([eb817b2](https://github.com/angelacorte/fieldVMC/commit/eb817b26b999782054d72fb50e9650c50a2ee7f7))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.22 ([e7053f9](https://github.com/angelacorte/fieldVMC/commit/e7053f9381f26fe3957fd7498164b229be87383a))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.23 ([b807010](https://github.com/angelacorte/fieldVMC/commit/b807010f729cce779e29977cd1d78a7b08600cca))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.7 [skip ci] ([94fc929](https://github.com/angelacorte/fieldVMC/commit/94fc929cb5206592c7002eaa05fda565c89c4c51))
+
+### Refactoring
+
+* update repeat into evolve as in Collektive v11 ([a75a156](https://github.com/angelacorte/fieldVMC/commit/a75a1564725b9e4c8c7a2404269eae0701a7210c))
+
 ## [1.1.7](https://github.com/angelacorte/fieldVMC/compare/1.1.6...1.1.7) (2024-11-14)
 
 ### Dependency updates
