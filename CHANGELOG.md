@@ -1,3 +1,17 @@
+## [1.1.9](https://github.com/angelacorte/fieldVMC/compare/1.1.8...1.1.9) (2024-11-30)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v11.0.1 ([fc38232](https://github.com/angelacorte/fieldVMC/commit/fc38232996c0e8142e0ee6c2cbb500f5612608b5))
+* **deps:** update alchemist to v36.0.2 ([301c9f2](https://github.com/angelacorte/fieldVMC/commit/301c9f29fcd3f0104e7057f2ce1ffae75818f6e0))
+* **deps:** update alchemist to v36.0.3 ([fcf1a58](https://github.com/angelacorte/fieldVMC/commit/fcf1a5834589c6d4bccc60d79f62419843162dbe))
+* **deps:** update dependency it.unibo.alchemist:alchemist-ui-tooling to v36.0.1 ([b8b96fd](https://github.com/angelacorte/fieldVMC/commit/b8b96fde5f527def84445df67347857e2330712d))
+* **deps:** update plugin kotlin-qa to v0.75.0 ([6a06a62](https://github.com/angelacorte/fieldVMC/commit/6a06a620105e69dd29ce55c036f7d2f1b465db1d))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.8 [skip ci] ([0b54f7d](https://github.com/angelacorte/fieldVMC/commit/0b54f7d8b2af2ecadc6f2a69540e5f21cfcc5348))
+
 ## [1.1.8](https://github.com/angelacorte/fieldVMC/compare/1.1.7...1.1.8) (2024-11-27)
 
 ### Dependency updates
