@@ -1,3 +1,14 @@
+## [1.1.10](https://github.com/angelacorte/fieldVMC/compare/1.1.9...1.1.10) (2024-12-02)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v11.0.2 ([1dfdfa5](https://github.com/angelacorte/fieldVMC/commit/1dfdfa5cf5045eb743d3a274158cdf671bc8082c))
+* **deps:** update plugin org.gradle.toolchains.foojay-resolver-convention to v0.9.0 ([afda1da](https://github.com/angelacorte/fieldVMC/commit/afda1da51c4d3c3d9dcd80a26b3141552fe14f59))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.9 [skip ci] ([b57c445](https://github.com/angelacorte/fieldVMC/commit/b57c44568739118cf591033deb4a7cd7036c858f))
+
 ## [1.1.9](https://github.com/angelacorte/fieldVMC/compare/1.1.8...1.1.9) (2024-11-30)
 
 ### Dependency updates
