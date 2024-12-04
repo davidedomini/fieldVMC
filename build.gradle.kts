@@ -91,7 +91,7 @@ fun String.capitalizeString(): String =
  * Scan the folder with the simulation files, and create a task for each one of them.
  */
 File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
-    ?.filter { it.name == "fixedLeader.yml" }
+//    ?.filter { it.name == "fixedLeader.yml" }
     ?.sortedBy { it.nameWithoutExtension }
     ?.forEach {
         fun basetask(name: String, additionalConfiguration: JavaExec.() -> Unit = {}) = tasks.register<JavaExec>(name) {
