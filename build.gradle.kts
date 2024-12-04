@@ -91,7 +91,7 @@ fun String.capitalizeString(): String =
  * Scan the folder with the simulation files, and create a task for each one of them.
  */
 File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
-//    ?.filter { it.name == "fixedLeader.yml" }
+    ?.filter { it.extension == "yml" }
     ?.sortedBy { it.nameWithoutExtension }
     ?.forEach {
         fun basetask(name: String, additionalConfiguration: JavaExec.() -> Unit = {}) = tasks.register<JavaExec>(name) {
@@ -99,11 +99,11 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
             mainClass.set("it.unibo.alchemist.Alchemist")
             classpath = sourceSets["main"].runtimeClasspath
             args("run", it.absolutePath)
-            javaLauncher.set(
-                javaToolchains.launcherFor {
-                    languageVersion.set(JavaLanguageVersion.of(multiJvm.latestJava))
-                },
-            )
+//            javaLauncher.set(
+//                javaToolchains.launcherFor {
+//                    languageVersion.set(JavaLanguageVersion.of(multiJvm.latestJava))
+//                },
+//            )
             if (System.getenv("CI") == "true") {
                 args("--override", "terminate: { type: AfterTime, parameters: [2] } ")
             } else {
@@ -119,7 +119,7 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
                 "--override",
                 "launcher: { parameters: { batch: [], autoStart: false } }",
                 "--verbosity",
-                "error"
+                "error",
             )
         }
         runAllGraphic.dependsOn(graphic)
@@ -128,12 +128,18 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
             description = "Launches batch experiments for $capitalizedName"
             maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
             File("data").mkdirs()
+            args(
+                "--override",
+                "launcher: { parameters: { batch: [seed], autoStart: true } }",
+                "--verbosity",
+                "error",
+            )
         }
         runAllBatch.dependsOn(batch)
     }
 
-tasks.withType<KotlinCompile>().all {
+tasks.withType(KotlinCompile::class).all {
     compilerOptions {
-        allWarningsAsErrors.set(false)
+        allWarningsAsErrors = false
     }
 }
