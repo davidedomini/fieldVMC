@@ -18,7 +18,7 @@ jobs:
       - uses: DanySK/build-check-deploy-gradle-action@3.5.23
         with:
           build-command: true
-          check-command:  MIN=1.0 MAX=5.0 DEFAULT=2.0 ./gradlew runGossipGraphic # todo change this
+          check-command:  MIN=0 MAX=20 DEFAULT=0 RADIUS=100.0 MAX_RESOURCE=1000.0 RESOURCE_LOWER_BOUND=1.0 MAX_CHILDREN=5 MIN_SPAN_WAIT=40.0 CLONING_RANGE=5 ./gradlew runAllGraphic
           deploy-command: true
           should-run-codecov: false
           should-validate-wrapper: ${{ contains('Linux', runner.os) }}
