@@ -11,58 +11,64 @@ services:
         mkdir -p /experiment/charts
         chmod 777 /experiment/charts
 
-  simulation1:
+  default-simulation:
     image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
     build:
       context: .
       dockerfile: ./docker/sim/Dockerfile
     environment:
-      MIN: 1
-      MAX: 5
-      DEFAULT: 2
+      MIN: 0
+      MAX: 20
+      DEFAULT: 0
+      RADIUS: 100.0
+      MAX_RESOURCE: 1000.0
+      RESOURCE_LOWER_BOUND: 1.0
+      MAX_CHILDREN: 5
+      MIN_SPAN_WAIT: 40.0
+      CLONING_RANGE: 5
     depends_on:
       - prepare
     volumes:
       - ./data:/experiment/data
-
-  simulation2:
-    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
-    build:
-      context: .
-      dockerfile: ./docker/sim/Dockerfile
-    environment:
-      MIN: 6
-      MAX: 10
-      DEFAULT: 7
-    depends_on:
-      - prepare
-    volumes:
-      - ./data:/experiment/data
-
-  simulation3:
-    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
-    build:
-      context: .
-      dockerfile: ./docker/sim/Dockerfile
-    environment:
-      MIN: 11
-      MAX: 15
-      DEFAULT: 12
-    depends_on:
-      - prepare
-    volumes:
-      - ./data:/experiment/data
+#
+#  simulation2:
+#    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
+#    build:
+#      context: .
+#      dockerfile: ./docker/sim/Dockerfile
+#    environment:
+#      MIN: 6
+#      MAX: 10
+#      DEFAULT: 7
+#    depends_on:
+#      - prepare
+#    volumes:
+#      - ./data:/experiment/data
+#
+#  simulation3:
+#    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
+#    build:
+#      context: .
+#      dockerfile: ./docker/sim/Dockerfile
+#    environment:
+#      MIN: 11
+#      MAX: 15
+#      DEFAULT: 12
+#    depends_on:
+#      - prepare
+#    volumes:
+#      - ./data:/experiment/data
 
   charts:
     depends_on:
       prepare:
         condition: service_completed_successfully
-      simulation1:
+      default-simulation:
         condition: service_completed_successfully
-      simulation2:
-        condition: service_completed_successfully
-      simulation3:
-        condition: service_completed_successfully
+#      simulation2:
+#        condition: service_completed_successfully
+#      simulation3:
+#        condition: service_completed_successfully
     image: angelacortecchia/${PROJECT_NAME:-unknown}-charts:${VERSION:-latest}
     build:
       dockerfile: ./docker/charts/Dockerfile
