@@ -4,15 +4,10 @@ import it.unibo.alchemist.collektive.device.DistanceSensor
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.LeaderSensor
-import it.unibo.collektive.alchemist.device.sensors.LocationSensor
 import it.unibo.collektive.alchemist.device.sensors.ResourceSensor
 import it.unibo.collektive.alchemist.device.sensors.SuccessSensor
 import it.unibo.collektive.coordination.findParent
-import it.unibo.collektive.lib.convergeSuccess
-import it.unibo.collektive.lib.findPotential
-import it.unibo.collektive.lib.isLeader
-import it.unibo.collektive.lib.obtainLocalSuccess
-import it.unibo.collektive.lib.spreadResource
+import it.unibo.collektive.lib.*
 
 /**
  * The VMC algorithm without spawning and destroying after stability policies.
