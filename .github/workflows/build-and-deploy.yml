@@ -7,7 +7,7 @@ jobs:
   check-simulations-native:
     strategy:
       matrix:
-        os: [ windows-2022, macos-14, ubuntu-22.04 ]
+        os: [ windows-2022, macos-14, ubuntu-24.04 ]
     runs-on: ${{ matrix.os }}
     concurrency:
       group: sim-check${{ github.workflow }}${{ matrix.os }}${{ github.event.number || github.ref }}
@@ -18,7 +18,7 @@ jobs:
       - uses: DanySK/build-check-deploy-gradle-action@3.5.23
         with:
           build-command: true
-          check-command: ./gradlew runAllGraphic
+          check-command:  MIN=1.0 MAX=5.0 DEFAULT=2.0 ./gradlew runGossipGraphic # todo change this
           deploy-command: true
           should-run-codecov: false
           should-validate-wrapper: ${{ contains('Linux', runner.os) }}
@@ -53,20 +53,22 @@ jobs:
         with:
           name: charts
           path: charts.tar.zst
-  #  check-simulations-docker:
-  #    runs-on: ubuntu-22.04
-  #    concurrency:
-  #      group: container-check${{ github.workflow }}${{ matrix.os }}${{ github.event.number || github.ref }}
-  #      cancel-in-progress: true
-  #    steps:
-  #    - name: Checkout
-  #      uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
-  #    - name: Run compose
-  #      run: docker-compose up --build
+  check-simulations-docker:
+    runs-on: ubuntu-24.04
+    concurrency:
+      group: container-check${{ github.workflow }}${{ matrix.os }}${{ github.event.number || github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Prepare docker-compose to be tested in CI
+        run: sed 's/CI:\s.*/CI:\ \"true\"/g' -i docker-compose.yml
+      - name: Run compose
+        run: docker-compose up --build
   release:
     needs:
       - check-simulations-native
-      #      - check-simulations-docker
+      - check-simulations-docker
       - create-charts
     runs-on: ubuntu-24.04
     concurrency:
@@ -95,11 +97,11 @@ jobs:
         uses: actions/setup-node@v4.1.0
         with:
           node-version: ${{ steps.node-version.outputs.version }}
-#      - name: Login to dockerhub
-#        env:
-#          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-#          DOCKER_USERNAME: angelacortecchia
-#        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin docker.io
+      - name: Login to dockerhub
+        env:
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_USERNAME: angelacortecchia
+        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin docker.io
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.DEPLOYMENT_TOKEN }}
@@ -111,7 +113,7 @@ jobs:
     needs:
       - create-charts
       - check-simulations-native
-      #      - check-simulations-docker
+      - check-simulations-docker
       - release
     if: >-
       always() && (
