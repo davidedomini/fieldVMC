@@ -2,6 +2,7 @@ package it.unibo.collektive.vmc
 
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.alchemist.device.sensors.DeviceSpawn
+import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.LocationSensor
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.ResourceSensor
@@ -23,22 +24,26 @@ data class Stability(val spawnStable: Boolean = false, val destroyStable: Boolea
  * if it is not father of any node and the neighborhood is stable.
  */
 fun Aggregate<Int>.determineStability(
-    potential: Double,
     childrenCount: Int,
     localResource: Double,
-    resourceS: ResourceSensor,
-    everyoneIsDestroyStable: Boolean,
-    neighborPositions: List<Pair<Double, Double>>,
-    localPosition: Pair<Double, Double>,
-    random: RandomGenerator,
-    devSpawn: DeviceSpawn,
-    localStability: Stability,
-    now: Double,
     lastChanged: Double,
-    enoughTime: Boolean,
-    everyoneIsStable: Boolean
-): Stability =
-    when {
+    now: Double,
+    potential: Double,
+    localPosition: Pair<Double, Double>,
+    neighborPositions: List<Pair<Double, Double>>,
+    localStability: Stability,
+    devSpawn: DeviceSpawn,
+    env: EnvironmentVariables,
+    random: RandomGenerator,
+    resourceS: ResourceSensor,
+): Stability {
+    val enoughTime = now > lastChanged + devSpawn.minSpawnWait
+    val everyoneIsDestroyStable = now > lastChanged
+    val everyoneIsStable = localStability.spawnStable && localStability.destroyStable && enoughTime
+    env["enough-time"] = enoughTime
+    env["everyone-is-stable"] = everyoneIsStable
+    env["everyone-is-destroy-stable"] = everyoneIsDestroyStable
+    return when {
         potential > 0.0 && childrenCount == 0 && localResource < resourceS.resourceLowerBound && everyoneIsDestroyStable -> {
             devSpawn.selfDestroy()
             Stability(spawnStable = false, destroyStable = false)
@@ -60,3 +65,4 @@ fun Aggregate<Int>.determineStability(
         }
         else -> Stability(spawnStable = enoughTime, destroyStable = now > lastChanged)
     }
+}

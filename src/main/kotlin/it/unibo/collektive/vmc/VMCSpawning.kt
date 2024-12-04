@@ -55,18 +55,8 @@ fun Aggregate<Int>.spawnAndDestroyAfterStability(
                 val current = listOf(potential, localSuccess, success, localResource)
                 if (current == last.second) { last } else { now to current }
             }.first
-            val enoughTime = now > lastChanged + devSpawn.minSpawnWait
-            val everyoneIsStable = neighborhoodStability.fold(enoughTime) { acc, change -> acc and change.destroyStable && change.spawnStable }
-            val everyoneIsDestroyStable = neighborhoodStability.fold(lastChanged != now) { acc, change -> acc and change.destroyStable }
-            env["enough-time"] = enoughTime
-            env["everyone-is-stable"] = everyoneIsStable
-            env["everyone-is-destroy-stable"] = everyoneIsDestroyStable
             val localStability = neighborhoodStability.localValue
-            determineStability(
-                potential, childrenCount, localResource, resourceS, everyoneIsDestroyStable,
-                neighborPositions, localPosition, random, devSpawn, localStability, now, lastChanged,
-                enoughTime, everyoneIsStable
-            )
+            determineStability(childrenCount, localResource, lastChanged, now, potential, localPosition, neighborPositions, localStability, devSpawn, env, random, resourceS)
         }
     }
 }
