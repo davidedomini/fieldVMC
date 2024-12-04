@@ -11,10 +11,9 @@ import kotlin.Double.Companion.POSITIVE_INFINITY
  * Propagates the minimum value (or the [initial] if the minimum is infinity) through the gradient.
  * If the node is the [source], it will propagate zero.
  */
-context(DistanceSensor)
-fun <ID : Any> Aggregate<ID>.gradientCast(source: Boolean, initial: Double): Double =
+fun <ID : Any> Aggregate<ID>.gradientCast(distanceSensor: DistanceSensor, source: Boolean, initial: Double): Double =
     share(initial) { field ->
-        val dist = distances()
+        val dist = distanceSensor.distances()
         when (source) {
             true -> 0.0
             else -> {
@@ -31,9 +30,8 @@ fun <ID : Any> Aggregate<ID>.gradientCast(source: Boolean, initial: Double): Dou
 /**
  * Evaluate the distance of the node from the [source].
  */
-context(DistanceSensor)
-fun <ID : Any> Aggregate<ID>.distanceTo(source: Boolean): Double =
-    gradientCast(source, if (source) 0.0 else POSITIVE_INFINITY)
+fun <ID : Any> Aggregate<ID>.distanceTo(distanceSensor: DistanceSensor, source: Boolean): Double =
+    gradientCast(distanceSensor, source, if (source) 0.0 else POSITIVE_INFINITY)
 
 ///**
 // * Evaluate the distance between the [source] and the [destination].

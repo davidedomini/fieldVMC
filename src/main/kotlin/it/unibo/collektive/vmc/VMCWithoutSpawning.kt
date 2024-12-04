@@ -20,21 +20,19 @@ import it.unibo.collektive.lib.spreadResource
  * the local success, and the overall success of the children.
  * Finally, it calculates and returns the local resource.
  */
-context(
-    DistanceSensor,
-    EnvironmentVariables,
-    LeaderSensor,
-    LocationSensor,
-    ResourceSensor,
-    SuccessSensor
-)
-fun Aggregate<Int>.withoutSpawning(): Double {
-    val isLeader = isLeader()
-    val potential = findPotential(isLeader)
-    set("potential", potential)
-    set("myParent", findParent(potential))
-    val localSuccess = obtainLocalSuccess()
-    val success = convergeSuccess(potential, localSuccess)
-    val localResource = spreadResource(potential, success)
+fun Aggregate<Int>.withoutSpawning(
+    env: EnvironmentVariables,
+    distanceS: DistanceSensor,
+    leaderS: LeaderSensor,
+    resourceS: ResourceSensor,
+    successS: SuccessSensor
+): Double {
+    val isLeader = isLeader(distanceS, leaderS, resourceS)
+    val potential = findPotential(distanceS, isLeader)
+    env["potential"] = potential
+    env["myParent"] = findParent(potential)
+    val localSuccess = obtainLocalSuccess(successS)
+    val success = convergeSuccess(successS, potential, localSuccess)
+    val localResource = spreadResource(env, resourceS, potential, success)
     return localResource
 }

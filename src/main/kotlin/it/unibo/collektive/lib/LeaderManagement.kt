@@ -11,20 +11,25 @@ import it.unibo.collektive.coordination.distanceTo
 /**
  * Elect the leader of the current node.
  */
-context(DistanceSensor, LeaderSensor, ResourceSensor)
-fun <ID : Comparable<ID>> Aggregate<ID>.chooseLeader(): ID =
-    boundedElection(getResource(), leaderRadius)
+fun <ID : Comparable<ID>> Aggregate<ID>.chooseLeader(
+    distanceSensor: DistanceSensor,
+    leaderSensor: LeaderSensor,
+    resourceSensor: ResourceSensor
+): ID =
+    boundedElection(distanceSensor, resourceSensor.getResource(), leaderSensor.leaderRadius)
 
 /**
  * Find the potential of the current node.
  */
-context(DistanceSensor)
-fun <ID : Comparable<ID>> Aggregate<ID>.findPotential(leader: Boolean): Double =
-    distanceTo(leader)
+fun <ID : Comparable<ID>> Aggregate<ID>.findPotential(distanceSensor: DistanceSensor, leader: Boolean): Double =
+    distanceTo(distanceSensor, leader)
 
 /**
  * Check if the current node is the leader.
  */
-context(DistanceSensor, LeaderSensor, EnvironmentVariables, ResourceSensor)
-fun <ID : Comparable<ID>> Aggregate<ID>.isLeader(): Boolean =
-    (chooseLeader() == localId).also { setLeader(it) }
+fun <ID : Comparable<ID>> Aggregate<ID>.isLeader(
+    distanceSensor: DistanceSensor,
+    leaderSensor: LeaderSensor,
+    resourceSensor: ResourceSensor,
+): Boolean =
+    (chooseLeader(distanceSensor, leaderSensor, resourceSensor) == localId).also { leaderSensor.setLeader(it) }

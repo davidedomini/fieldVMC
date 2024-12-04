@@ -7,10 +7,9 @@ operator fun Pair<Double, Double>.minus(other: Pair<Double, Double>): Pair<Doubl
 operator fun Pair<Double, Double>.plus(other: Pair<Double, Double>): Pair<Double, Double> =
     first + other.first to second + other.second
 
-context(RandomGenerator)
-fun <T> Iterable<T>.randomElementWeighted(by: T.() -> Double): T {
+fun <T> Iterable<T>.randomElementWeighted(random: RandomGenerator, by: T.() -> Double): T {
     val total = fold(0.0) { acc, element -> acc + by(element) }
-    val selector: Double = nextRandomDouble(0.0..total)
+    val selector: Double = random.nextRandomDouble(0.0..total)
     var accumulator = 0.0
     for (element in this) {
         accumulator += by(element)

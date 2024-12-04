@@ -35,7 +35,7 @@ class DeviceSpawner<T, P : Position<P>> @JvmOverloads constructor(
         return spawningTime.toDouble()
     }
 
-    override fun <ID : Comparable<ID>> Aggregate<ID>.selfDestroy() {
+    override fun selfDestroy() {
         node.reactions.toList().forEach {
             environment.simulation.reactionRemoved(it)
             node.removeReaction(it)

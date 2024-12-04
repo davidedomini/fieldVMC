@@ -135,6 +135,5 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
 tasks.withType<KotlinCompile>().all {
     compilerOptions {
         allWarningsAsErrors.set(false)
-        freeCompilerArgs.add("-Xcontext-receivers")
     }
 }

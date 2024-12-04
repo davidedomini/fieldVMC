@@ -36,8 +36,8 @@ fun <T, ID : Comparable<ID>> Aggregate<ID>.convergeCast(
 /**
  * Spreads the [localResource] to the children of this node, according to the [localSuccess] of each child.
  */
-context(EnvironmentVariables)
 fun <ID : Comparable<ID>> Aggregate<ID>.spreadToChildren(
+    env: EnvironmentVariables,
     potential: Double,
     localResource: Double,
     localSuccess: Double,
@@ -56,7 +56,7 @@ fun <ID : Comparable<ID>> Aggregate<ID>.spreadToChildren(
             }
         }
     val selfConsumption = myLocalResources / childrenSuccess.fold(1) { a, b -> a + (1.takeIf { b > 0 } ?: 0) }
-    if (potential > 0.0) set("resource", selfConsumption)
+    if (potential > 0.0) env["resource"] = selfConsumption
     val resourcesToSpread = myLocalResources - selfConsumption
     val overallChildrenSuccess = childrenSuccess.hood(Double.NEGATIVE_INFINITY) { a, b -> a + b }
     childrenSuccess.map { if (overallChildrenSuccess <= 0) 0.0 else it * resourcesToSpread / overallChildrenSuccess }

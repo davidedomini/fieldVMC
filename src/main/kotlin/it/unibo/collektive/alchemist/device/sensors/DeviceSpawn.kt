@@ -13,7 +13,7 @@ interface DeviceSpawn {
     /**
      * The node will destroy itself.
      */
-    fun <ID : Comparable<ID>> Aggregate<ID>.selfDestroy()
+    fun selfDestroy()
 
     /**
      * Returns the current time inside the simulation environment.

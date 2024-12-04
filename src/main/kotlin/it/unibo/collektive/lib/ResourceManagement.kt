@@ -10,13 +10,14 @@ import it.unibo.collektive.coordination.spreadToChildren
 /**
  * Spreads the available resources to the children of this device, according to the [localSuccess] of each child.
  */
-context(ResourceSensor, LeaderSensor, LocationSensor, EnvironmentVariables)
 fun <ID : Comparable<ID>> Aggregate<ID>.spreadResource(
+    env: EnvironmentVariables,
+    resourceSensor: ResourceSensor,
     potential: Double,
     localSuccess: Double,
 ): Double {
-    return spreadToChildren(potential, if (potential > 0) 0.0 else getResource(), localSuccess).also {
-        setCurrentOverallResource(it)
+    return spreadToChildren(env, potential, if (potential > 0) 0.0 else resourceSensor.getResource(), localSuccess).also {
+        resourceSensor.setCurrentOverallResource(it)
     }
 }
 
@@ -24,9 +25,9 @@ fun <ID : Comparable<ID>> Aggregate<ID>.spreadResource(
  * Given a fixed [resource] value for the root, spreads the available resources to the children of this device,
  * according to the [localSuccess] of each child.
  */
-context(EnvironmentVariables)
 fun <ID : Comparable<ID>> Aggregate<ID>.spreadResource(
+    env: EnvironmentVariables,
     potential: Double,
     localSuccess: Double,
     resource: Double,
-): Double = spreadToChildren(potential, if (potential > 0) 0.0 else resource, localSuccess)
+): Double = spreadToChildren(env, potential, if (potential > 0) 0.0 else resource, localSuccess)
