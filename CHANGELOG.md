@@ -1,3 +1,31 @@
+## [1.2.0](https://github.com/angelacorte/fieldVMC/compare/1.1.10...1.2.0) (2024-12-04)
+
+### Features
+
+* remove all context receivers ([098e154](https://github.com/angelacorte/fieldVMC/commit/098e154c2c2ebbb1330fe2bbf2aaa7d0ebcff36b))
+
+### Dependency updates
+
+* **deps:** update dependency matplotlib to v3.9.3 ([bee86b4](https://github.com/angelacorte/fieldVMC/commit/bee86b4e60f2073fa1bd97ba6b62b22524d9af73))
+
+### Bug Fixes
+
+* add missing parameter in node properties ([a1c005e](https://github.com/angelacorte/fieldVMC/commit/a1c005e425f11220fff2e9a515caf70b4c69da97))
+* add missing parameter in node properties ([b5000b5](https://github.com/angelacorte/fieldVMC/commit/b5000b53db1eb3ebd35c91f55161eb3d5776d75d))
+* correct use of distance sensor in context ([caebdbc](https://github.com/angelacorte/fieldVMC/commit/caebdbc3e11cca2437c2d6b59cd9ca76cbdd0e8c))
+* error when using distances() ([a5a1bf0](https://github.com/angelacorte/fieldVMC/commit/a5a1bf0e397cdc1e853a7dd122ca4ec49434ba8b))
+* generating again all simulations instead of just the fixed leader one ([94e30b7](https://github.com/angelacorte/fieldVMC/commit/94e30b762f72101ffb2c3b5a07cd679398f02530))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.10 [skip ci] ([cd44f59](https://github.com/angelacorte/fieldVMC/commit/cd44f59ce8cd0a22b4176cd81c2f184cd86b31bf))
+
+### Refactoring
+
+* move common functions into another file ([c6fd8ab](https://github.com/angelacorte/fieldVMC/commit/c6fd8abcc019a907c5a7300cd2af581a13725b6f))
+* remove duplicate code ([63697f4](https://github.com/angelacorte/fieldVMC/commit/63697f416394c0f96bb46067e9ec3d9af2acdbef))
+* use stdlib's distanceTo function ([6239c45](https://github.com/angelacorte/fieldVMC/commit/6239c4598994d225abadbd7adf0a5b43f87b8014))
+
 ## [1.1.10](https://github.com/angelacorte/fieldVMC/compare/1.1.9...1.1.10) (2024-12-02)
 
 ### Dependency updates
