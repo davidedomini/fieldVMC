@@ -26,7 +26,7 @@ class SuccessSensorProperty<T, P : Position<P>>(
 
     @Suppress("UNCHECKED_CAST")
     override fun setLocalSuccess(localSuccess: Double) =
-        node.setConcentration(SimpleMolecule("localSuccess"), localSuccess as T)
+        node.setConcentration(SimpleMolecule("local-success"), localSuccess as T)
 
     override fun getSuccess(): Double =
         node.getConcentration(SimpleMolecule("success")) as Double

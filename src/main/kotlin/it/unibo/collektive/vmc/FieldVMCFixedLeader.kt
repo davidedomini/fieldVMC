@@ -62,13 +62,13 @@ fun Aggregate<Int>.vmcFixedLeader(
     locationS: LocationSensor,
     resourceS: ResourceSensor,
     successS: SuccessSensor,
-    spawner: Spawner
+    spawner: Spawner,
 ): Double {
     val isLeader = env.get<Boolean>("leader")
     val potential = findPotential(distanceS, isLeader)
     val localSuccess = obtainLocalSuccess(successS)
     val success = convergeSuccess(successS, potential, localSuccess)
-    val localResource = spreadResource(env, potential, success, resourceS.maxResource)
+    val localResource = spreadResource(env, potential, success, resourceS.maxResource).also { env["local-resource"] = it }
     spawner(devSpawn, locationS, potential, localSuccess, success, localResource)
     return localResource
 }
