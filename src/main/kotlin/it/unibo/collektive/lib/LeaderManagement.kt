@@ -2,11 +2,10 @@ package it.unibo.collektive.lib
 
 import it.unibo.alchemist.collektive.device.DistanceSensor
 import it.unibo.collektive.aggregate.api.Aggregate
-import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.LeaderSensor
 import it.unibo.collektive.alchemist.device.sensors.ResourceSensor
 import it.unibo.collektive.coordination.boundedElection
-import it.unibo.collektive.coordination.distanceTo
+import it.unibo.collektive.stdlib.distanceTo
 
 /**
  * Elect the leader of the current node.
@@ -22,7 +21,7 @@ fun <ID : Comparable<ID>> Aggregate<ID>.chooseLeader(
  * Find the potential of the current node.
  */
 fun <ID : Comparable<ID>> Aggregate<ID>.findPotential(distanceSensor: DistanceSensor, leader: Boolean): Double =
-    distanceTo(distanceSensor, leader)
+    distanceTo(leader) { with(distanceSensor) { distances() } }
 
 /**
  * Check if the current node is the leader.
