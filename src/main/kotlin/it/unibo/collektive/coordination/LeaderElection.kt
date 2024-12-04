@@ -28,8 +28,9 @@ fun <ID : Any, C : Comparable<C>> Aggregate<ID>.boundedElection(
     }
     val local: Candidacy<ID> = Candidacy(localStrength, 0.0, localId)
     return share(local) { candidates ->
-        val candidate = candidates
-            .alignedMap(distanceSensor.distances()) { c, m -> Candidacy(c.strength, c.distance + m, c.leaderId) }
+        val candidate = with(distanceSensor) {
+            candidates.alignedMap(distances()) { c, m -> Candidacy(c.strength, c.distance + m, c.leaderId) }
+        }
         val field: Field<ID, Candidacy<ID>?> = candidate
             .mapWithId { id, c -> c.takeUnless { id == localId || it.distance > radius } }
         field.fold(local) { accumulator, newValue ->
