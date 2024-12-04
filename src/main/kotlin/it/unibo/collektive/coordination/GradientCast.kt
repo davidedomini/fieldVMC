@@ -13,7 +13,7 @@ import kotlin.Double.Companion.POSITIVE_INFINITY
  */
 fun <ID : Any> Aggregate<ID>.gradientCast(distanceSensor: DistanceSensor, source: Boolean, initial: Double): Double =
     share(initial) { field ->
-        val dist = distanceSensor.distances()
+        val dist = with(distanceSensor) { distances() }
         when (source) {
             true -> 0.0
             else -> {
