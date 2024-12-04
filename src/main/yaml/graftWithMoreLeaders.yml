@@ -80,7 +80,7 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LeaderSensorProperty
         parameters: [ *leaderRadius ]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
-        parameters: [ *maxResource ]
+        parameters: [*resourceLowerBound, *maxResource]
   - type: Rectangle
     parameters: [*initialNodes, *width, 0, *width, *height]
     programs:
