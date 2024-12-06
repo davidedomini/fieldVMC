@@ -7,6 +7,9 @@ import it.unibo.collektive.alchemist.device.sensors.*
 import it.unibo.collektive.coordination.findParent
 import it.unibo.collektive.field.Field.Companion.fold
 import it.unibo.collektive.lib.*
+import it.unibo.collektive.utils.Spawner
+import it.unibo.collektive.utils.Stability
+import it.unibo.collektive.utils.determineStability
 
 /**
  * Entrypoint of the VMC algorithm, using spawning and destroying after stability policies.

@@ -10,6 +10,9 @@ import it.unibo.collektive.lib.convergeSuccess
 import it.unibo.collektive.lib.findPotential
 import it.unibo.collektive.lib.obtainLocalSuccess
 import it.unibo.collektive.lib.spreadResource
+import it.unibo.collektive.utils.Spawner
+import it.unibo.collektive.utils.Stability
+import it.unibo.collektive.utils.determineStability
 
 /**
  * Entrypoint of the VMC algorithm, using spawning and destroying after stability policies.

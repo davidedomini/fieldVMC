@@ -1,4 +1,4 @@
-package it.unibo.collektive.vmc
+package it.unibo.collektive.utils
 
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import kotlin.math.PI
