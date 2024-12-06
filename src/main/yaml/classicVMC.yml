@@ -1,0 +1,118 @@
+variables:
+  radius: &leaderRadius
+    formula: System.getenv("RADIUS").toDouble() # 100.0
+    language: kotlin
+  maxResource: &maxResource
+    formula: System.getenv("MAX_RESOURCE").toDouble() #1000.0
+    language: kotlin
+  resourceLowerBound: &resourceLowerBound
+    formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
+    language: kotlin
+  maxChildren: &maxChildren
+    formula: System.getenv("MAX_CHILDREN").toInt() #5
+    language: kotlin
+  minSpanWait: &minSpanWait
+    formula: System.getenv("MIN_SPAN_WAIT").toDouble() #40.0 / 20.0
+    language: kotlin
+  maxSuccess: &maxSuccess
+    formula: System.getenv("MAX_RESOURCE").toDouble() #success same as resource
+    language: kotlin
+  gaussianShape: &gaussianShape
+    5
+  cloningRange: &cloningRange
+    formula: System.getenv("CLONING_RANGE").toInt() #5
+    language: kotlin
+  range: &range
+    formula: System.getenv("CLONING_RANGE").toInt() * 1.01
+    language: kotlin
+  seed: &seed
+    min:
+      formula: System.getenv("MIN").toDouble() #0
+      language: kotlin
+    max:
+      formula: System.getenv("MAX").toDouble() #20
+      language: kotlin
+    step: 1
+    default:
+      formula: System.getenv("DEFAULT").toDouble() #0
+      language: kotlin
+
+network-model:
+  type: ConnectWithinDistance
+  parameters: *range
+
+seeds:
+  scenario: *seed
+  simulation: *seed
+
+layers:
+  - type: BidimensionalGaussianLayer
+    parameters: [0, 25, *maxSuccess, *gaussianShape]
+    molecule: successSource
+
+incarnation: collektive
+
+_pool: &program
+  - time-distribution:
+      type: DiracComb
+      parameters: [ 0, 1 ]
+    type: Event
+    actions:
+      - type: Execute
+        parameters: [TODO]
+
+deployments:
+  - type: Point
+    parameters: [0, 0]
+    programs:
+      - *program
+    contents:
+      - molecule: leader
+        concentration: true
+    properties:
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
+        parameters: [ *maxSuccess ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LeaderSensorProperty
+        parameters: [ *leaderRadius ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
+        parameters: [*resourceLowerBound, *maxResource]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
+        parameters: [ *cloningRange, *maxChildren, *minSpanWait ]
+
+terminate:
+    type: AfterTime
+    parameters: 100
+
+export:
+  - type: CSVExporter
+    parameters:
+      fileNameRoot: "classic-vmc"
+      interval: 1.0
+      exportPath: "data"
+    data:
+      - time
+      - molecule: children-count
+        aggregators: [ min, max, mean, stdev ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: local-success
+        aggregators: [ min, max, mean, stdev ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: resource
+        aggregators: [ min, max, mean, stdev ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: success
+        aggregators: [ min, max, mean, stdev ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: local-resource
+        aggregators: [ min, max, mean, stdev ]
+        value-filter: onlyfinite
+        precision: 3
+
+# MIN=0 MAX=20 DEFAULT=0 RADIUS=100.0 MAX_RESOURCE=1000.0 RESOURCE_LOWER_BOUND=1.0 MAX_CHILDREN=5 MIN_SPAN_WAIT=40.0 CLONING_RANGE=5 ./gradlew runFixedLeaderGraphic
