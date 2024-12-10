@@ -26,10 +26,16 @@ variables:
     formula: System.getenv("CLONING_RANGE").toInt() * 1.01
     language: kotlin
 #    const and sensor-related rates
-  successSensorProductionRate: &successSensorProductionRate
+  sensorProductionRate: &sensorProductionRate
     formula: System.getenv("SUCCESS_SENSOR_PRODUCTION_RATE").toDouble() #0.1
     language: kotlin
   constProductionRate: &constProductionRate
+    formula: System.getenv("CONST_PRODUCTION_RATE").toDouble() #0.1
+    language: kotlin
+  sensorTransferRate: &sensorTransferRate
+    formula: System.getenv("SUCCESS_SENSOR_PRODUCTION_RATE").toDouble() #0.1
+    language: kotlin
+  constTransferRate: &constTransferRate
     formula: System.getenv("CONST_PRODUCTION_RATE").toDouble() #0.1
     language: kotlin
   seed: &seed
@@ -66,10 +72,12 @@ _pool: &program
       parameters: [ 0, 1 ]
     type: Event
     actions:
-      - type: Execute
+      - type: ExecutionClock
         parameters: [TODO]
-      - type: EvaluateLeafSuccess
-        parameters: [ *constProductionRate ]
+      - type: EvaluateSuccess
+        parameters: [ *constProductionRate, *constTransferRate ]
+      - type: UpdateConnectionWeight
+        parameters: [ TODO ]
 
 deployments:
   - type: Point
@@ -83,12 +91,16 @@ deployments:
         concentration: true
       - molecule: intermediate
         concentration: false
+      - molecule: clock
+        concentration: -1
+      - molecule: parent-weight
+        concentration: [0, 1]
     properties:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
-        parameters: [ *maxSuccess, *successSensorProductionRate ]
+        parameters: [ *maxSuccess, *sensorProductionRate, *sensorTransferRate ]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LeaderSensorProperty
         parameters: [ *leaderRadius ]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty

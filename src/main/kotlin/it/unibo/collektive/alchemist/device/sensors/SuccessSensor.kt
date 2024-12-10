@@ -3,6 +3,7 @@ package it.unibo.collektive.alchemist.device.sensors
 interface SuccessSensor {
 
     val sensorProductionRate: Double
+    val sensorTransferRate: Double
     /**
      * Set the [success] accumulated at the current node.
      */
