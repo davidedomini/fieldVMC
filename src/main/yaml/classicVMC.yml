@@ -25,6 +25,13 @@ variables:
   range: &range
     formula: System.getenv("CLONING_RANGE").toInt() * 1.01
     language: kotlin
+#    const and sensor-related rates
+  successSensorProductionRate: &successSensorProductionRate
+    formula: System.getenv("SUCCESS_SENSOR_PRODUCTION_RATE").toDouble() #0.1
+    language: kotlin
+  constProductionRate: &constProductionRate
+    formula: System.getenv("CONST_PRODUCTION_RATE").toDouble() #0.1
+    language: kotlin
   seed: &seed
     min:
       formula: System.getenv("MIN").toDouble() #0
@@ -36,6 +43,7 @@ variables:
     default:
       formula: System.getenv("DEFAULT").toDouble() #0
       language: kotlin
+
 
 network-model:
   type: ConnectWithinDistance
@@ -60,6 +68,8 @@ _pool: &program
     actions:
       - type: Execute
         parameters: [TODO]
+      - type: EvaluateLeafSuccess
+        parameters: [ *constProductionRate ]
 
 deployments:
   - type: Point
@@ -69,12 +79,16 @@ deployments:
     contents:
       - molecule: leader
         concentration: true
+      - molecule: leaf
+        concentration: true
+      - molecule: intermediate
+        concentration: false
     properties:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
-        parameters: [ *maxSuccess ]
+        parameters: [ *maxSuccess, *successSensorProductionRate ]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LeaderSensorProperty
         parameters: [ *leaderRadius ]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
