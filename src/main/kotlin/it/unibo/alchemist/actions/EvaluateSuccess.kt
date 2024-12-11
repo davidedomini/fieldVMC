@@ -26,7 +26,7 @@ class EvaluateSuccess<T, P : Position<P>>(
             successSensor.setLocalSuccess(localProduction)
             successSensor.setSuccess(localProduction)
         } else if(node.getConcentration(SimpleMolecule("intermediate")) == true) {
-            val childrenSuccessSum = environment.getNeighborhood(node).toMutableList().filter { n ->
+            val childrenSuccessSum = environment.getNeighborhood(node).filter { n ->
                 n.getConcentration(SimpleMolecule("parent")) == node.id
             }.sumOf { n ->
                 n.getConcentration(SimpleMolecule("success")) as Double
