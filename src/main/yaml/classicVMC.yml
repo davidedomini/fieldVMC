@@ -45,6 +45,8 @@ variables:
   vesselsAdaptationRate: &vesselsAdaptationRate
     formula: System.getenv("VESSELS_ADAPTATION_RATE").toDouble() #0.1
     language: kotlin
+  constConsumptionRate: &constConsumptionRate
+    formula: System.getenv("CONST_CONSUMPTION_RATE").toDouble() #0.1
 # seed
   seed: &seed
     min:
@@ -86,7 +88,7 @@ _pool: &program
       - type: UpdateConnectionWeight
         parameters: [ *constCompetitionRate, *vesselsAdaptationRate ]
       - type: ResourceDistribution
-        parameters: [ TODO ]
+        parameters: [ *constConsumptionRate ]
       - type: Spawn
         parameters: [ *cloningRange, *maxChildren ]
 

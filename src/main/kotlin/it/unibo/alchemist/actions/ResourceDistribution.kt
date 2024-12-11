@@ -7,18 +7,33 @@ import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.Position
 import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.actions.AbstractAction
+import it.unibo.alchemist.model.molecules.SimpleMolecule
 
 class ResourceDistribution<T, P : Position<P>>(
     private val environment: Environment<T, P>,
     private val node: Node<T>,
+    val constConsumptionRate: Double,
 ) : AbstractAction<T>(node) {
     override fun cloneAction(
         node: Node<T>,
         reaction: Reaction<T>,
-    ): Action<T> = ResourceDistribution(environment, node)
+    ): Action<T> = ResourceDistribution(environment, node, constConsumptionRate)
 
     override fun execute() {
-        TODO("Not yet implemented")
+        //todo check node's turn
+        val children = environment.getNeighborhood(node).filter { n ->
+            n.getConcentration(SimpleMolecule("parent")) == node.id
+        }
+        val weightSum = children.sumOf { n ->
+            n.getConcentration(SimpleMolecule("weight")) as Double
+        }
+        val availableResources = node.getConcentration(SimpleMolecule("resource")) as Double
+        children.forEach { n ->
+            val weight = n.getConcentration(SimpleMolecule("weight")) as Double
+            val resource = (availableResources - constConsumptionRate) * (weight / weightSum)
+            n.setConcentration(SimpleMolecule("resource"), resource as T)
+        }
+
     }
 
     override fun getContext(): Context? = Context.NEIGHBORHOOD
