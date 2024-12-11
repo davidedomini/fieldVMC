@@ -39,6 +39,7 @@ class Spawn<T, P : Position<P>>(
     override fun execute() {
         // todo check if its the node's turn
         // todo check if this node is the one with maximum resources
+        // todo check if it has enough resources to spawn
         val localPosition: Pair<Double, Double> = locationSensor.coordinates()
         val neighborPosition: List<Pair<Double, Double>> = locationSensor.surroundings()
         val relativePositions: List<Pair<Double, Double>> = neighborPosition.map { it - localPosition}
@@ -65,6 +66,7 @@ class Spawn<T, P : Position<P>>(
         cloneOfThis.setConcentration(SimpleMolecule("leader"), false as T)
         cloneOfThis.setConcentration(SimpleMolecule("parent"), node.id as T)
         cloneOfThis.setConcentration(SimpleMolecule("weight"), 1.0 as T)
+        cloneOfThis.setConcentration(SimpleMolecule("resource"), 0.0 as T)
         node.setConcentration(SimpleMolecule("leaf"), false as T)
         node.setConcentration(SimpleMolecule("intermediate"), true as T)
         val updatedPosition = environment.makePosition(*coordinate.toList().toTypedArray())

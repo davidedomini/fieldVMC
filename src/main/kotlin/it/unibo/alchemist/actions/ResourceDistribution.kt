@@ -8,19 +8,24 @@ import it.unibo.alchemist.model.Position
 import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.actions.AbstractAction
 import it.unibo.alchemist.model.molecules.SimpleMolecule
+import it.unibo.collektive.alchemist.device.sensors.ResourceSensor
 
 class ResourceDistribution<T, P : Position<P>>(
     private val environment: Environment<T, P>,
     private val node: Node<T>,
+    val resourceSensor: ResourceSensor,
     val constConsumptionRate: Double,
 ) : AbstractAction<T>(node) {
     override fun cloneAction(
         node: Node<T>,
         reaction: Reaction<T>,
-    ): Action<T> = ResourceDistribution(environment, node, constConsumptionRate)
+    ): Action<T> = ResourceDistribution(environment, node, resourceSensor, constConsumptionRate)
 
     override fun execute() {
         //todo check node's turn
+        if(node.getConcentration(SimpleMolecule("leader")) == true) {
+            node.setConcentration(SimpleMolecule("resource"), resourceSensor.maxResource as T)
+        }
         val children = environment.getNeighborhood(node).filter { n ->
             n.getConcentration(SimpleMolecule("parent")) == node.id
         }
@@ -33,9 +38,7 @@ class ResourceDistribution<T, P : Position<P>>(
             val resource = (availableResources - constConsumptionRate) * (weight / weightSum)
             n.setConcentration(SimpleMolecule("resource"), resource as T)
         }
-
     }
 
     override fun getContext(): Context? = Context.NEIGHBORHOOD
-
 }
