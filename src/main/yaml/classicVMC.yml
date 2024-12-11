@@ -1,7 +1,8 @@
+# MAX_RESOURCE=10.0 RESOURCE_LOWER_BOUND=1.0 MAX_CHILDREN=5 MIN_SPAN_WAIT=40.0 CLONING_RANGE=5 SENSOR_PRODUCTION_RATE=1.0 CONST_PRODUCTION_RATE=0.1 SENSOR_TRANSFER_RATE=0.5 CONST_TRANSFER_RATE=0.5 SENSOR_COMPETITION_RATE=0.1 CONST_COMPETITION_RATE=2 VESSELS_ADAPTATION_RATE=0.9 CONST_CONSUMPTION_RATE=0.1 MIN=0 MAX=20 DEFAULT=0 ./gradlew runClassicVMCGraphic
 variables:
 # simulation variables
   maxResource: &maxResource
-    formula: System.getenv("MAX_RESOURCE").toDouble() #1000.0
+    formula: System.getenv("MAX_RESOURCE").toDouble() #10
     language: kotlin
   resourceLowerBound: &resourceLowerBound
     formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
@@ -25,25 +26,25 @@ variables:
     language: kotlin
 # const and sensor-related rates
   sensorProductionRate: &sensorProductionRate
-    formula: System.getenv("SENSOR_PRODUCTION_RATE").toDouble() #0.1
+    formula: System.getenv("SENSOR_PRODUCTION_RATE").toDouble() #1.0
     language: kotlin
   constProductionRate: &constProductionRate
     formula: System.getenv("CONST_PRODUCTION_RATE").toDouble() #0.1
     language: kotlin
   sensorTransferRate: &sensorTransferRate
-    formula: System.getenv("SENSOR_TRANSFER_RATE").toDouble() #0.1
+    formula: System.getenv("SENSOR_TRANSFER_RATE").toDouble() #0.5
     language: kotlin
   constTransferRate: &constTransferRate
-    formula: System.getenv("CONST_TRANSFER_RATE").toDouble() #0.1
+    formula: System.getenv("CONST_TRANSFER_RATE").toDouble() #0.5
     language: kotlin
   sensorCompetitionRate: &sensorCompetitionRate
     formula: System.getenv("SENSOR_COMPETITION_RATE").toDouble() #0.1
     language: kotlin
   constCompetitionRate: &constCompetitionRate
-    formula: System.getenv("CONST_COMPETITION_RATE").toDouble() #0.1
+    formula: System.getenv("CONST_COMPETITION_RATE").toDouble() #2
     language: kotlin
   vesselsAdaptationRate: &vesselsAdaptationRate
-    formula: System.getenv("VESSELS_ADAPTATION_RATE").toDouble() #0.1
+    formula: System.getenv("VESSELS_ADAPTATION_RATE").toDouble() #0.9
     language: kotlin
   constConsumptionRate: &constConsumptionRate
     formula: System.getenv("CONST_CONSUMPTION_RATE").toDouble() #0.1
@@ -110,7 +111,10 @@ deployments:
         concentration: 0
       - molecule: weight
         concentration: 0
+      - molecule: resource
+        concentration: 0
     properties:
+      - type: it.unibo.collektive.alchemist.device.properties.impl.ClockProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
