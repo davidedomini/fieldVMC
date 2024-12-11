@@ -4,6 +4,7 @@ interface SuccessSensor {
 
     val sensorProductionRate: Double
     val sensorTransferRate: Double
+    val sensorCompetitionRate: Double
     /**
      * Set the [success] accumulated at the current node.
      */
