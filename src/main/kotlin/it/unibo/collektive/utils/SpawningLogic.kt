@@ -6,6 +6,9 @@ import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.LocationSensor
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.ResourceSensor
+import it.unibo.common.calculateAngle
+import it.unibo.common.minus
+import it.unibo.common.plus
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin

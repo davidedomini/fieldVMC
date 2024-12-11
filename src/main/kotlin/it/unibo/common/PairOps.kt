@@ -1,4 +1,4 @@
-package it.unibo.collektive.utils
+package it.unibo.common
 
 operator fun Pair<Double, Double>.minus(other: Pair<Double, Double>): Pair<Double, Double> =
     first - other.first to second - other.second
