@@ -71,7 +71,7 @@ seeds:
 
 layers:
   - type: BidimensionalGaussianLayer
-    parameters: [0, 25, *maxSuccess, *gaussianShape]
+    parameters: [0, 15, *maxSuccess, *gaussianShape]
     molecule: successSource
 
 incarnation: collektive
@@ -89,7 +89,7 @@ _pool: &program
       - type: ResourceDistribution
         parameters: [ *constConsumptionRate ]
       - type: Spawn
-        parameters: [ *cloningRange, *maxChildren ]
+        parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ]
 
 deployments:
   - type: Point
@@ -103,8 +103,6 @@ deployments:
         concentration: true
       - molecule: intermediate
         concentration: false
-      - molecule: clock
-        concentration: -1
       - molecule: parent
         concentration: 0
       - molecule: weight
@@ -112,7 +110,7 @@ deployments:
       - molecule: resource
         concentration: 0
     properties:
-      - type: it.unibo.collektive.alchemist.device.properties.impl.ClockProperty
+      - type: it.unibo.collektive.alchemist.device.properties.impl.ExecutionClockProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty

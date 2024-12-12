@@ -1,9 +1,11 @@
 package it.unibo.alchemist.actions
 
 import it.unibo.alchemist.model.*
+import it.unibo.alchemist.model.Node.Companion.asProperty
 import it.unibo.alchemist.model.actions.AbstractAction
 import it.unibo.alchemist.model.molecules.SimpleMolecule
-import it.unibo.collektive.alchemist.device.sensors.SuccessSensor
+import it.unibo.collektive.alchemist.device.properties.Clock
+import it.unibo.collektive.alchemist.device.properties.impl.ExecutionClockProperty
 import it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
 import kotlin.math.max
 import kotlin.math.min
@@ -11,6 +13,7 @@ import kotlin.math.min
 class EvaluateSuccess<T, P : Position<P>>(
     private val environment: Environment<T, P>,
     private val node: Node<T>,
+    val clock: ExecutionClockProperty<T, P>,
     private val successSensor: SuccessSensorProperty<T, P>,
     val constProductionRate: Double,
     val constTransferRate: Double,
@@ -20,10 +23,14 @@ class EvaluateSuccess<T, P : Position<P>>(
     override fun cloneAction(
         node: Node<T>,
         reaction: Reaction<T>,
-    ): Action<T> = EvaluateSuccess(environment, node, successSensor, constProductionRate, constTransferRate, sensorProductionRate, sensorTransferRate)
+    ): Action<T> = EvaluateSuccess(environment, node, clock, successSensor, constProductionRate, constTransferRate, sensorProductionRate, sensorTransferRate)
 
     override fun execute() {
         // todo add check on the turn of the node
+//        val clock = node.properties.first { it is ClockProperty<*, *> }
+//        val nbr = environment.getNeighborhood(node).map { n -> n.asProperty() }
+
+//        clock.currentClock()
         if(node.getConcentration(SimpleMolecule("leaf")) == true) {
             val localProduction = max(0.0, production())
             successSensor.setLocalSuccess(localProduction)

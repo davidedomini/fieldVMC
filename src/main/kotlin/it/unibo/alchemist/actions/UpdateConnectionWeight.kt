@@ -3,13 +3,14 @@ package it.unibo.alchemist.actions
 import it.unibo.alchemist.model.*
 import it.unibo.alchemist.model.actions.AbstractAction
 import it.unibo.alchemist.model.molecules.SimpleMolecule
-import it.unibo.collektive.alchemist.device.sensors.SuccessSensor
+import it.unibo.collektive.alchemist.device.properties.impl.ExecutionClockProperty
 import it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
 import kotlin.math.pow
 
 class UpdateConnectionWeight<T, P : Position<P>>(
     private val environment: Environment<T, P>,
     private val node: Node<T>,
+    val clock: ExecutionClockProperty<T, P>,
     val successSensor: SuccessSensorProperty<T, P>,
     val constCompetitionRate: Double,
     val sensorCompetitionRate: Double,
@@ -18,7 +19,7 @@ class UpdateConnectionWeight<T, P : Position<P>>(
     override fun cloneAction(
         node: Node<T>,
         reaction: Reaction<T>,
-    ): Action<T> = UpdateConnectionWeight(environment, node, successSensor, constCompetitionRate, sensorCompetitionRate, vesselsAdaptationRate)
+    ): Action<T> = UpdateConnectionWeight(environment, node, clock, successSensor, constCompetitionRate, sensorCompetitionRate, vesselsAdaptationRate)
 
     override fun execute() {
         // todo check on the clock of the node
