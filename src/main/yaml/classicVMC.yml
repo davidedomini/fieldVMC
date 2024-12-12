@@ -1,4 +1,4 @@
-# MAX_RESOURCE=10.0 RESOURCE_LOWER_BOUND=1.0 MAX_CHILDREN=5 MIN_SPAN_WAIT=40.0 CLONING_RANGE=5 SENSOR_PRODUCTION_RATE=1.0 CONST_PRODUCTION_RATE=0.1 SENSOR_TRANSFER_RATE=0.5 CONST_TRANSFER_RATE=0.5 SENSOR_COMPETITION_RATE=0.1 CONST_COMPETITION_RATE=2 VESSELS_ADAPTATION_RATE=0.9 CONST_CONSUMPTION_RATE=0.1 MIN=0 MAX=20 DEFAULT=0 ./gradlew runClassicVMCGraphic
+# MAX_RESOURCE=10.0 RESOURCE_LOWER_BOUND=1.0 MAX_CHILDREN=5 MIN_SPAN_WAIT=40.0 MAX_SUCCESS=1000.0 CLONING_RANGE=5 SENSOR_PRODUCTION_RATE=1.0 CONST_PRODUCTION_RATE=0.1 SENSOR_TRANSFER_RATE=0.5 CONST_TRANSFER_RATE=0.5 SENSOR_COMPETITION_RATE=0.1 CONST_COMPETITION_RATE=2 VESSELS_ADAPTATION_RATE=0.9 CONST_CONSUMPTION_RATE=0.1 MIN=0 MAX=20 DEFAULT=0 ./gradlew runClassicVMCGraphic
 variables:
 # simulation variables
   maxResource: &maxResource
@@ -14,7 +14,7 @@ variables:
     formula: System.getenv("MIN_SPAN_WAIT").toDouble() #40.0 / 20.0
     language: kotlin
   maxSuccess: &maxSuccess
-    formula: System.getenv("MAX_RESOURCE").toDouble() #success same as resource
+    formula: System.getenv("MAX_SUCCESS").toDouble() #1000.0
     language: kotlin
   gaussianShape: &gaussianShape
     5
@@ -82,8 +82,6 @@ _pool: &program
       parameters: [ 0, 1 ]
     type: Event
     actions:
-      - type: ExecutionClock
-        parameters: [TODO]
       - type: EvaluateSuccess
         parameters: [ *constProductionRate, *constTransferRate, *sensorProductionRate, *sensorTransferRate ]
       - type: UpdateConnectionWeight
@@ -125,9 +123,9 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
         parameters: [ *cloningRange, *maxChildren, *minSpanWait ]
 
-terminate:
-    type: AfterTime
-    parameters: 100
+#terminate:
+#    type: AfterTime
+#    parameters: 100
 
 export:
   - type: CSVExporter
