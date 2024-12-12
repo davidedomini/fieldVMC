@@ -4,21 +4,22 @@ import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.NodeProperty
 import it.unibo.alchemist.model.Position
-import it.unibo.collektive.alchemist.device.properties.Clock
 import it.unibo.collektive.alchemist.device.properties.ExecutionClock
+import it.unibo.collektive.alchemist.device.properties.Clock
 
-class ClockProperty<T, P : Position<P>>(
+class ExecutionClockProperty<T, P : Position<P>>(
     override val node: Node<T>,
     private val environment: Environment<T, P>,
-) : Clock, NodeProperty<T> {
-    private var clock: ExecutionClock = ExecutionClock()
+) : ExecutionClock, NodeProperty<T> {
+
+    private var clock: Clock = Clock()
 
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> =
-        ClockProperty(node, environment)
+        ExecutionClockProperty(node, environment)
 
-    override fun currentClock(): ExecutionClock = clock
+    override fun currentClock(): Clock = clock
 
-    override fun nextClock(): ExecutionClock {
+    override fun nextClock(): Clock {
         clock = clock.next()
         return clock
     }
