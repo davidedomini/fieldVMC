@@ -9,11 +9,12 @@ import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.actions.AbstractAction
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.collektive.alchemist.device.sensors.ResourceSensor
+import it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
 
 class ResourceDistribution<T, P : Position<P>>(
     private val environment: Environment<T, P>,
     private val node: Node<T>,
-    val resourceSensor: ResourceSensor,
+    val resourceSensor: ResourceSensorProperty<T, P>,
     val constConsumptionRate: Double,
 ) : AbstractAction<T>(node) {
     override fun cloneAction(

@@ -11,8 +11,9 @@ import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.actions.AbstractAction
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.alchemist.model.times.DoubleTime
-import it.unibo.collektive.alchemist.device.sensors.LocationSensor
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
+import it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
+import it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
 import it.unibo.collektive.utils.Stability
 import it.unibo.common.calculateAngle
 import it.unibo.common.minus
@@ -22,11 +23,11 @@ import kotlin.math.cos
 import kotlin.math.nextUp
 import kotlin.math.sin
 
-class Spawn<T, P : Position<P>>(
+class Spawn<T: Any, P : Position<P>>(
     private val environment: Environment<T, P>,
     private val node: Node<T>,
-    val randomGenerator: RandomGenerator,
-    val locationSensor: LocationSensor,
+    val randomGenerator: RandomNodeProperty<T>,
+    val locationSensor: LocationSensorProperty<T, P>,
     val cloningRange: Double,
     val maxChildren: Int,
 ) : AbstractAction<T>(node) {
@@ -40,18 +41,22 @@ class Spawn<T, P : Position<P>>(
         // todo check if its the node's turn
         // todo check if this node is the one with maximum resources
         // todo check if it has enough resources to spawn
-        val localPosition: Pair<Double, Double> = locationSensor.coordinates()
-        val neighborPosition: List<Pair<Double, Double>> = locationSensor.surroundings()
-        val relativePositions: List<Pair<Double, Double>> = neighborPosition.map { it - localPosition}
-        val angles = relativePositions.map { atan2(it.second, it.first) }.sorted()
-        val angle = calculateAngle(angles, randomGenerator, maxChildren)
-        when {
-            angle.isNaN() -> Stability(spawnStable = true, destroyStable = true)
-            else -> {
-                val x = cloningRange * cos(angle)
-                val y = cloningRange * sin(angle)
-                val absoluteDestination = localPosition + (x to y)
-                spawn(absoluteDestination)
+        val maxLeaf = environment.nodes.filter { n-> n.getConcentration(SimpleMolecule("leaf")) == true }
+            .maxBy { n -> n.getConcentration(SimpleMolecule("resource")) as Double}
+        if(maxLeaf.id == node.id) {
+            val localPosition: Pair<Double, Double> = locationSensor.coordinates()
+            val neighborPosition: List<Pair<Double, Double>> = locationSensor.surroundings()
+            val relativePositions: List<Pair<Double, Double>> = neighborPosition.map { it - localPosition}
+            val angles = relativePositions.map { atan2(it.second, it.first) }.sorted()
+            val angle = calculateAngle(angles, randomGenerator, maxChildren)
+            when {
+                angle.isNaN() -> Stability(spawnStable = true, destroyStable = true)
+                else -> {
+                    val x = cloningRange * cos(angle)
+                    val y = cloningRange * sin(angle)
+                    val absoluteDestination = localPosition + (x to y)
+                    spawn(absoluteDestination)
+                }
             }
         }
     }

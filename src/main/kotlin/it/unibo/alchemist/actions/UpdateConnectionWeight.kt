@@ -4,12 +4,13 @@ import it.unibo.alchemist.model.*
 import it.unibo.alchemist.model.actions.AbstractAction
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.collektive.alchemist.device.sensors.SuccessSensor
+import it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
 import kotlin.math.pow
 
 class UpdateConnectionWeight<T, P : Position<P>>(
     private val environment: Environment<T, P>,
     private val node: Node<T>,
-    val successSensor: SuccessSensor,
+    val successSensor: SuccessSensorProperty<T, P>,
     val constCompetitionRate: Double,
     val sensorCompetitionRate: Double,
     val vesselsAdaptationRate: Double,
