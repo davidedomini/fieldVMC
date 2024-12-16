@@ -84,10 +84,8 @@ _pool: &program
     actions:
       - type: EvaluateSuccess
         parameters: [ *constProductionRate, *constTransferRate, *sensorProductionRate, *sensorTransferRate ]
-      - type: UpdateConnectionWeight
-        parameters: [ *constCompetitionRate, *sensorCompetitionRate, *vesselsAdaptationRate ]
       - type: ResourceDistribution
-        parameters: [ *constConsumptionRate ]
+        parameters: [ *constConsumptionRate, *constCompetitionRate, *sensorCompetitionRate, *vesselsAdaptationRate  ]
       - type: Spawn
         parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ]
 
@@ -97,7 +95,7 @@ deployments:
     programs:
       - *program
     contents:
-      - molecule: leader
+      - molecule: root
         concentration: true
       - molecule: leaf
         concentration: true
@@ -106,9 +104,9 @@ deployments:
       - molecule: parent
         concentration: 0
       - molecule: weight
-        concentration: 0
+        concentration: 1
       - molecule: resource
-        concentration: 0
+        concentration: *maxResource
     properties:
       - type: it.unibo.collektive.alchemist.device.properties.impl.ExecutionClockProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
