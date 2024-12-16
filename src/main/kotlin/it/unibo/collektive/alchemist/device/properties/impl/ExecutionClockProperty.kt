@@ -4,14 +4,13 @@ import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.NodeProperty
 import it.unibo.alchemist.model.Position
-import it.unibo.collektive.alchemist.device.properties.ExecutionClock
 import it.unibo.collektive.alchemist.device.properties.Clock
+import it.unibo.collektive.alchemist.device.properties.ExecutionClock
 
 class ExecutionClockProperty<T, P : Position<P>>(
     override val node: Node<T>,
     private val environment: Environment<T, P>,
 ) : ExecutionClock, NodeProperty<T> {
-
     private var clock: Clock = Clock()
 
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> =
@@ -19,8 +18,7 @@ class ExecutionClockProperty<T, P : Position<P>>(
 
     override fun currentClock(): Clock = clock
 
-    override fun nextClock(): Clock {
+    override fun nextClock() {
         clock = clock.next()
-        return clock
     }
 }
