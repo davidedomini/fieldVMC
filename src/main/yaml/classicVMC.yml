@@ -104,7 +104,7 @@ deployments:
       - molecule: parent
         concentration: 0
       - molecule: weight
-        concentration: 1
+        concentration: 1.0
       - molecule: resource
         concentration: *maxResource
     properties:
