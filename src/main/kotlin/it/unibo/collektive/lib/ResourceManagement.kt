@@ -2,8 +2,6 @@ package it.unibo.collektive.lib
 
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
-import it.unibo.collektive.alchemist.device.sensors.LeaderSensor
-import it.unibo.collektive.alchemist.device.sensors.LocationSensor
 import it.unibo.collektive.alchemist.device.sensors.ResourceSensor
 import it.unibo.collektive.coordination.spreadToChildren
 
