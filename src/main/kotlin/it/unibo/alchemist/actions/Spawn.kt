@@ -23,7 +23,7 @@ import kotlin.math.cos
 import kotlin.math.nextUp
 import kotlin.math.sin
 
-class Spawn<T: Any, P : Position<P>>(
+class Spawn<T : Any, P : Position<P>>(
     private val environment: Environment<T, P>,
     private val node: Node<T>,
     val clock: ExecutionClockProperty<T, P>,
@@ -69,7 +69,7 @@ class Spawn<T: Any, P : Position<P>>(
     ): Double {
         val spawningTime = environment.simulation.time + DoubleTime(randomGenerator.nextRandomDouble(0.0.nextUp() .. 0.1))
         val cloneOfThis = node.cloneNode(spawningTime)
-        cloneOfThis.setConcentration(SimpleMolecule("leader"), false as T)
+        cloneOfThis.setConcentration(SimpleMolecule("root"), false as T)
         cloneOfThis.setConcentration(SimpleMolecule("parent"), node.id as T)
         cloneOfThis.setConcentration(SimpleMolecule("weight"), 1.0 as T)
         cloneOfThis.setConcentration(SimpleMolecule("resource"), 0.0 as T) // todo evaluate the amount of resources to give
