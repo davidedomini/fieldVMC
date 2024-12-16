@@ -69,6 +69,7 @@ class EvaluateSuccess<T, P : Position<P>>(
                         }
                     val success = max(0.0, min(1.0, transfer() * childrenSuccessSum))
                     successSensor.setSuccess(success)
+                    clock.nextClock()
                 }
             }
             else -> throw IllegalStateException("Node is in a inconsistent state")
