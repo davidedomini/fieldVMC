@@ -11,8 +11,6 @@ import it.unibo.alchemist.model.actions.AbstractAction
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.collektive.alchemist.device.properties.Clock
 import it.unibo.collektive.alchemist.device.properties.Cycle.BACKWARD
-import it.unibo.collektive.alchemist.device.properties.Cycle.FORWARD
-import it.unibo.collektive.alchemist.device.properties.Cycle.SPAWNED
 import it.unibo.collektive.alchemist.device.properties.impl.ExecutionClockProperty
 import it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
 import kotlin.math.max
@@ -45,17 +43,45 @@ class EvaluateSuccess<T, P : Position<P>>(
 
     override fun execute() {
         val allNodes = environment.nodes.map { it to it.asProperty<T, ExecutionClockProperty<T, P>>() }
-        val children = allNodes.filter { (node, _) -> node.getConcentration(SimpleMolecule("parent")) == node.id }
-        val current = clock.currentClock()
-        val nodesInBackward = allNodes.filter { (_, nodesClock) -> nodesClock.currentClock().action == BACKWARD }
-        when {
-            node.getConcentration(SimpleMolecule("leaf")) == true -> {
-                if ((current.action == FORWARD || current.action == SPAWNED) && nodesInBackward.isEmpty()) {
+        val children = allNodes
+            .filterNot { (n, _) -> n.id == node.id }
+            .filter { (n, _) -> n.getConcentration(SimpleMolecule("parent")) == node.id }
+        val nodesInBackward = allNodes.filter { (_, c) -> c.currentClock().action == BACKWARD }
+        val childrenInBackward = children.filter { (_, c) ->
+            c.currentClock() == Clock(time = clock.currentClock().time + 1, action = BACKWARD)
+        }
+        if (node.getConcentration(SimpleMolecule("leaf")) == true && nodesInBackward.isEmpty()) {
+            val localProduction = max(0.0, production())
+            successSensor.setLocalSuccess(localProduction)
+            successSensor.setSuccess(localProduction)
+            clock.nextClock()
+        } else if (children.isNotEmpty() && childrenInBackward.size == children.size) {
+            val childrenSuccessSum =
+                children.sumOf { (n, _) ->
+                    n.getConcentration(SimpleMolecule("success")) as Double
+                }
+            val success = max(0.0, min(1.0, transfer() * childrenSuccessSum))
+            successSensor.setSuccess(success)
+            clock.nextClock()
+        }
+    }
+
+    override fun getContext(): Context? = Context.NEIGHBORHOOD
+
+    private fun production(): Double = constProductionRate + sensorProductionRate * successSensor.getLocalSuccess()
+
+    private fun transfer(): Double = constTransferRate + sensorTransferRate * successSensor.getLocalSuccess()
+}
+
+/*
+when {
+            node.getConcentration(SimpleMolecule("leaf")) == true && nodesInBackward.isEmpty() -> {
+//                if ((current.action == FORWARD || current.action == SPAWNED) && nodesInBackward.isEmpty()) {
                     val localProduction = max(0.0, production())
                     successSensor.setLocalSuccess(localProduction)
                     successSensor.setSuccess(localProduction)
                     clock.nextClock()
-                }
+//                }
             }
             node.getConcentration(SimpleMolecule("intermediate")) == true || node.getConcentration(SimpleMolecule("root")) == true -> {
                 val childrenInBackward =
@@ -74,11 +100,4 @@ class EvaluateSuccess<T, P : Position<P>>(
             }
             else -> throw IllegalStateException("Node is in a inconsistent state")
         }
-    }
-
-    override fun getContext(): Context? = Context.NEIGHBORHOOD
-
-    private fun production(): Double = constProductionRate + sensorProductionRate * successSensor.getLocalSuccess()
-
-    private fun transfer(): Double = constTransferRate + sensorTransferRate * successSensor.getLocalSuccess()
-}
+ */
