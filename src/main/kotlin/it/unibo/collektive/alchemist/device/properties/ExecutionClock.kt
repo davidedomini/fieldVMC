@@ -17,6 +17,8 @@ interface ExecutionClock {
      * Set the next [Clock].
      */
     fun nextClock()
+
+    fun justSpawned(time: Int)
 }
 
 /**
@@ -33,7 +35,7 @@ data class Clock(
         when (action) {
             BACKWARD -> Clock(time, action.reverse())
             FORWARD -> Clock(time + 1, action.reverse())
-            SPAWNED -> Clock(time + 1, action.reverse())
+            SPAWNED -> Clock(time, action.reverse())
         }
 }
 
@@ -54,9 +56,7 @@ enum class Cycle {
     /**
      * The node has just been spawned.
      */
-    SPAWNED,
-
-    ;
+    SPAWNED;
 
     /**
      * Returns the opposite direction of the current one.
