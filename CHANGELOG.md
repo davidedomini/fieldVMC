@@ -1,3 +1,71 @@
+## [1.3.0](https://github.com/angelacorte/fieldVMC/compare/1.2.0...1.3.0) (2024-12-17)
+
+### Features
+
+* add (empty) actions for classic vmc ([40fafbc](https://github.com/angelacorte/fieldVMC/commit/40fafbc0d50768813fea220a0b94ee05b99953d4))
+* add `spawned` action in cycle ([6c30f5a](https://github.com/angelacorte/fieldVMC/commit/6c30f5aaa9d6ea5527f1184cd9cbe5165ba0ffd1))
+* add base yaml for classic vmc sim ([0e8217f](https://github.com/angelacorte/fieldVMC/commit/0e8217f68269ac21ed18312554eaed6b781dd330))
+* add check on execution clock ([ce62958](https://github.com/angelacorte/fieldVMC/commit/ce6295868b2fa28ff26c01f34abbd1ebc4022ae9))
+* add check on execution clock ([742af1a](https://github.com/angelacorte/fieldVMC/commit/742af1aa31510b3326ba3e4dcb35a92996de3bb4))
+* add class for custom linking rule ([0e207dc](https://github.com/angelacorte/fieldVMC/commit/0e207dcd7a58004b67314a526b481c9aba05fedc))
+* add entrypoint class for classic vmc ([bc80c3a](https://github.com/angelacorte/fieldVMC/commit/bc80c3a8b86b5ef6978a6387c8cb775f74cb48c1))
+* add execution clock ([1f7b85a](https://github.com/angelacorte/fieldVMC/commit/1f7b85ae67c9766558fab2002d0c7abc7ed355de))
+* add first implementation of clock property ([3dd1a54](https://github.com/angelacorte/fieldVMC/commit/3dd1a54b392f744b0bb48ec21034062bfadca3b6))
+* add main resource distribution logic ([acd3099](https://github.com/angelacorte/fieldVMC/commit/acd309901d43354467af400dc98447a57be56826))
+* add main spawn logic ([896c8b2](https://github.com/angelacorte/fieldVMC/commit/896c8b25effed231aeb1efa9042a56102ca90a49))
+* add main success sensing logic ([9c2bdc2](https://github.com/angelacorte/fieldVMC/commit/9c2bdc22f7cc90b04aa5205b50d92a6324a3dfc1))
+* add main weight update logic ([bdfae3f](https://github.com/angelacorte/fieldVMC/commit/bdfae3f0474c0a4087b20318d38626b1f3fec87c))
+* add parameters ([86a4299](https://github.com/angelacorte/fieldVMC/commit/86a42990f04fec16b87b3844eb17c66a5085dfcc))
+* add setup for just spawned nodes ([2720290](https://github.com/angelacorte/fieldVMC/commit/2720290f62bd8803149420f48d94a99fc117aa6b))
+* dockerize project ([420a0e6](https://github.com/angelacorte/fieldVMC/commit/420a0e698c5ad8064146fd32e5b17a96373f864a))
+* merge weight update and resource distribution ([432abe4](https://github.com/angelacorte/fieldVMC/commit/432abe41d0926c425502570e3e88db290fefc002))
+* parametrize simulation and retrieve data ([4a000f1](https://github.com/angelacorte/fieldVMC/commit/4a000f148ac22086d0a2795109e4092c366938f6))
+
+### Dependency updates
+
+* **deps:** update alpine docker tag to v3.21.0 ([#87](https://github.com/angelacorte/fieldVMC/issues/87)) ([ec4e9fd](https://github.com/angelacorte/fieldVMC/commit/ec4e9fdcdac8303a262da194b88dfb910c780ade))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.116 ([ebdf130](https://github.com/angelacorte/fieldVMC/commit/ebdf13021be31d92f583c9edd11125d54baf5624))
+* **deps:** update plugin kotlin-qa to v0.78.0 ([#82](https://github.com/angelacorte/fieldVMC/issues/82)) ([63a9221](https://github.com/angelacorte/fieldVMC/commit/63a9221be7439b4f1599af0a26688406045f418c))
+
+### Bug Fixes
+
+* add check on node id ([0ee247a](https://github.com/angelacorte/fieldVMC/commit/0ee247a17c0c6a896131edd6dc823bd93e5f554e))
+* add starting resource for leader ([d5a037d](https://github.com/angelacorte/fieldVMC/commit/d5a037df21f1453427108bd2a51da175a5abd6d9))
+* change action parameters into node properties ([0874080](https://github.com/angelacorte/fieldVMC/commit/0874080d305db47c0920f57280658985c80e3e6c))
+* change task to execute for checking simulations ([ee19902](https://github.com/angelacorte/fieldVMC/commit/ee19902a30e91175347038881bab7f1796fe49d6))
+* **ci:** change simulation check ([720243d](https://github.com/angelacorte/fieldVMC/commit/720243d0d98363879cfba0e714068ced12336df3))
+* **ci:** typo in docker command ([ce63719](https://github.com/angelacorte/fieldVMC/commit/ce6371978ec3c793e6a1000f3c95eeb96d6bb9be))
+* different input for success value ([732b0e6](https://github.com/angelacorte/fieldVMC/commit/732b0e639e9d91633d5b1dacb1f5ef8ed8c9eaef))
+* leader concentration into root ([b9b3012](https://github.com/angelacorte/fieldVMC/commit/b9b3012cd5dd6e7536a86bef5f967cb7ae44bf83))
+* missing increase clock ([70b54d0](https://github.com/angelacorte/fieldVMC/commit/70b54d0a3706baec9032d68ed749b524c08ae5c6))
+* move classic vmc-related constant into action ([1f096b8](https://github.com/angelacorte/fieldVMC/commit/1f096b8dd7723fef83d230b781f164a161cda006))
+* parametrized in docker ([26b3d64](https://github.com/angelacorte/fieldVMC/commit/26b3d642a633d9a45d2bbbba7d232b3d607293fa))
+* remove update weight action ([9528bef](https://github.com/angelacorte/fieldVMC/commit/9528bef44648c96d66027939c765b6af832457da))
+* remove useless call to mutable list ([588b86f](https://github.com/angelacorte/fieldVMC/commit/588b86ff03c16f673d0bdb1c1ca086ee03bfc185))
+* remove useless class ([6dd2e90](https://github.com/angelacorte/fieldVMC/commit/6dd2e90f85b86d33b8fc9c17369e368dddc1fa61))
+* remove useless entrypoint class ([957eab0](https://github.com/angelacorte/fieldVMC/commit/957eab0ccafae91b58ca767222dd53e8a2f359c8))
+* stick to classic VMC resources quantity ([218d4af](https://github.com/angelacorte/fieldVMC/commit/218d4afc05a750fef409542e6a479c3dbc045f44))
+* try to fix main logic ([0587276](https://github.com/angelacorte/fieldVMC/commit/0587276acc2d65bd1733a4569443e39c00e1352a))
+* weight should be double ([f3bfbc2](https://github.com/angelacorte/fieldVMC/commit/f3bfbc2dcb4d34ded081305160c3c5faaa7e2637))
+
+### General maintenance
+
+* add effects for classic vmc ([9b8bd8d](https://github.com/angelacorte/fieldVMC/commit/9b8bd8d9f71774bd8fd77ba30be46532270bc8e6))
+* add gitignore ([adb7b2a](https://github.com/angelacorte/fieldVMC/commit/adb7b2ac8831d16e4588871b851eba11886b5a95))
+* add preliminary data on fixed leader ([61c9bd1](https://github.com/angelacorte/fieldVMC/commit/61c9bd1c3a030dac11e49a37b229f3d43cb13539))
+* **ci:** add check simulations docker ([b1348e7](https://github.com/angelacorte/fieldVMC/commit/b1348e7a7a7b71c5b505f5f57896b39b09c8a791))
+* **release:** update gradle.properties .env versions to 1.2.0 [skip ci] ([c8e153e](https://github.com/angelacorte/fieldVMC/commit/c8e153e73042753d846be1af5f15ec6aa179ef16))
+* update gitingore ([f86d027](https://github.com/angelacorte/fieldVMC/commit/f86d027909bb2b149fcbcae48833cb238a3d173d))
+
+### Style improvements
+
+* remove unused imports ([dce8669](https://github.com/angelacorte/fieldVMC/commit/dce8669538be71034b8610b0574247a054518ce2))
+
+### Refactoring
+
+* move common functions into proper package ([88fb10a](https://github.com/angelacorte/fieldVMC/commit/88fb10acbd4103a7fb7eb5380f750cc0e0056ca0))
+* rename clock/execution clock ([77b0c01](https://github.com/angelacorte/fieldVMC/commit/77b0c01191b86abbac775d6a5bb3bbe2c2a02141))
+
 ## [1.2.0](https://github.com/angelacorte/fieldVMC/compare/1.1.10...1.2.0) (2024-12-04)
 
 ### Features
