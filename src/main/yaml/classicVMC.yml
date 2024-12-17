@@ -1,8 +1,8 @@
-# MAX_RESOURCE=10.0 RESOURCE_LOWER_BOUND=1.0 MAX_CHILDREN=5 MIN_SPAN_WAIT=40.0 MAX_SUCCESS=1000.0 CLONING_RANGE=5 SENSOR_PRODUCTION_RATE=1.0 CONST_PRODUCTION_RATE=0.1 SENSOR_TRANSFER_RATE=0.5 CONST_TRANSFER_RATE=0.5 SENSOR_COMPETITION_RATE=0.1 CONST_COMPETITION_RATE=2 VESSELS_ADAPTATION_RATE=0.9 CONST_CONSUMPTION_RATE=0.1 MIN=0 MAX=20 DEFAULT=0 ./gradlew runClassicVMCGraphic
+# MAX_RESOURCE=1.0 RESOURCE_LOWER_BOUND=1.0 MAX_CHILDREN=5 MIN_SPAN_WAIT=40.0 MAX_SUCCESS=1000.0 CLONING_RANGE=5 SENSOR_PRODUCTION_RATE=1.0 CONST_PRODUCTION_RATE=0.1 SENSOR_TRANSFER_RATE=0.5 CONST_TRANSFER_RATE=0.5 SENSOR_COMPETITION_RATE=0.1 CONST_COMPETITION_RATE=2 VESSELS_ADAPTATION_RATE=0.9 CONST_CONSUMPTION_RATE=0.1 MIN=0 MAX=20 DEFAULT=0 ./gradlew runClassicVMCGraphic
 variables:
 # simulation variables
   maxResource: &maxResource
-    formula: System.getenv("MAX_RESOURCE").toDouble() #10
+    formula: System.getenv("MAX_RESOURCE").toDouble() #1
     language: kotlin
   resourceLowerBound: &resourceLowerBound
     formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
@@ -103,8 +103,6 @@ deployments:
         concentration: false
       - molecule: parent
         concentration: 0
-      - molecule: weight
-        concentration: 1.0
       - molecule: resource
         concentration: *maxResource
     properties:
