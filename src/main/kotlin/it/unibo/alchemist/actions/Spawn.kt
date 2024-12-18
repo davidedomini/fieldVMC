@@ -33,14 +33,14 @@ class Spawn<T : Any, P : Position<P>>(
     private val randomGenerator: RandomNodeProperty<T>,
     private val locationSensor: LocationSensorProperty<T, P>,
     private val cloningRange: Double,
-    private val resourceLowerBound: Double,
+    private val resourceThreshold: Double,
     private val maxChildren: Int,
 ) : AbstractAction<T>(node) {
     override fun cloneAction(
         node: Node<T>,
         reaction: Reaction<T>,
     ): Action<T> =
-        Spawn(environment, node, clock, randomGenerator, locationSensor, cloningRange, resourceLowerBound, maxChildren)
+        Spawn(environment, node, clock, randomGenerator, locationSensor, cloningRange, resourceThreshold, maxChildren)
 
     override fun execute() {
         val allNodes = environment.nodes.map { it to it.asProperty<T, ExecutionClockProperty<T, P>>() }
@@ -48,22 +48,21 @@ class Spawn<T : Any, P : Position<P>>(
             .maxBy { (n, _) -> n.getConcentration(SimpleMolecule("resource")) as Double }
         val localResource = node.getConcentration(SimpleMolecule("resource")) as Double
         val current = clock.currentClock()
-        val nodesNotInForward = allNodes.filterNot { (_, s) -> s.currentClock() == Clock(time = current.time, action = FORWARD) }
-        if(nodesNotInForward.isEmpty() && maxLeaf.first.id == node.id && localResource >= resourceLowerBound) {
-            // todo spawn N children
+        val nodesNotInForward = allNodes.filterNot { (_, s) ->
+            s.currentClock() == Clock(time = current.time, action = FORWARD)
+        }
+        if(nodesNotInForward.isEmpty() && maxLeaf.first.id == node.id && localResource >= (resourceThreshold * 2) && current.time % 20 == 0) {
+            val spawnableChildren = (localResource / resourceThreshold).toInt().coerceIn(1, maxChildren)
             val localPosition: Pair<Double, Double> = locationSensor.coordinates()
             val neighborPosition: List<Pair<Double, Double>> = locationSensor.surroundings()
             val relativePositions: List<Pair<Double, Double>> = neighborPosition.map { it - localPosition}
             val angles = relativePositions.map { atan2(it.second, it.first) }.sorted()
-            val angle = calculateAngle(angles, randomGenerator, maxChildren)
-            when {
-                angle.isNaN() -> Stability(spawnStable = true, destroyStable = true)
-                else -> {
-                    val x = cloningRange * cos(angle)
-                    val y = cloningRange * sin(angle)
-                    val absoluteDestination = localPosition + (x to y)
-                    spawn(absoluteDestination)
-                }
+            repeat(spawnableChildren) {
+                val angle = calculateAngle(angles, randomGenerator, maxChildren)
+                val x = cloningRange * cos(angle)
+                val y = cloningRange * sin(angle)
+                val absoluteDestination = if( it % 2 == 0 ) localPosition + (x to y) else localPosition + (-x to y)
+                spawn(absoluteDestination)
             }
         }
     }
@@ -77,12 +76,11 @@ class Spawn<T : Any, P : Position<P>>(
         val cloneOfThis = node.cloneNode(spawningTime)
         cloneOfThis.setConcentration(SimpleMolecule("root"), false as T)
         cloneOfThis.setConcentration(SimpleMolecule("parent"), node.id as T)
-        cloneOfThis.setConcentration(SimpleMolecule("weight"), 1.0 as T)
-        cloneOfThis.setConcentration(SimpleMolecule("resource"), 0.0 as T) // todo evaluate the amount of resources to give
+        cloneOfThis.setConcentration(SimpleMolecule("weight"), 0.0 as T)
+        cloneOfThis.setConcentration(SimpleMolecule("resource"), 0.0 as T)
         cloneOfThis.properties.find { property -> property is ExecutionClockProperty<*, *> }?.let {
             (it as ExecutionClockProperty<T, P>).justSpawned(clock.currentClock().time + 1)
         }
-//        cloneOfThis.asProperty<T, ExecutionClockProperty<T, P>>().justSpawned()
         node.setConcentration(SimpleMolecule("leaf"), false as T)
         if(node.getConcentration(SimpleMolecule("root")) == false) {
             node.setConcentration(SimpleMolecule("intermediate"), true as T)
