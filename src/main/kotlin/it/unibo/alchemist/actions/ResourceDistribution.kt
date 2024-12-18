@@ -59,12 +59,12 @@ class ResourceDistribution<T, P : Position<P>>(
             val children = allNodes
                 .filterNot { (n, _) -> n.id == node.id } // remove self because root has self as parent
                 .filter { (n, _) -> n.getConcentration(SimpleMolecule("parent")) == node.id }
-            if(children.isNotEmpty()) { // should not a leaf
-                var availableResources = node.getConcentration(SimpleMolecule("resource")) as Double
-                if (parent == null) { // root adds resources
-                    availableResources = availableResources + resourceSensor.maxResource
-                    resourceSensor.setCurrentOverallResource(availableResources)
-                }
+            var availableResources = node.getConcentration(SimpleMolecule("resource")) as Double
+            if (parent == null) { // root adds resources
+                availableResources = availableResources + resourceSensor.maxResource
+                resourceSensor.setCurrentOverallResource(availableResources)
+            }
+            if(children.isNotEmpty()) { // should not be a leaf to evaluate weight and resource distribution
                 val remainingResources = availableResources - (availableResources * constConsumptionRate) // consume resources
 
                 val weightSum = children.sumOf { (n, _) ->
