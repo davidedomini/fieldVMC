@@ -10,7 +10,10 @@ import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.actions.AbstractAction
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.collektive.alchemist.device.properties.Clock
+import it.unibo.collektive.alchemist.device.properties.Cycle
 import it.unibo.collektive.alchemist.device.properties.Cycle.BACKWARD
+import it.unibo.collektive.alchemist.device.properties.Cycle.FORWARD
+import it.unibo.collektive.alchemist.device.properties.Cycle.SPAWNED
 import it.unibo.collektive.alchemist.device.properties.impl.ExecutionClockProperty
 import it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
 import kotlin.math.max
@@ -19,7 +22,7 @@ import kotlin.math.min
 class EvaluateSuccess<T, P : Position<P>>(
     private val environment: Environment<T, P>,
     private val node: Node<T>,
-    private val clock: ExecutionClockProperty<T, P>,
+//    private val clock: ExecutionClockProperty<T, P>,
     private val successSensor: SuccessSensorProperty<T, P>,
     private val constProductionRate: Double,
     private val constTransferRate: Double,
@@ -33,39 +36,50 @@ class EvaluateSuccess<T, P : Position<P>>(
         EvaluateSuccess(
             environment,
             node,
-            clock,
-            successSensor,
+//            node.asProperty<T, ExecutionClockProperty<T, P>>(),
+            node.asProperty<T, SuccessSensorProperty<T, P>>(),
             constProductionRate,
             constTransferRate,
             sensorProductionRate,
             sensorTransferRate,
         )
 
+//    init {
+//        require(clock.node == node) { "The node of the clock must be the same as the node of the action" }
+//    }
+
     override fun execute() {
         val allNodes = environment.nodes.map { it to it.asProperty<T, ExecutionClockProperty<T, P>>() }
+        val current = node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
         val children = allNodes
             .filterNot { (n, _) -> n.id == node.id }
             .filter { (n, _) -> n.getConcentration(SimpleMolecule("parent")) == node.id }
         val nodesInBackward = allNodes.filter { (_, c) -> c.currentClock().action == BACKWARD }
         val childrenInBackward = children.filter { (_, c) ->
-            c.currentClock() == Clock(time = clock.currentClock().time + 1, action = BACKWARD)
+            c.currentClock() == Clock(time = current.time + 1, action = BACKWARD)
         }
-        if (node.getConcentration(SimpleMolecule("leaf")) == true && nodesInBackward.isEmpty()) {
+        val parent = allNodes.firstOrNull { (n, _) -> node.getConcentration(SimpleMolecule("parent")) == n.id }
+        if ((parent == null || node.getConcentration(SimpleMolecule("leaf")) == true)
+            && (current.action == FORWARD || current.action == SPAWNED)
+            && (parent != null && parent.second.currentClock().action == FORWARD) ) {
             val localProduction = max(0.0, production())
             successSensor.setLocalSuccess(localProduction)
             successSensor.setSuccess(localProduction)
-            clock.nextClock()
-        } else if (children.isNotEmpty() && childrenInBackward.size == children.size) {
+            node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
+        } else if (children.isNotEmpty() && current.action == FORWARD && childrenInBackward.size == children.size) {
             val childrenSuccessSum =
                 children.sumOf { (n, _) ->
                     n.getConcentration(SimpleMolecule("success")) as Double
                 }
             val success = max(0.0, min(1.0, transfer() * childrenSuccessSum))
-            successSensor.setSuccess(success)
-            clock.nextClock()
+            node.setConcentration(SimpleMolecule("success"), success as T)
+            node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
         }
     }
 
+    private fun getClockFromProperty(node: Node<T>): Clock {
+        return node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
+    }
     override fun getContext(): Context? = Context.NEIGHBORHOOD
 
     private fun production(): Double = constProductionRate + sensorProductionRate * successSensor.getLocalSuccess()

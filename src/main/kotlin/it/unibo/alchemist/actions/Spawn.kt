@@ -17,6 +17,8 @@ import it.unibo.collektive.alchemist.device.properties.Cycle.FORWARD
 import it.unibo.collektive.alchemist.device.properties.impl.ExecutionClockProperty
 import it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
 import it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
+import it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
+import it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
 import it.unibo.collektive.utils.Stability
 import it.unibo.common.calculateAngle
 import it.unibo.common.minus
@@ -29,7 +31,7 @@ import kotlin.math.sin
 class Spawn<T : Any, P : Position<P>>(
     private val environment: Environment<T, P>,
     private val node: Node<T>,
-    private val clock: ExecutionClockProperty<T, P>,
+//    private val clock: ExecutionClockProperty<T, P>,
     private val randomGenerator: RandomNodeProperty<T>,
     private val locationSensor: LocationSensorProperty<T, P>,
     private val cloningRange: Double,
@@ -40,14 +42,23 @@ class Spawn<T : Any, P : Position<P>>(
         node: Node<T>,
         reaction: Reaction<T>,
     ): Action<T> =
-        Spawn(environment, node, clock, randomGenerator, locationSensor, cloningRange, resourceThreshold, maxChildren)
+        Spawn(
+            environment,
+            node,
+//            node.asProperty<T, ExecutionClockProperty<T, P>>(),
+            randomGenerator,
+            node.asProperty<T, LocationSensorProperty<T, P>>(),
+            cloningRange,
+            resourceThreshold,
+            maxChildren,
+        )
 
     override fun execute() {
         val allNodes = environment.nodes.map { it to it.asProperty<T, ExecutionClockProperty<T, P>>() }
         val maxLeaf = allNodes.filter { (n, _) -> n.getConcentration(SimpleMolecule("leaf")) == true }
             .maxBy { (n, _) -> n.getConcentration(SimpleMolecule("resource")) as Double }
         val localResource = node.getConcentration(SimpleMolecule("resource")) as Double
-        val current = clock.currentClock()
+        val current = node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
         val nodesNotInForward = allNodes.filterNot { (_, s) ->
             s.currentClock() == Clock(time = current.time, action = FORWARD)
         }
@@ -69,18 +80,19 @@ class Spawn<T : Any, P : Position<P>>(
 
     override fun getContext(): Context? = Context.NEIGHBORHOOD
 
-    private fun spawn(
-        coordinate: Pair<Double, Double>,
-    ) {
+    private fun spawn(coordinate: Pair<Double, Double>) {
         val spawningTime = environment.simulation.time + DoubleTime(randomGenerator.nextRandomDouble(0.0.nextUp() .. 0.1))
         val cloneOfThis = node.cloneNode(spawningTime)
+        val nodeClock = node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
         cloneOfThis.setConcentration(SimpleMolecule("root"), false as T)
+        cloneOfThis.setConcentration(SimpleMolecule("leaf"), true as T)
         cloneOfThis.setConcentration(SimpleMolecule("parent"), node.id as T)
         cloneOfThis.setConcentration(SimpleMolecule("weight"), 0.0 as T)
         cloneOfThis.setConcentration(SimpleMolecule("resource"), 0.0 as T)
-        cloneOfThis.properties.find { property -> property is ExecutionClockProperty<*, *> }?.let {
-            (it as ExecutionClockProperty<T, P>).justSpawned(clock.currentClock().time + 1)
-        }
+//        node.properties.forEachIndexed { i, p ->
+//            cloneOfThis.addProperty(p.cloneOnNewNode(cloneOfThis))
+//        }
+        cloneOfThis.asProperty<T, ExecutionClockProperty<T, P>>().justSpawned(nodeClock.time + 1)
         node.setConcentration(SimpleMolecule("leaf"), false as T)
         if(node.getConcentration(SimpleMolecule("root")) == false) {
             node.setConcentration(SimpleMolecule("intermediate"), true as T)

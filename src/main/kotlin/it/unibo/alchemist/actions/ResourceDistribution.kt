@@ -21,7 +21,7 @@ import kotlin.math.pow
 class ResourceDistribution<T, P : Position<P>>(
     private val environment: Environment<T, P>,
     private val node: Node<T>,
-    private val clock: ExecutionClockProperty<T, P>,
+//    private val clock: ExecutionClockProperty<T, P>,
     private val resourceSensor: ResourceSensorProperty<T, P>,
     private val successSensor: SuccessSensorProperty<T, P>,
     private val constConsumptionRate: Double,
@@ -36,9 +36,9 @@ class ResourceDistribution<T, P : Position<P>>(
         ResourceDistribution(
             environment,
             node,
-            clock,
-            resourceSensor,
-            successSensor,
+//            node.asProperty<T, ExecutionClockProperty<T, P>>(),
+            node.asProperty<T, ResourceSensorProperty<T, P>>(),
+            node.asProperty<T, SuccessSensorProperty<T, P>>(),
             constConsumptionRate,
             constCompetitionRate,
             sensorCompetitionRate,
@@ -47,7 +47,7 @@ class ResourceDistribution<T, P : Position<P>>(
 
     override fun execute() {
         val allNodes = environment.nodes.map { it to it.asProperty<T, ExecutionClockProperty<T, P>>() }
-        val current = clock.currentClock()
+        val current = node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
         val parent = allNodes
             .filterNot { (n, _) -> n.id == node.id }
             .firstOrNull { (n, _) -> n.id == node.getConcentration(SimpleMolecule("parent")) } // if null then it's a root
@@ -83,7 +83,7 @@ class ResourceDistribution<T, P : Position<P>>(
                     n.setConcentration(SimpleMolecule("resource"), resource as T)
                 }
             }
-            clock.nextClock()
+            node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
         }
     }
 
