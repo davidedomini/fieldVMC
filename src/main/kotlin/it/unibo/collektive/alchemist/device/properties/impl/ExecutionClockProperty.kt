@@ -13,22 +13,16 @@ class ExecutionClockProperty<T, P : Position<P>>(
     override val node: Node<T>,
     private val environment: Environment<T, P>,
 ) : ExecutionClock, NodeProperty<T> {
-    private lateinit var clock: Clock //= Clock().also { node.setConcentration(SimpleMolecule("clock"), it as T) }
-
-    private fun setup() {
-        clock = Clock()
-    }
+    private var clock: Clock = Clock().also { node.setConcentration(SimpleMolecule("clock"), it as T) }
 
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> =
         ExecutionClockProperty(node, environment)
 
     override fun currentClock(): Clock {
-        if (!::clock.isInitialized) setup()
         return clock.also { node.setConcentration(SimpleMolecule("clock"), it as T) }
     }
 
     override fun nextClock() {
-        if (!::clock.isInitialized) setup()
         clock = clock.next()
             .also { node.setConcentration(SimpleMolecule("clock"), it as T) }
     }
@@ -37,4 +31,6 @@ class ExecutionClockProperty<T, P : Position<P>>(
         clock = Clock(time = time, action = SPAWNED)
             .also { node.setConcentration(SimpleMolecule("clock"), it as T) }
     }
+
+    override fun toString(): String = clock.toString()
 }
