@@ -1,3 +1,38 @@
+## [1.4.0](https://github.com/angelacorte/fieldVMC/compare/1.3.0...1.4.0) (2024-12-18)
+
+### Features
+
+* spawn more than one node ([e6ef6c7](https://github.com/angelacorte/fieldVMC/commit/e6ef6c7372cbac7f8664782b38cfe62ea8ae1cee))
+
+### Dependency updates
+
+* **deps:** update alchemist to v36.0.9 ([398b82c](https://github.com/angelacorte/fieldVMC/commit/398b82c7625f22b11cc81229253d74220c0833ac))
+* **deps:** update dependency matplotlib to v3.10.0 ([c1af005](https://github.com/angelacorte/fieldVMC/commit/c1af005c2efac4f7dc44f9f4412bca09dc19c0e0))
+* **deps:** update dependency matplotlib to v3.9.4 ([a3c695e](https://github.com/angelacorte/fieldVMC/commit/a3c695e5028822f30c2e1084518b7486221632ee))
+* **deps:** update node.js to 22.12 ([f6ef210](https://github.com/angelacorte/fieldVMC/commit/f6ef210782223275e03c137b1962aab49c7c02b1))
+* **deps:** update plugin com.gradle.enterprise to v3.19 ([a1ade25](https://github.com/angelacorte/fieldVMC/commit/a1ade2517a52f9325df39c81c951ee0810d7414a))
+* **deps:** update python docker tag to v3.13.1 ([abda2d1](https://github.com/angelacorte/fieldVMC/commit/abda2d1486c71eb0e3f94de29906c3f25b1e35c7))
+
+### Bug Fixes
+
+* always add resources to root ([3701271](https://github.com/angelacorte/fieldVMC/commit/37012717567cb1ec8c680e3fb4d4ea310e3af9c7))
+
+### Build and continuous integration
+
+* **deps:** update actions/upload-artifact action to v4.5.0 ([f1cc5a5](https://github.com/angelacorte/fieldVMC/commit/f1cc5a5baf055412e01620132ba15f6fc0d64f36))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.25 ([f652bbf](https://github.com/angelacorte/fieldVMC/commit/f652bbf67b4b55d249db6fefe3be96a8165547b2))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.26 ([b9e51ee](https://github.com/angelacorte/fieldVMC/commit/b9e51eeddd2ec5560e6a7618991aa78285554bcc))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.27 ([83085c9](https://github.com/angelacorte/fieldVMC/commit/83085c915f74f19f1543aa06db93fdf41c94ccb2))
+
+### General maintenance
+
+* change position of success layer ([b255e39](https://github.com/angelacorte/fieldVMC/commit/b255e39e5473a7a11412e2e569caac6b1269dfff))
+* **release:** update gradle.properties .env versions to 1.3.0 [skip ci] ([b0cfa92](https://github.com/angelacorte/fieldVMC/commit/b0cfa921d117a8acbf7dabe453bac80a42b17326))
+
+### Refactoring
+
+* remove lateinit clock ([68d6039](https://github.com/angelacorte/fieldVMC/commit/68d6039d191aba2d021f3d6c5967cf2e8e1f83e4))
+
 ## [1.3.0](https://github.com/angelacorte/fieldVMC/compare/1.2.0...1.3.0) (2024-12-17)
 
 ### Features
