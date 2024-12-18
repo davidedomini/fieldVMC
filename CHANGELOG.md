@@ -1,3 +1,13 @@
+## [1.4.1](https://github.com/angelacorte/fieldVMC/compare/1.4.0...1.4.1) (2024-12-18)
+
+### Bug Fixes
+
+* nodes in deadlock for success evaluation - still work in progress ([8ced19b](https://github.com/angelacorte/fieldVMC/commit/8ced19bd539139dba0b8a8bbe8a9806656d3d81f))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.4.0 [skip ci] ([0d91ea0](https://github.com/angelacorte/fieldVMC/commit/0d91ea02c4e2ea1108f9c84212f770b0c91e77e1))
+
 ## [1.4.0](https://github.com/angelacorte/fieldVMC/compare/1.3.0...1.4.0) (2024-12-18)
 
 ### Features
