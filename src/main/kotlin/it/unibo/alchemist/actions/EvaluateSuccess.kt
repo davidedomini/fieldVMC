@@ -10,7 +10,6 @@ import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.actions.AbstractAction
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.collektive.alchemist.device.properties.Clock
-import it.unibo.collektive.alchemist.device.properties.Cycle
 import it.unibo.collektive.alchemist.device.properties.Cycle.BACKWARD
 import it.unibo.collektive.alchemist.device.properties.Cycle.FORWARD
 import it.unibo.collektive.alchemist.device.properties.Cycle.SPAWNED
@@ -54,19 +53,19 @@ class EvaluateSuccess<T, P : Position<P>>(
         val children = allNodes
             .filterNot { (n, _) -> n.id == node.id }
             .filter { (n, _) -> n.getConcentration(SimpleMolecule("parent")) == node.id }
-        val nodesInBackward = allNodes.filter { (_, c) -> c.currentClock().action == BACKWARD }
-        val childrenInBackward = children.filter { (_, c) ->
+        val childrenNotInBackward = children.filterNot { (_, c) ->
             c.currentClock() == Clock(time = current.time + 1, action = BACKWARD)
         }
-        val parent = allNodes.firstOrNull { (n, _) -> node.getConcentration(SimpleMolecule("parent")) == n.id }
-        if ((parent == null || node.getConcentration(SimpleMolecule("leaf")) == true)
-            && (current.action == FORWARD || current.action == SPAWNED)
-            && (parent != null && parent.second.currentClock().action == FORWARD) ) {
+        val parent = allNodes
+            .filterNot { (n, _) -> n.id == node.id }
+            .firstOrNull { (n, _) -> node.getConcentration(SimpleMolecule("parent")) == n.id }
+        if( (parent == null && node.getConcentration(SimpleMolecule("leaf")) == true) // if root is a leaf
+            || (node.getConcentration(SimpleMolecule("leaf")) == true && (current.action == SPAWNED || current.action == FORWARD)) ){ // if the leaf is in forward or just has spawned
             val localProduction = max(0.0, production())
             successSensor.setLocalSuccess(localProduction)
             successSensor.setSuccess(localProduction)
             node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
-        } else if (children.isNotEmpty() && current.action == FORWARD && childrenInBackward.size == children.size) {
+        } else if (children.isNotEmpty() && current.action == FORWARD && childrenNotInBackward.isEmpty()) { // if it has children and it is in forward and its children are in backward
             val childrenSuccessSum =
                 children.sumOf { (n, _) ->
                     n.getConcentration(SimpleMolecule("success")) as Double
@@ -86,6 +85,12 @@ class EvaluateSuccess<T, P : Position<P>>(
 
     private fun transfer(): Double = constTransferRate + sensorTransferRate * successSensor.getLocalSuccess()
 }
+
+/*
+//        if ((parent == null || node.getConcentration(SimpleMolecule("leaf")) == true)
+//            && (current.action == FORWARD || current.action == SPAWNED)
+//            && (parent != null && parent.second.currentClock().action == FORWARD) ) {
+ */
 
 /*
 when {
