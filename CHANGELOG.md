@@ -1,3 +1,22 @@
+## [1.4.2](https://github.com/angelacorte/fieldVMC/compare/1.4.1...1.4.2) (2024-12-19)
+
+### Dependency updates
+
+* **deps:** update alchemist to v36.0.10 ([c1d684c](https://github.com/angelacorte/fieldVMC/commit/c1d684cde529cf35614afc1e164d0a0c557fd335))
+* **deps:** update alchemist to v36.0.11 ([d1ccc8c](https://github.com/angelacorte/fieldVMC/commit/d1ccc8c79277c52608412a79efd6b125ebfdbce5))
+
+### Bug Fixes
+
+* update success sensing cases ([27e1fb7](https://github.com/angelacorte/fieldVMC/commit/27e1fb7c1002210173af41a4570c029eb11d6f08))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.28 ([12a4170](https://github.com/angelacorte/fieldVMC/commit/12a41708c73cc2fc53ea1ad0f01143feb25e7d5b))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.4.1 [skip ci] ([5316310](https://github.com/angelacorte/fieldVMC/commit/531631041de7a216ecf28197fc8c46ffddbe547e))
+
 ## [1.4.1](https://github.com/angelacorte/fieldVMC/compare/1.4.0...1.4.1) (2024-12-18)
 
 ### Bug Fixes
