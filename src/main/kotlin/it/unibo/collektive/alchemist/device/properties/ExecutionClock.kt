@@ -2,7 +2,8 @@ package it.unibo.collektive.alchemist.device.properties
 
 import it.unibo.collektive.alchemist.device.properties.Cycle.BACKWARD
 import it.unibo.collektive.alchemist.device.properties.Cycle.FORWARD
-import it.unibo.collektive.alchemist.device.properties.Cycle.SPAWNED
+import it.unibo.collektive.alchemist.device.properties.Cycle.MAX
+import it.unibo.collektive.alchemist.device.properties.Cycle.SPAWNING
 
 /**
  * Evaluates the current and next [Clock] of a node.
@@ -19,6 +20,8 @@ interface ExecutionClock {
     fun nextClock()
 
     fun justSpawned(time: Int)
+
+    fun cannotSpawn()
 }
 
 /**
@@ -26,7 +29,7 @@ interface ExecutionClock {
  */
 data class Clock(
     val time: Int = 0,
-    val action: Cycle = SPAWNED,
+    val action: Cycle = SPAWNING,
 ) {
     /**
      * Evaluates and returns the next [Clock].
@@ -35,7 +38,8 @@ data class Clock(
         when (action) {
             BACKWARD -> Clock(time, action.reverse())
             FORWARD -> Clock(time + 1, action.reverse())
-            SPAWNED -> Clock(time, action.reverse())
+            SPAWNING -> Clock(time, action.reverse())
+            MAX -> Clock(time + 1, action.reverse())
         }
 }
 
@@ -54,9 +58,14 @@ enum class Cycle {
     FORWARD,
 
     /**
+     *
+     */
+    MAX,
+
+    /**
      * The node has just been spawned.
      */
-    SPAWNED;
+    SPAWNING;
 
     /**
      * Returns the opposite direction of the current one.
@@ -65,6 +74,7 @@ enum class Cycle {
         when (this) {
             FORWARD -> BACKWARD
             BACKWARD -> FORWARD
-            SPAWNED -> BACKWARD
+            SPAWNING -> BACKWARD
+            MAX -> SPAWNING
         }
 }
