@@ -1,3 +1,14 @@
+## [1.4.3](https://github.com/angelacorte/fieldVMC/compare/1.4.2...1.4.3) (2024-12-20)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v11.1.3 ([f9446e7](https://github.com/angelacorte/fieldVMC/commit/f9446e731e20766d27e4769753ab0184cfdca657))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.117 ([1867da6](https://github.com/angelacorte/fieldVMC/commit/1867da6922c4de3f40a5c8a3f9e8ab588f4de012))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.4.2 [skip ci] ([b2d119d](https://github.com/angelacorte/fieldVMC/commit/b2d119d635770e3560322bb770f723e32bb10fc8))
+
 ## [1.4.2](https://github.com/angelacorte/fieldVMC/compare/1.4.1...1.4.2) (2024-12-19)
 
 ### Dependency updates
