@@ -86,6 +86,8 @@ _pool: &program
         parameters: [ *constProductionRate, *constTransferRate, *sensorProductionRate, *sensorTransferRate ]
       - type: ResourceDistribution
         parameters: [ *constConsumptionRate, *constCompetitionRate, *sensorCompetitionRate, *vesselsAdaptationRate  ]
+      - type: FindMax
+        parameters: []
       - type: Spawn
         parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ]
 

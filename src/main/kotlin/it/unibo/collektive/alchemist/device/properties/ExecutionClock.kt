@@ -20,8 +20,6 @@ interface ExecutionClock {
     fun nextClock()
 
     fun justSpawned(time: Int)
-
-    fun cannotSpawn()
 }
 
 /**
@@ -36,10 +34,10 @@ data class Clock(
      */
     fun next(): Clock =
         when (action) {
-            BACKWARD -> Clock(time, action.reverse())
-            FORWARD -> Clock(time + 1, action.reverse())
-            SPAWNING -> Clock(time, action.reverse())
-            MAX -> Clock(time + 1, action.reverse())
+            BACKWARD -> Clock(time, action.nextStep())
+            FORWARD -> Clock(time, action.nextStep())
+            SPAWNING -> Clock(time, action.nextStep())
+            MAX -> Clock(time + 1, action.nextStep())
         }
 }
 
@@ -58,7 +56,7 @@ enum class Cycle {
     FORWARD,
 
     /**
-     *
+     * The phase to decide which node has the maximum resource.
      */
     MAX,
 
@@ -70,11 +68,11 @@ enum class Cycle {
     /**
      * Returns the opposite direction of the current one.
      */
-    fun reverse(): Cycle =
+    fun nextStep(): Cycle =
         when (this) {
-            FORWARD -> BACKWARD
-            BACKWARD -> FORWARD
             SPAWNING -> BACKWARD
+            BACKWARD -> FORWARD
+            FORWARD -> MAX
             MAX -> SPAWNING
         }
 }

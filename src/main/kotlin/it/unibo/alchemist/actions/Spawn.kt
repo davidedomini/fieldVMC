@@ -10,8 +10,7 @@ import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.actions.AbstractAction
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.alchemist.model.times.DoubleTime
-import it.unibo.collektive.alchemist.device.properties.Clock
-import it.unibo.collektive.alchemist.device.properties.Cycle.FORWARD
+import it.unibo.collektive.alchemist.device.properties.Cycle.MAX
 import it.unibo.collektive.alchemist.device.properties.Cycle.SPAWNING
 import it.unibo.collektive.alchemist.device.properties.impl.ExecutionClockProperty
 import it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
@@ -48,33 +47,46 @@ class Spawn<T : Any, P : Position<P>>(
         )
 
     override fun execute() {
-        val allNodes = environment.nodes.map { it to it.asProperty<T, ExecutionClockProperty<T, P>>() }
-        val maxLeaf = allNodes.filter { (n, _) -> n.getConcentration(SimpleMolecule("leaf")) == true }
-            .maxBy { (n, _) -> n.getConcentration(SimpleMolecule("resource")) as Double }
-        val localResource = node.getConcentration(SimpleMolecule("resource")) as Double
+        val neighbors = environment.getNeighborhood(node)
+            .filterNot { n -> n.id == node.id }
+            .map { it to it.asProperty<T, ExecutionClockProperty<T, P>>() }
         val current = node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
-        val nodesNotInForward = allNodes.filterNot { (_, s) ->
-            s.currentClock() == Clock(time = current.time, action = FORWARD)
-        }
-        val isLeaf = allNodes
-            .filter { (n, _) -> n.id == node.id }
-            .none { (n, _) -> n.getConcentration(SimpleMolecule("parent")) == node.id }
-        val SPAWNING = allNodes.filter { (_, c) -> c.currentClock().action == SPAWNING }
-        if(nodesNotInForward.isEmpty() && maxLeaf.first.id == node.id && localResource >= (resourceThreshold * 2)) { // && current.time % 21 == 0
-            val spawnableChildren = (localResource / resourceThreshold).toInt().coerceIn(1, maxChildren)
-            val localPosition: Pair<Double, Double> = locationSensor.coordinates()
-            val neighborPosition: List<Pair<Double, Double>> = locationSensor.surroundings()
-            val relativePositions: List<Pair<Double, Double>> = neighborPosition.map { it - localPosition}
-            val angles = relativePositions.map { atan2(it.second, it.first) }.sorted()
-            repeat(spawnableChildren) {
-                val angle = calculateAngle(angles, randomGenerator, maxChildren)
-                val x = cloningRange * cos(angle)
-                val y = cloningRange * sin(angle)
-                val absoluteDestination = if( it % 2 == 0 ) localPosition + (x to y) else localPosition + (-x to y)
-                spawn(absoluteDestination)
+        val parent = neighbors.firstOrNull { (n, _) -> node.getConcentration(SimpleMolecule("parent")) == n.id } // if null then it is root
+        val children = neighbors.filter { (n, _) -> n.getConcentration(SimpleMolecule("parent")) == node.id }
+
+        if ((children.isNotEmpty() && current.action == MAX && parent != null && parent.second.currentClock().action == SPAWNING)) { // intermediate node
+            node.setConcentration(SimpleMolecule("max-leaf-id"), parent!!.first.getConcentration(SimpleMolecule("max-leaf-id")))
+            node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
+        } else if (children.isNotEmpty() && current.action == MAX && parent == null) { // root with children
+            // max id already set in find max
+            node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
+        } else if (children.isEmpty() && current.action == MAX && parent == null) { // root as leaf
+            // should spawn
+            val localResource = node.getConcentration(SimpleMolecule("resource")) as Double
+            spawnChildren(localResource)
+            node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
+        } else if (parent != null && parent.second.currentClock().action == SPAWNING && children.isEmpty()) { // i am leaf
+            if (parent.first.getConcentration(SimpleMolecule("max-leaf-id")) == node.id) { // I'm the max
+                // i should spawn
+                val localResource = node.getConcentration(SimpleMolecule("resource")) as Double
+                spawnChildren(localResource)
             }
-        } else if (isLeaf && SPAWNING.isEmpty()) {
-            node.asProperty<T, ExecutionClockProperty<T, P>>().cannotSpawn()
+            node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
+        }
+    }
+
+    private fun spawnChildren(localResource: Double) {
+        val spawnableChildren = (localResource / resourceThreshold).toInt().coerceIn(1, maxChildren)
+        val localPosition: Pair<Double, Double> = locationSensor.coordinates()
+        val neighborPosition: List<Pair<Double, Double>> = locationSensor.surroundings()
+        val relativePositions: List<Pair<Double, Double>> = neighborPosition.map { it - localPosition }
+        val angles = relativePositions.map { atan2(it.second, it.first) }.sorted()
+        repeat(spawnableChildren) {
+            val angle = calculateAngle(angles, randomGenerator, maxChildren)
+            val x = cloningRange * cos(angle)
+            val y = cloningRange * sin(angle)
+            val absoluteDestination = if (it % 2 == 0) localPosition + (x to y) else localPosition + (-x to y)
+            spawn(absoluteDestination)
         }
     }
 

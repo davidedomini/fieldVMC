@@ -12,7 +12,6 @@ import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.collektive.alchemist.device.properties.Clock
 import it.unibo.collektive.alchemist.device.properties.Cycle.BACKWARD
 import it.unibo.collektive.alchemist.device.properties.Cycle.FORWARD
-import it.unibo.collektive.alchemist.device.properties.Cycle.SPAWNING
 import it.unibo.collektive.alchemist.device.properties.impl.ExecutionClockProperty
 import it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
 import it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
@@ -44,27 +43,22 @@ class ResourceDistribution<T, P : Position<P>>(
         )
 
     override fun execute() {
-        val allNodes = environment.nodes.map { it to it.asProperty<T, ExecutionClockProperty<T, P>>() }
+        val neighbors = environment.getNeighborhood(node)
+            .filterNot { n -> n.id == node.id }
+            .map { it to it.asProperty<T, ExecutionClockProperty<T, P>>() }
         val current = node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
-        val parent = allNodes
-            .filterNot { (n, _) -> n.id == node.id }
-            .firstOrNull { (n, _) -> n.id == node.getConcentration(SimpleMolecule("parent")) } // if null then it's a root
-        val nodesNotInBackward = allNodes
-            .filterNot { (_, nodesClock) -> nodesClock.currentClock().action == BACKWARD || nodesClock.currentClock().action == SPAWNING }
-            .filterNot { (n, _) -> n.id == node.id }
-        if ((parent == null && nodesNotInBackward.isEmpty()) || // starting from root
-            current.action != FORWARD && parent != null && parent.second.currentClock() == Clock(time = current.time, action = FORWARD) ) { // intermediate node or leaf checking if parent is in forward
-            val children = allNodes
-                .filterNot { (n, _) -> n.id == node.id } // remove self because root has self as parent
-                .filter { (n, _) -> n.getConcentration(SimpleMolecule("parent")) == node.id }
+        val parent = neighbors.firstOrNull { (n, _) -> node.getConcentration(SimpleMolecule("parent")) == n.id } // if null then it is root
+        val children = neighbors.filter { (n, _) -> n.getConcentration(SimpleMolecule("parent")) == node.id }
+        val childrenNotInBackward = children.filterNot { (_, c) -> c.currentClock() == Clock(time = current.time, action = BACKWARD) }
+        if( (parent == null && childrenNotInBackward.isEmpty()) ||
+            (current.action == BACKWARD && parent != null && parent.second.currentClock() == Clock(current.time, FORWARD)) ) {
             var availableResources = node.getConcentration(SimpleMolecule("resource")) as Double
             if (parent == null) { // root adds resources
                 availableResources = availableResources + resourceSensor.maxResource
             }
             val remainingResources = availableResources - (availableResources * constConsumptionRate) // consume resources
-            resourceSensor.setCurrentOverallResource(availableResources)
+            node.setConcentration(SimpleMolecule("resource"), remainingResources as T)
             if(children.isNotEmpty()) { // should not be a leaf to evaluate weight and resource distribution
-
                 val weightSum = children.sumOf { (n, _) ->
                     n.getConcentration(SimpleMolecule("weight")) as Double
                 }
