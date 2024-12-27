@@ -1,3 +1,14 @@
+## [1.4.5](https://github.com/angelacorte/fieldVMC/compare/1.4.4...1.4.5) (2024-12-27)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v11.2.0 ([096a623](https://github.com/angelacorte/fieldVMC/commit/096a62314eeb457e63a98e7151d35819f9bf7c8c))
+* **deps:** update alchemist to v36.0.12 ([#102](https://github.com/angelacorte/fieldVMC/issues/102)) ([8c0fd3a](https://github.com/angelacorte/fieldVMC/commit/8c0fd3a457da27940914271d6d9dfb14ee0a1d9d))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.4.4 [skip ci] ([f55a113](https://github.com/angelacorte/fieldVMC/commit/f55a11345ae30429df7fe5dec41cb204d18b3e3a))
+
 ## [1.4.4](https://github.com/angelacorte/fieldVMC/compare/1.4.3...1.4.4) (2024-12-27)
 
 ### Bug Fixes
