@@ -1,3 +1,14 @@
+## [1.4.4](https://github.com/angelacorte/fieldVMC/compare/1.4.3...1.4.4) (2024-12-27)
+
+### Bug Fixes
+
+* changing logic (again) using should use MAX as status to understand who should spawn ([029ce33](https://github.com/angelacorte/fieldVMC/commit/029ce33bf2d9c9f0f4258bc951bb4ee4d080d9e1))
+* logic to spawn passing through a find max node phase ([14c6404](https://github.com/angelacorte/fieldVMC/commit/14c64049e2e406ec81f8b03f739945f367c48a3a))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.4.3 [skip ci] ([1927491](https://github.com/angelacorte/fieldVMC/commit/1927491846d4a6a3342972b3a90fc77fbbed6058))
+
 ## [1.4.3](https://github.com/angelacorte/fieldVMC/compare/1.4.2...1.4.3) (2024-12-20)
 
 ### Dependency updates
