@@ -1,3 +1,14 @@
+## [1.4.6](https://github.com/angelacorte/fieldVMC/compare/1.4.5...1.4.6) (2024-12-28)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v12 ([bf1223e](https://github.com/angelacorte/fieldVMC/commit/bf1223e2fa6469232366caf853df7cb5c8ffd816))
+* **deps:** update dependency gradle to v8.12 ([8c37314](https://github.com/angelacorte/fieldVMC/commit/8c3731468be468c9016d8d5620352845d7295d6a))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.4.5 [skip ci] ([d62fc64](https://github.com/angelacorte/fieldVMC/commit/d62fc6499f4a0f6cc913bf09c74a17bbd6a6fbb6))
+
 ## [1.4.5](https://github.com/angelacorte/fieldVMC/compare/1.4.4...1.4.5) (2024-12-27)
 
 ### Dependency updates
