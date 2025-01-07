@@ -91,7 +91,7 @@ services:
     depends_on:
       prepare:
         condition: service_completed_successfully
-      default-simulation:
+      fieldVMC-fixed-leader-simulation:
         condition: service_completed_successfully
 #      simulation2:
 #        condition: service_completed_successfully
