@@ -58,34 +58,6 @@ services:
       - prepare
     volumes:
       - ./data:/experiment/data
-#
-#  simulation2:
-#    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
-#    build:
-#      context: .
-#      dockerfile: ./docker/sim/Dockerfile
-#    environment:
-#      MIN: 6
-#      MAX: 10
-#      DEFAULT: 7
-#    depends_on:
-#      - prepare
-#    volumes:
-#      - ./data:/experiment/data
-#
-#  simulation3:
-#    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
-#    build:
-#      context: .
-#      dockerfile: ./docker/sim/Dockerfile
-#    environment:
-#      MIN: 11
-#      MAX: 15
-#      DEFAULT: 12
-#    depends_on:
-#      - prepare
-#    volumes:
-#      - ./data:/experiment/data
 
   charts:
     depends_on:
@@ -93,10 +65,6 @@ services:
         condition: service_completed_successfully
       fieldVMC-fixed-leader-simulation:
         condition: service_completed_successfully
-#      simulation2:
-#        condition: service_completed_successfully
-#      simulation3:
-#        condition: service_completed_successfully
     image: angelacortecchia/${PROJECT_NAME:-unknown}-charts:${VERSION:-latest}
     build:
       dockerfile: ./docker/charts/Dockerfile
