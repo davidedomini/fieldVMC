@@ -30,6 +30,54 @@ services:
       - prepare
     volumes:
       - ./data:/experiment/data
+
+  fieldVMC-fixed-leader-simulation:
+    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
+    build:
+      context: .
+      dockerfile: ./docker/classicVMC/Dockerfile
+    environment:
+      CLONING_RANGE: 5
+      DEFAULT: 0
+      LEADER_RADIUS: 100.0
+      MAX: 20
+      MAX_CHILDREN: 3
+      MAX_RESOURCE: 1000.0
+      MIN: 0
+      MIN_SPAWN_WAIT: 40.0
+      RESOURCE_LOWER_BOUND: 1.0
+    depends_on:
+      - prepare
+    volumes:
+      - ./data:/experiment/data
+      
+  classic-vmc-simulation:
+    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
+    build:
+      context: .
+      dockerfile: ./docker/classicVMC/Dockerfile
+    environment:
+      CLONING_RANGE: 5
+      CONST_COMPETITION_RATE: 2
+      CONST_CONSUMPTION_RATE: 0.1
+      CONST_PRODUCTION_RATE: 0.1
+      CONST_TRANSFER_RATE: 0.5
+      DEFAULT: 0
+      MAX: 20
+      MAX_CHILDREN: 3
+      MAX_RESOURCE: 3.0
+      MAX_SUCCESS: 500.0
+      MIN: 0
+      MIN_SPAWN_WAIT: 21
+      RESOURCE_LOWER_BOUND: 5.0
+      SENSOR_COMPETITION_RATE: 0.1
+      SENSOR_PRODUCTION_RATE: 1.0
+      SENSOR_TRANSFER_RATE: 0.5
+      VESSELS_ADAPTATION_RATE: 0.9
+    depends_on:
+      - prepare
+    volumes:
+      - ./data:/experiment/data
 #
 #  simulation2:
 #    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
