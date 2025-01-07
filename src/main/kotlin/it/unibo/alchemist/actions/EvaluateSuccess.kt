@@ -51,6 +51,7 @@ class EvaluateSuccess<T, P : Position<P>>(
         }
         val parent = neighbors.firstOrNull { (n, _) -> node.getConcentration(SimpleMolecule("parent")) == n.id }
         val isLeaf = children.isEmpty()
+        // is leaf && (parent == null || action == spawning)
         if((parent == null && isLeaf) || (isLeaf && current.action == SPAWNING) ){ // if root is a leaf or the leaf is in spawning
             val localProduction = max(0.0, production())
             successSensor.setLocalSuccess(localProduction)

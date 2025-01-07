@@ -36,8 +36,8 @@ data class Clock(
         when (action) {
             BACKWARD -> Clock(time, action.nextStep())
             FORWARD -> Clock(time, action.nextStep())
-            SPAWNING -> Clock(time, action.nextStep())
-            MAX -> Clock(time + 1, action.nextStep())
+            MAX -> Clock(time, action.nextStep())
+            SPAWNING -> Clock(time + 1, action.nextStep())
         }
 }
 
@@ -70,9 +70,9 @@ enum class Cycle {
      */
     fun nextStep(): Cycle =
         when (this) {
-            SPAWNING -> BACKWARD
             BACKWARD -> FORWARD
             FORWARD -> MAX
             MAX -> SPAWNING
+            SPAWNING -> BACKWARD
         }
 }

@@ -9,7 +9,6 @@ import it.unibo.alchemist.model.Position
 import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.actions.AbstractAction
 import it.unibo.alchemist.model.molecules.SimpleMolecule
-import it.unibo.collektive.alchemist.device.properties.Cycle
 import it.unibo.collektive.alchemist.device.properties.Cycle.FORWARD
 import it.unibo.collektive.alchemist.device.properties.Cycle.MAX
 import it.unibo.collektive.alchemist.device.properties.impl.ExecutionClockProperty

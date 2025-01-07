@@ -65,8 +65,8 @@ class Spawn<T : Any, P : Position<P>>(
             val localResource = node.getConcentration(SimpleMolecule("resource")) as Double
             spawnChildren(localResource)
             node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
-        } else if (parent != null && parent.second.currentClock().action == SPAWNING && children.isEmpty()) { // i am leaf
-            if (parent.first.getConcentration(SimpleMolecule("max-leaf-id")) == node.id) { // I'm the max
+        } else if (parent != null && parent.second.currentClock().action == SPAWNING && children.isEmpty() && current.action == MAX) { // i am leaf
+            if (parent.first.getConcentration(SimpleMolecule("max-leaf-id")) == node.id && current.time % 21 == 0) { // I'm the max
                 // i should spawn
                 val localResource = node.getConcentration(SimpleMolecule("resource")) as Double
                 spawnChildren(localResource)
@@ -99,7 +99,7 @@ class Spawn<T : Any, P : Position<P>>(
         cloneOfThis.setConcentration(SimpleMolecule("parent"), node.id as T)
         cloneOfThis.setConcentration(SimpleMolecule("weight"), 0.1 as T)
         cloneOfThis.setConcentration(SimpleMolecule("resource"), 0.0 as T)
-        cloneOfThis.asProperty<T, ExecutionClockProperty<T, P>>().justSpawned(nodeClock.time + 1)
+        cloneOfThis.asProperty<T, ExecutionClockProperty<T, P>>().justSpawned(nodeClock.time)
         val updatedPosition = environment.makePosition(*coordinate.toList().toTypedArray())
         environment.addNode(cloneOfThis, updatedPosition)
     }
