@@ -53,8 +53,7 @@ class Spawn<T : Any, P : Position<P>>(
         val current = node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
         val parent = neighbors.firstOrNull { (n, _) -> node.getConcentration(SimpleMolecule("parent")) == n.id } // if null then it is root
         val children = neighbors.filter { (n, _) -> n.getConcentration(SimpleMolecule("parent")) == node.id }
-
-        if ((children.isNotEmpty() && current.action == MAX && parent != null && parent.second.currentClock().action == SPAWNING)) { // intermediate node
+        if ((children.isNotEmpty() && current.action == MAX && parent != null && parent.second.currentClock().action == SPAWNING)) { // intermediate node going towards the leaves
             node.setConcentration(SimpleMolecule("max-leaf-id"), parent!!.first.getConcentration(SimpleMolecule("max-leaf-id")))
             node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
         } else if (children.isNotEmpty() && current.action == MAX && parent == null) { // root with children
@@ -65,9 +64,9 @@ class Spawn<T : Any, P : Position<P>>(
             val localResource = node.getConcentration(SimpleMolecule("resource")) as Double
             spawnChildren(localResource)
             node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
-        } else if (parent != null && parent.second.currentClock().action == SPAWNING && children.isEmpty() && current.action == MAX) { // i am leaf
+        } else if (parent != null && parent.second.currentClock().action == SPAWNING && children.isEmpty() && current.action == MAX) { // I am a leaf
             if (parent.first.getConcentration(SimpleMolecule("max-leaf-id")) == node.id && current.time % 21 == 0) { // I'm the max
-                // i should spawn
+                // I should spawn
                 val localResource = node.getConcentration(SimpleMolecule("resource")) as Double
                 spawnChildren(localResource)
             }
@@ -97,7 +96,7 @@ class Spawn<T : Any, P : Position<P>>(
         val cloneOfThis = node.cloneNode(spawningTime)
         val nodeClock = node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
         cloneOfThis.setConcentration(SimpleMolecule("parent"), node.id as T)
-        cloneOfThis.setConcentration(SimpleMolecule("weight"), 0.1 as T)
+        cloneOfThis.setConcentration(SimpleMolecule("weight"), 0.01 as T)
         cloneOfThis.setConcentration(SimpleMolecule("resource"), 0.0 as T)
         cloneOfThis.asProperty<T, ExecutionClockProperty<T, P>>().justSpawned(nodeClock.time)
         val updatedPosition = environment.makePosition(*coordinate.toList().toTypedArray())
