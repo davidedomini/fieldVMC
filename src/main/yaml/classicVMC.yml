@@ -1,54 +1,52 @@
-# MAX_RESOURCE=3.0 RESOURCE_LOWER_BOUND=5.0 MAX_CHILDREN=3 MIN_SPAN_WAIT=40.0 MAX_SUCCESS=1000.0 CLONING_RANGE=5 SENSOR_PRODUCTION_RATE=1.0 CONST_PRODUCTION_RATE=0.1 SENSOR_TRANSFER_RATE=0.5 CONST_TRANSFER_RATE=0.5 SENSOR_COMPETITION_RATE=0.1 CONST_COMPETITION_RATE=2 VESSELS_ADAPTATION_RATE=0.9 CONST_CONSUMPTION_RATE=0.1 MIN=0 MAX=20 DEFAULT=0 ./gradlew runClassicVMCGraphic
-# CLONING_RANGE=5 CONST_COMPETITION_RATE=2 CONST_CONSUMPTION_RATE=0.1 CONST_PRODUCTION_RATE=0.1 CONST_TRANSFER_RATE=0.5 DEFAULT=0 MAX=20 MAX_CHILDREN=3 MAX_RESOURCE=3.0 MAX_SUCCESS=500.0 MIN=0 MIN_SPAN_WAIT=40.0 RESOURCE_LOWER_BOUND=5.0 SENSOR_COMPETITION_RATE=0.1 SENSOR_PRODUCTION_RATE=1.0 SENSOR_TRANSFER_RATE=0.5 VESSELS_ADAPTATION_RATE=0.9 ./gradlew runClassicVMCGraphic
+# from command line: CLONING_RANGE=5 CONST_COMPETITION_RATE=2 CONST_CONSUMPTION_RATE=0.1 CONST_PRODUCTION_RATE=0.1 CONST_TRANSFER_RATE=0.5 DEFAULT=0 MAX=20 MAX_CHILDREN=3 MAX_RESOURCE=3.0 MAX_SUCCESS=500.0 MIN=0 MIN_SPAWN_WAIT=21 RESOURCE_LOWER_BOUND=5.0 SENSOR_COMPETITION_RATE=0.1 SENSOR_PRODUCTION_RATE=1.0 SENSOR_TRANSFER_RATE=0.5 VESSELS_ADAPTATION_RATE=0.9 ./gradlew runClassicVMCGraphic
 variables:
-# simulation variables
-  maxResource: &maxResource
-    formula: System.getenv("MAX_RESOURCE").toDouble() #1
-    language: kotlin
-  resourceLowerBound: &resourceLowerBound
-    formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
-    language: kotlin
-  maxChildren: &maxChildren
-    formula: System.getenv("MAX_CHILDREN").toInt() #5
-    language: kotlin
-  minSpanWait: &minSpanWait
-    formula: System.getenv("MIN_SPAN_WAIT").toDouble() #40.0 / 20.0
-    language: kotlin
-  maxSuccess: &maxSuccess
-    formula: System.getenv("MAX_SUCCESS").toDouble() #1000.0
-    language: kotlin
-  gaussianShape: &gaussianShape
-    5
   cloningRange: &cloningRange
     formula: System.getenv("CLONING_RANGE").toInt() #5
-    language: kotlin
-  range: &range
-    formula: System.getenv("CLONING_RANGE").toInt() * 1.01
-    language: kotlin
-# const and sensor-related rates
-  sensorProductionRate: &sensorProductionRate
-    formula: System.getenv("SENSOR_PRODUCTION_RATE").toDouble() #1.0
-    language: kotlin
-  constProductionRate: &constProductionRate
-    formula: System.getenv("CONST_PRODUCTION_RATE").toDouble() #0.1
-    language: kotlin
-  sensorTransferRate: &sensorTransferRate
-    formula: System.getenv("SENSOR_TRANSFER_RATE").toDouble() #0.5
-    language: kotlin
-  constTransferRate: &constTransferRate
-    formula: System.getenv("CONST_TRANSFER_RATE").toDouble() #0.5
-    language: kotlin
-  sensorCompetitionRate: &sensorCompetitionRate
-    formula: System.getenv("SENSOR_COMPETITION_RATE").toDouble() #0.1
     language: kotlin
   constCompetitionRate: &constCompetitionRate
     formula: System.getenv("CONST_COMPETITION_RATE").toDouble() #2
     language: kotlin
+  constConsumptionRate: &constConsumptionRate
+    formula: System.getenv("CONST_CONSUMPTION_RATE").toDouble() #0.1
+    language: kotlin
+  constProductionRate: &constProductionRate
+    formula: System.getenv("CONST_PRODUCTION_RATE").toDouble() #0.1
+    language: kotlin
+  constTransferRate: &constTransferRate
+    formula: System.getenv("CONST_TRANSFER_RATE").toDouble() #0.5
+    language: kotlin
+  gaussianShape: &gaussianShape
+    5
+  maxChildren: &maxChildren
+    formula: System.getenv("MAX_CHILDREN").toInt() #5
+    language: kotlin
+  maxResource: &maxResource
+    formula: System.getenv("MAX_RESOURCE").toDouble() #1
+    language: kotlin
+  maxSuccess: &maxSuccess
+    formula: System.getenv("MAX_SUCCESS").toDouble() #500.0
+    language: kotlin
+  minSpawnWait: &minSpawnWait
+    formula: System.getenv("MIN_SPAWN_WAIT").toInt() #21
+    language: kotlin
+  range: &range
+    formula: System.getenv("CLONING_RANGE").toInt() * 1.01
+    language: kotlin
+  resourceLowerBound: &resourceLowerBound
+    formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
+    language: kotlin
+  sensorCompetitionRate: &sensorCompetitionRate
+    formula: System.getenv("SENSOR_COMPETITION_RATE").toDouble() #0.1
+    language: kotlin
+  sensorProductionRate: &sensorProductionRate
+    formula: System.getenv("SENSOR_PRODUCTION_RATE").toDouble() #1.0
+    language: kotlin
+  sensorTransferRate: &sensorTransferRate
+    formula: System.getenv("SENSOR_TRANSFER_RATE").toDouble() #0.5
+    language: kotlin
   vesselsAdaptationRate: &vesselsAdaptationRate
     formula: System.getenv("VESSELS_ADAPTATION_RATE").toDouble() #0.9
     language: kotlin
-  constConsumptionRate: &constConsumptionRate
-    formula: System.getenv("CONST_CONSUMPTION_RATE").toDouble() #0.1
 # seed
   seed: &seed
     min:
@@ -72,7 +70,7 @@ seeds:
 
 layers:
   - type: BidimensionalGaussianLayer
-    parameters: [5, 25, *maxSuccess, *gaussianShape]
+    parameters: [5, 25, *maxSuccess, *gaussianShape ]
     molecule: successSource
 
 incarnation: collektive
@@ -90,7 +88,7 @@ _pool: &program
       - type: FindMax
         parameters: []
       - type: Spawn
-        parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ]
+        parameters: [ *cloningRange, *resourceLowerBound, *maxChildren, *minSpawnWait ]
 
 deployments:
   - type: Point
@@ -111,8 +109,6 @@ deployments:
         parameters: [ *maxSuccess ]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
         parameters: [*resourceLowerBound, *maxResource]
-      - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
-        parameters: [ *cloningRange, *maxChildren, *minSpanWait ]
 
 #terminate:
 #    type: AfterTime
@@ -146,5 +142,3 @@ export:
         aggregators: [ min, max, mean, stdev ]
         value-filter: onlyfinite
         precision: 3
-
-# MIN=0 MAX=20 DEFAULT=0 RADIUS=100.0 MAX_RESOURCE=1000.0 RESOURCE_LOWER_BOUND=1.0 MAX_CHILDREN=5 MIN_SPAN_WAIT=40.0 CLONING_RANGE=5 ./gradlew runFixedLeaderGraphic
