@@ -62,7 +62,7 @@ class EvaluateSuccess<T, P : Position<P>>(
                 children.sumOf { (n, _) ->
                     n.getConcentration(SimpleMolecule("success")) as Double
                 }
-            val success = max(0.0, min(1.0, transfer() * childrenSuccessSum))
+            val success = max(0.0, min(1.0, transfer())) * childrenSuccessSum
             node.setConcentration(SimpleMolecule("success"), success as T)
             node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
         }
