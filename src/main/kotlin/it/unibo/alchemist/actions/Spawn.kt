@@ -15,6 +15,7 @@ import it.unibo.collektive.alchemist.device.properties.Cycle.SPAWNING
 import it.unibo.collektive.alchemist.device.properties.impl.ExecutionClockProperty
 import it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
 import it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
+import it.unibo.collektive.utils.Stability
 import it.unibo.common.calculateAngle
 import it.unibo.common.minus
 import it.unibo.common.plus
@@ -82,10 +83,21 @@ class Spawn<T : Any, P : Position<P>>(
         val angles = relativePositions.map { atan2(it.second, it.first) }.sorted()
         repeat(spawnableChildren) {
             val angle = calculateAngle(angles, randomGenerator, maxChildren)
-            val x = cloningRange * cos(angle)
-            val y = cloningRange * sin(angle)
-            val absoluteDestination = if (it % 2 == 0) localPosition + (x to y) else localPosition + (-x to y)
-            spawn(absoluteDestination)
+//            val x = cloningRange * cos(angle)
+//            val y = cloningRange * sin(angle)
+//            val absoluteDestination = if (it % 2 == 0) localPosition + (x to y) else localPosition + (-x to y)
+//            spawn(absoluteDestination)
+//
+            when {
+                !angle.isNaN() -> {
+                    val x = cloningRange * cos(angle)
+                    val y = cloningRange * sin(angle)
+                    val absoluteDestination = localPosition + (x to y)
+                    spawn(absoluteDestination)
+                }
+                else -> { }
+            }
+
         }
     }
 
