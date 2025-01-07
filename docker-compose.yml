@@ -11,31 +11,11 @@ services:
         mkdir -p /experiment/charts
         chmod 777 /experiment/charts
 
-  default-simulation:
-    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
-    build:
-      context: .
-      dockerfile: ./docker/sim/Dockerfile
-    environment:
-      MIN: 0
-      MAX: 20
-      DEFAULT: 0
-      RADIUS: 100.0
-      MAX_RESOURCE: 1000.0
-      RESOURCE_LOWER_BOUND: 1.0
-      MAX_CHILDREN: 5
-      MIN_SPAN_WAIT: 40.0
-      CLONING_RANGE: 5
-    depends_on:
-      - prepare
-    volumes:
-      - ./data:/experiment/data
-
   fieldVMC-fixed-leader-simulation:
     image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
     build:
       context: .
-      dockerfile: ./docker/classicVMC/Dockerfile
+      dockerfile: ./docker/fixedLeaderFieldVMC/Dockerfile
     environment:
       CLONING_RANGE: 5
       DEFAULT: 0
