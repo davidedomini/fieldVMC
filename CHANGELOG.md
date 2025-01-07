@@ -1,3 +1,13 @@
+## [1.4.7](https://github.com/angelacorte/fieldVMC/compare/1.4.6...1.4.7) (2025-01-07)
+
+### Bug Fixes
+
+* add check on spawning ([3c3dee4](https://github.com/angelacorte/fieldVMC/commit/3c3dee471f6d2b16f0d7eab75749cbee5c3fea13))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.4.6 [skip ci] ([25e0ed1](https://github.com/angelacorte/fieldVMC/commit/25e0ed14a52665bc2e278c66276320f080c2285a))
+
 ## [1.4.6](https://github.com/angelacorte/fieldVMC/compare/1.4.5...1.4.6) (2024-12-28)
 
 ### Dependency updates
