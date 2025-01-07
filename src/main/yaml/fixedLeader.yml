@@ -82,9 +82,9 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
         parameters: [ *cloningRange, *maxChildren, *minSpawnWait ]
 
-#terminate:
-#    type: AfterTime
-#    parameters: 100
+terminate:
+    type: AfterTime
+    parameters: 1000
 
 export:
   - type: CSVExporter
