@@ -71,7 +71,7 @@ seeds:
 
 layers:
   - type: BidimensionalGaussianLayer
-    parameters: [5, 20, *maxSuccess, *gaussianShape]
+    parameters: [5, 25, *maxSuccess, *gaussianShape]
     molecule: successSource
 
 incarnation: collektive
