@@ -1,3 +1,14 @@
+## [1.4.9](https://github.com/angelacorte/fieldVMC/compare/1.4.8...1.4.9) (2025-01-07)
+
+### Bug Fixes
+
+* manage angle NaN case ([1e95be9](https://github.com/angelacorte/fieldVMC/commit/1e95be997aacaae44c3a21ed7a60096ba4743ee6))
+
+### General maintenance
+
+* add prompt command to launch simulation ([23de41f](https://github.com/angelacorte/fieldVMC/commit/23de41f16dbb8ecf156f84f23d650b0c67c53ef7))
+* **release:** update gradle.properties .env versions to 1.4.8 [skip ci] ([358ecc9](https://github.com/angelacorte/fieldVMC/commit/358ecc9724f6c13fda72fda39908deb470a179d4))
+
 ## [1.4.8](https://github.com/angelacorte/fieldVMC/compare/1.4.7...1.4.8) (2025-01-07)
 
 ### Dependency updates
