@@ -1,3 +1,23 @@
+## [1.4.8](https://github.com/angelacorte/fieldVMC/compare/1.4.7...1.4.8) (2025-01-07)
+
+### Dependency updates
+
+* **deps:** update dependency xarray to v2025 ([1baf925](https://github.com/angelacorte/fieldVMC/commit/1baf9251d5532ba980c0428ae9e45bfe526e9ac1))
+
+### Bug Fixes
+
+* transfer success evaluation ([f3f1357](https://github.com/angelacorte/fieldVMC/commit/f3f1357edf370052f8cdc4c83f65fdb3b3dbc7dd))
+
+### General maintenance
+
+* add clarifying comments ([348857c](https://github.com/angelacorte/fieldVMC/commit/348857ccef840bd97f44c26e4e0e276785bcb588))
+* change layer position ([d11fddd](https://github.com/angelacorte/fieldVMC/commit/d11fddd5491e6ef1d1a28be20c1f0e1def31c1ab))
+* **release:** update gradle.properties .env versions to 1.4.7 [skip ci] ([83cde64](https://github.com/angelacorte/fieldVMC/commit/83cde643d9a93bf2dca6245048c103706b08b78a))
+
+### Refactoring
+
+* change val name ([fd9d641](https://github.com/angelacorte/fieldVMC/commit/fd9d641c7057e5c9e3229407afc0f23c9a69558a))
+
 ## [1.4.7](https://github.com/angelacorte/fieldVMC/compare/1.4.6...1.4.7) (2025-01-07)
 
 ### Bug Fixes
