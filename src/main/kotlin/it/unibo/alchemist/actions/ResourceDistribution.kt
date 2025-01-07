@@ -49,8 +49,8 @@ class ResourceDistribution<T, P : Position<P>>(
         val current = node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
         val parent = neighbors.firstOrNull { (n, _) -> node.getConcentration(SimpleMolecule("parent")) == n.id } // if null then it is root
         val children = neighbors.filter { (n, _) -> n.getConcentration(SimpleMolecule("parent")) == node.id }
-        val childrenNotInBackward = children.filterNot { (_, c) -> c.currentClock() == Clock(time = current.time, action = BACKWARD) }
-        if( (parent == null && childrenNotInBackward.isEmpty()) ||
+        val childrenNotDone = children.filterNot { (_, c) -> c.currentClock() == Clock(time = current.time, action = BACKWARD) }
+        if( (parent == null && childrenNotDone.isEmpty()) ||
             (current.action == BACKWARD && parent != null && parent.second.currentClock() == Clock(current.time, FORWARD)) ) {
             var availableResources = node.getConcentration(SimpleMolecule("resource")) as Double
             if (parent == null) { // root adds resources
