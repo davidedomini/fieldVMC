@@ -1,8 +1,7 @@
 # from command line:  CLONING_RANGE=5 DEFAULT=0 LEADER_RADIUS=100.0 MAX=20 MAX_CHILDREN=3 MAX_RESOURCE=1000.0 MIN=0 MIN_SPAWN_WAIT=40.0 RESOURCE_LOWER_BOUND=1.0 ./gradlew runFixedLeaderGraphic
 variables:
   cloningRange: &cloningRange
-    formula: System.getenv("CLONING_RANGE").toInt() #5
-    language: kotlin
+    formula: 5
   gaussianShape: &gaussianShape
     5
   leaderRadius: &leaderRadius
@@ -12,31 +11,23 @@ variables:
     formula: System.getenv("MAX_CHILDREN").toInt() #3
     language: kotlin
   maxResource: &maxResource
-    formula: System.getenv("MAX_RESOURCE").toDouble() #1000.0
+    formula: System.getenv("MAX_RESOURCE").toDouble() #500.0
     language: kotlin
   maxSuccess: &maxSuccess
-    formula: System.getenv("MAX_RESOURCE").toDouble() #success same as resource
-    language: kotlin
+    *maxResource #success same as resource
   minSpawnWait: &minSpawnWait
     formula: System.getenv("MIN_SPAWN_WAIT").toDouble() #40.0 / 20.0
     language: kotlin
   range: &range
-    formula: System.getenv("CLONING_RANGE").toInt() * 1.01
-    language: kotlin
+    formula: cloningRange * 1.01
   resourceLowerBound: &resourceLowerBound
     formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
     language: kotlin
   seed: &seed
-    min:
-      formula: System.getenv("MIN").toDouble() #0
-      language: kotlin
-    max:
-      formula: System.getenv("MAX").toDouble() #20
-      language: kotlin
+    min: 0
+    max: 20
     step: 1
-    default:
-      formula: System.getenv("DEFAULT").toDouble() #0
-      language: kotlin
+    default: 0
 network-model:
   type: ConnectWithinDistance
   parameters: *range
