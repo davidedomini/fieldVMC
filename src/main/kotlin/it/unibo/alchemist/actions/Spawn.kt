@@ -90,6 +90,9 @@ class Spawn<T : Any, P : Position<P>>(
                     val x = cloningRange * cos(angle)
                     val y = cloningRange * sin(angle)
                     val absoluteDestination = localPosition + (x to y)
+                    node.setConcentration(SimpleMolecule("children-count"),
+                        (node.getConcentration(SimpleMolecule("children-count")) as Int + 1) as T
+                    )
                     spawn(absoluteDestination)
                 }
                 else -> { }
@@ -107,6 +110,7 @@ class Spawn<T : Any, P : Position<P>>(
         cloneOfThis.setConcentration(SimpleMolecule("parent"), node.id as T)
         cloneOfThis.setConcentration(SimpleMolecule("weight"), 0.01 as T)
         cloneOfThis.setConcentration(SimpleMolecule("resource"), 0.0 as T)
+        cloneOfThis.setConcentration(SimpleMolecule("children-count"), 0 as T)
         cloneOfThis.asProperty<T, ExecutionClockProperty<T, P>>().justSpawned(nodeClock.time)
         val updatedPosition = environment.makePosition(*coordinate.toList().toTypedArray())
         environment.addNode(cloneOfThis, updatedPosition)
