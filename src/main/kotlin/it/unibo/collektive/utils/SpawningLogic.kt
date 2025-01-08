@@ -48,7 +48,7 @@ fun Aggregate<Int>.determineStability(
     env["everyone-is-destroy-stable"] = everyoneIsDestroyStable
     return when {
         potential > 0.0 && childrenCount == 0 && localResource < resourceS.resourceLowerBound && everyoneIsDestroyStable -> {
-            devSpawn.selfDestroy()
+//            devSpawn.selfDestroy()
             Stability(spawnStable = false, destroyStable = false)
         }
         neighborPositions.isEmpty() || localResource / (2 + childrenCount) > resourceS.resourceLowerBound && childrenCount < devSpawn.maxChildren && everyoneIsStable -> {
