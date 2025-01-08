@@ -207,7 +207,7 @@ if __name__ == '__main__':
     timeColumnName = 'time'
     logarithmicTime = False
     # One or more variables are considered random and "flattened"
-    seedVars = ['seed']
+    seedVars = ['seed', 'constCompetitionRate', 'maxChildren', 'maxResource', 'maxSuccess', 'minSpawnWait', 'resourceLowerBound']
     # 'time best-value[min]', 'best-value[max]', 'best-value[mean]', 'local-value[min]', 'local-value[max]', 'local-value[mean]', 'path-length[min]', 'path-length[max]', 'path-length[mean]', 'neighbors-size[min]', 'neighbors-size[max]', 'neighbors-size[mean]']  # 'seed', 'longseed'
     # Label mapping
     class Measure:
