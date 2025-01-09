@@ -5,24 +5,33 @@ variables:
   gaussianShape: &gaussianShape
     5
   leaderRadius: &leaderRadius
-    formula: System.getenv("LEADER_RADIUS").toDouble() # 100.0
-    language: kotlin
+    100.0
+  #    formula: System.getenv("LEADER_RADIUS").toDouble() # 100.0
+  #    language: kotlin
   maxChildren: &maxChildren
-    formula: System.getenv("MAX_CHILDREN").toInt() #3
-    language: kotlin
+    type: ArbitraryVariable
+    parameters: [ 3.0, [ 1.0, 2.0, 3.0, 5.0 ] ]
+  #    formula: System.getenv("MAX_CHILDREN").toInt() #3
+  #    language: kotlin
   maxResource: &maxResource
-    formula: System.getenv("MAX_RESOURCE").toDouble() #500.0
-    language: kotlin
+    type: ArbitraryVariable
+    parameters: [ 500.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+  #    formula: System.getenv("MAX_RESOURCE").toDouble() #500.0
+  #    language: kotlin
   maxSuccess: &maxSuccess
-    *maxResource #success same as resource
+    formula: maxResource #success same as resource
   minSpawnWait: &minSpawnWait
-    formula: System.getenv("MIN_SPAWN_WAIT").toDouble() #40.0 / 20.0
-    language: kotlin
+    type: LinearVariable
+    parameters: [ 40.0, 1.0, 71.0, 10.0 ]
+  #    formula: System.getenv("MIN_SPAWN_WAIT").toDouble() #40.0 / 20.0
+  #    language: kotlin
   range: &range
     formula: cloningRange * 1.01
   resourceLowerBound: &resourceLowerBound
-    formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
-    language: kotlin
+    type: LinearVariable
+    parameters: [ 1.0, 1.0, 10.0, 1.0 ]
+  #    formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
+  #    language: kotlin
   seed: &seed
     min: 0
     max: 20
@@ -74,8 +83,8 @@ deployments:
         parameters: [ *cloningRange, *maxChildren, *minSpawnWait ]
 
 terminate:
-    type: AfterTime
-    parameters: 1000
+  type: StableForSteps
+  parameters: [ 1000, 3 ]
 
 export:
   - type: CSVExporter
@@ -84,6 +93,12 @@ export:
       interval: 1.0
       exportPath: "data"
     data:
+      - type: NumberOfNodes
+#      - type: it.unibo.alchemist.boundary.extractors.NetworkDegree
+#        parameters:
+#        aggregators: [ max, mean, stdev ]
+#        value-filter: onlyfinite
+#        precision: 3
       - time
       - molecule: children-count
         aggregators: [ min, max, mean, stdev ]
@@ -105,3 +120,5 @@ export:
         aggregators: [ min, max, mean, stdev ]
         value-filter: onlyfinite
         precision: 3
+
+#RESOURCE_LOWER_BOUND=1.0;MIN=0;MAX=20;LEADER_RADIUS=100.0;CLONING_RANGE=5;MAX_RESOURCE=500.0;MIN_SPAWN_WAIT=40.0;DEFAULT=0;MAX_CHILDREN=3
