@@ -34,7 +34,7 @@ variables:
   #    language: kotlin
   seed: &seed
     min: 0
-    max: 20
+    max: 10
     step: 1
     default: 0
 network-model:
@@ -93,13 +93,13 @@ export:
       interval: 1.0
       exportPath: "data"
     data:
+      - time
       - type: NumberOfNodes
 #      - type: it.unibo.alchemist.boundary.extractors.NetworkDegree
 #        parameters:
 #        aggregators: [ max, mean, stdev ]
 #        value-filter: onlyfinite
 #        precision: 3
-      - time
       - molecule: children-count
         aggregators: [ min, max, mean, stdev ]
         value-filter: onlyfinite
