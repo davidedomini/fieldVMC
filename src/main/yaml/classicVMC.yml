@@ -126,6 +126,7 @@ export:
       exportPath: "data"
     data:
       - time
+      - type: NetworkDiameter
       - type: NumberOfNodes
       - molecule: children-count
         aggregators: [ min, max, mean, stdev ]

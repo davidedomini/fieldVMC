@@ -94,12 +94,10 @@ export:
       exportPath: "data"
     data:
       - time
+      - type: NetworkDiameter
       - type: NumberOfNodes
-#      - type: it.unibo.alchemist.boundary.extractors.NetworkDegree
-#        parameters:
-#        aggregators: [ max, mean, stdev ]
-#        value-filter: onlyfinite
-#        precision: 3
+      - type: NetworkDegree
+        parameters: []
       - molecule: children-count
         aggregators: [ min, max, mean, stdev ]
         value-filter: onlyfinite
