@@ -16,7 +16,7 @@ config.plugins.push(
     }],
     ["@semantic-release/github", {
         "assets": [ 
-            // { "path": "charts.tar.zst" },
+            { "path": "charts.tar.zst" },
          ]
     }],
     "@semantic-release/git",
