@@ -207,7 +207,7 @@ if __name__ == '__main__':
     timeColumnName = 'time'
     logarithmicTime = False
     # One or more variables are considered random and "flattened"
-    seedVars = ['seed'] #'constCompetitionRate', , 'maxChildren', 'maxResource', 'maxSuccess', 'minSpawnWait', 'resourceLowerBound'
+    seedVars = ['seed', 'constCompetitionRate', 'maxChildren', 'maxResource', 'maxSuccess', 'minSpawnWait', 'resourceLowerBound']
     # 'time best-value[min]', 'best-value[max]', 'best-value[mean]', 'local-value[min]', 'local-value[max]', 'local-value[mean]', 'path-length[min]', 'path-length[max]', 'path-length[mean]', 'neighbors-size[min]', 'neighbors-size[max]', 'neighbors-size[mean]']  # 'seed', 'longseed'
     # Label mapping
     class Measure:
@@ -471,12 +471,12 @@ if __name__ == '__main__':
         current_experiment_errors = stdevs[experiment]
         generate_all_charts(current_experiment_means, current_experiment_errors, basedir=f'{experiment}')
         to_show = [
+            'children-count[mean]',
             'local-success[mean]',
             'resource[mean]',
             'success[mean]',
             'local-resource[mean]',
         ]
-            # 'children-count[mean]',
         for data in to_show:
             current_experiment_means[data].plot.line()
             plt.savefig(f'{output_directory}/{experiment}_{data}.pdf')
