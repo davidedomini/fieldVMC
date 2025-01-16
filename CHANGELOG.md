@@ -1,3 +1,22 @@
+## [1.6.0](https://github.com/angelacorte/fieldVMC/compare/1.5.2...1.6.0) (2025-01-16)
+
+### Features
+
+* add new extractor in classic vmc ([7275a96](https://github.com/angelacorte/fieldVMC/commit/7275a96107a5d138ec07ba7b7338ad058acfe24b))
+
+### Build and continuous integration
+
+* **deps:** update actions/upload-artifact action to v4.6.0 ([83dd3cb](https://github.com/angelacorte/fieldVMC/commit/83dd3cb4d7a60851b95dac8db8b8349028378596))
+
+### General maintenance
+
+* delete old data ([d4b2c1d](https://github.com/angelacorte/fieldVMC/commit/d4b2c1ddac3f439e2dd29d1cbd2e285c50041d81))
+* **release:** update gradle.properties .env versions to 1.5.2 [skip ci] ([ce1c365](https://github.com/angelacorte/fieldVMC/commit/ce1c36528a88ff9c74c7d10a07553899e475b5a4))
+
+### Refactoring
+
+* change plotters (work in progress) ([a012302](https://github.com/angelacorte/fieldVMC/commit/a012302842af3cc2f1835a4d1735b332e2a23df0))
+
 ## [1.5.2](https://github.com/angelacorte/fieldVMC/compare/1.5.1...1.5.2) (2025-01-16)
 
 ### Dependency updates
