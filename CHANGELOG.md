@@ -1,3 +1,20 @@
+## [1.5.1](https://github.com/angelacorte/fieldVMC/compare/1.5.0...1.5.1) (2025-01-16)
+
+### Dependency updates
+
+* **core-deps:** update collektive ([029273c](https://github.com/angelacorte/fieldVMC/commit/029273c5fb7f76cf2be3a2bb1a517877ce918c05))
+* **core-deps:** update dependency org.jetbrains.kotlin.jvm to v2.1.0 ([51789b3](https://github.com/angelacorte/fieldVMC/commit/51789b3a887b812862ad022fbde60dfe139778fd))
+* **deps:** update alchemist to v36.1.3 ([228eb02](https://github.com/angelacorte/fieldVMC/commit/228eb029440c69c01a0b043a2cc09ae862f3e231))
+* **deps:** update dependency xarray to v2025.1.1 ([30544e4](https://github.com/angelacorte/fieldVMC/commit/30544e4ba4b6d75ee03016853fe70cd06f47153b))
+
+### Bug Fixes
+
+* restore seeds ([982da49](https://github.com/angelacorte/fieldVMC/commit/982da4982793de8bf442148ea7b7c3347f5da5fc))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.5.0 [skip ci] ([7dab028](https://github.com/angelacorte/fieldVMC/commit/7dab02885748869c1394450a8fe81e359784987c))
+
 ## [1.5.0](https://github.com/angelacorte/fieldVMC/compare/1.4.9...1.5.0) (2025-01-16)
 
 ### Features
