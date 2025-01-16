@@ -34,28 +34,23 @@ def plot_metric(data, metric, round, experiment, yname):
     plt.ylabel(yname)
     ax.yaxis.grid(True)
     ax.xaxis.grid(True)
-    plt.title(f'Global round {round}')
+    plt.title(f'{experiment} {round}')
     name = yname.replace(' ', '-').lower()
     plt.savefig(f'charts/{experiment}-{name}-{round}.pdf', dpi=500)
     plt.close()
 
 
 def to_label(experiment):
-    if '1' in experiment:
-        return 'Parallelism 1'
-    elif '2' in experiment:
-        return 'Parallelism 2'
-    elif '4' in experiment:
-        return 'Parallelism 4'
-    elif '8' in experiment:
-        return 'Parallelism 8'
+    if 'classic' in experiment:
+        return 'ClassicVMC'
+    elif 'leader' in experiment:
+        return 'FieldVMC fixed leader'
 
-
-def plot_metric_all(data, metric, round, yname):
+def plot_metric_all(experiment, data, metric, round, yname):
     plt.figure(figsize=(12, 8))
     colors_v = sns.color_palette("colorblind", 4)
     for i, d in enumerate(data):
-        l = d["classic-vmc"].iloc[0] #to_label()
+        l = d[experiment].iloc[0] #to_label()
         ax = sns.lineplot(data=d, x='time', label=l, y=metric, color=colors_v[i])
     plt.xlabel('Time')
     plt.ylabel(yname)
@@ -116,8 +111,12 @@ if __name__ == '__main__':
     maxRes = [ 1, 2, 3, 5, 10 ]
     maxResource = [f'maxResource-{m}' for m in maxRes]
 
+    maxResFieldVMC = [100.0, 200.0, 300.0, 500.0, 1000.0]
+    maxResourceFieldVMC = [f'maxResourceFieldVMC-{m}' for m in maxResFieldVMC]
+
     maxSuc = [ 100, 300, 500, 1000 ]
     maxSuccess = [f'maxSuccess-{m}' for m in maxSuc]
+    maxSuccessFieldVMC = [f'maxSuccessFieldVMC-{m}' for m in maxResFieldVMC]
 
     minSpawn = [ 1, 11, 21, 31, 41, 51, 61, 71 ]
     minSpawnWait = [f'minSpawnWait-{m}' for m in minSpawn]
@@ -127,45 +126,52 @@ if __name__ == '__main__':
 
     productClassicVMC = product(competitionRate, maxChildren, maxResource, maxSuccess, minSpawnWait, resourceLowerBound)
 
+    productFieldVMC = product(maxChildren, maxResourceFieldVMC, maxSuccessFieldVMC, minSpawnWait, resourceLowerBound)
+
     for competitionRate, maxChildren, maxResource, maxSuccess, minSpawnWait, resourceLowerBound in productClassicVMC:
+        ...
+
+    for maxChildren, maxResourceFieldVMC, maxSuccessFieldVMC, minSpawnWait, resourceLowerBound in productFieldVMC:
         ...
 
     input_dir = 'data/'
     clean_data_dir = 'data-cleaned/'
     charts_dir = 'charts/'
-    experiments = ['classic-vmc', 'fixed-leader']
+    experiments = ['fixed-leader', 'classic-vmc']
     clean = False
-    parameters = ['constCompetitionRate', 'maxChildren', 'maxResource', 'maxSuccess', 'minSpawnWait', 'resourceLowerBound', 'seed']
+    parametersClassicVMC = ['constCompetitionRate', 'maxChildren', 'maxResource', 'maxSuccess', 'minSpawnWait', 'resourceLowerBound', 'seed']
+    parametersFieldVMC = ['maxChildren', 'maxResource', 'maxSuccess', 'minSpawnWait', 'resourceLowerBound', 'seed']
     global_rounds = 9
-#classic-vmc_constCompetitionRate-2.0_maxChildren-5.0_maxResource-5.0_maxSuccess-500.0_minSpawnWait-41.0_resourceLowerBound-5.0_seed-0.0.csv
 
     if clean:
         clean_alchemist_csv(input_dir, clean_data_dir)
 
 
-    # for experiment in experiments:
-    #     for round in range(1, global_rounds+1):
-    #         files = glob.glob(f'{clean_data_dir}{experiment}*globalRound-{round}.csv')
-    #         dataframes = []
-    #         for f in files:
-    #             df = pd.read_csv(f, sep = ' ')
-    #             dataframes.append(df)
+    for experiment in experiments:
+        for round in range(1, global_rounds+1):
+            files = glob.glob(f'{clean_data_dir}{experiment}*globalRound-{round}.csv')
+            dataframes = []
+            for f in files:
+                df = pd.read_csv(f, sep = ' ')
+                dataframes.append(df)
 
-    #         mean_df = sum(dataframes)/len(dataframes)
-    #         mean_and_std = avg_std_dataframes(dataframes)
-    #         plot_metric(mean_and_std, 'Reward[mean]', round, experiment, 'Reward')
-    #         plot_metric(mean_and_std, 'MeanDistance[mean]', round, experiment, 'Distance from neighboors')
+            mean_df = sum(dataframes)/len(dataframes)
+            mean_and_std = avg_std_dataframes(dataframes)
+            plot_metric(mean_and_std, 'Reward[mean]', round, experiment, 'Reward')
+            plot_metric(mean_and_std, 'MeanDistance[mean]', round, experiment, 'Distance from neighboors')
 
 
     metrics = [
-        # 'nodes',
+        'nodes',
         'children-count[mean]',
         'local-success[mean]',
         'resource[mean]',
         'success[mean]',
         'local-resource[mean]',
+        'network-diameter',
+        'network-degree[mean]',
     ]
-#classic-vmc_constCompetitionRate-2.0_maxChildren-5.0_maxResource-5.0_maxSuccess-500.0_minSpawnWait-41.0_resourceLowerBound-5.0_seed-0.0.csv
+
     for metric in metrics:
         data_xglobal = pd.DataFrame()
         data_xglobal['Global Round'] = [x for x in range(0, global_rounds)]

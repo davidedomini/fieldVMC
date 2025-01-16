@@ -2,8 +2,6 @@ import numpy as np
 import xarray as xr
 import re
 from pathlib import Path
-import collections
-
 
 def distance(val, ref):
     return abs(ref - val)
