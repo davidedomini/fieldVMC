@@ -1,3 +1,19 @@
+## [1.5.2](https://github.com/angelacorte/fieldVMC/compare/1.5.1...1.5.2) (2025-01-16)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v12.1.1 ([799a98d](https://github.com/angelacorte/fieldVMC/commit/799a98dd53973dffffdea2e22aec516fc61dbacb))
+* **deps:** update node.js to 22.13 ([c13de1a](https://github.com/angelacorte/fieldVMC/commit/c13de1ae994f90a61cf14eb5f2ac03972e15fbed))
+* **deps:** update plugin multijvmtesting to v3 ([d6bac85](https://github.com/angelacorte/fieldVMC/commit/d6bac853bfe72e071facc4f73f1f55a7394a37be))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.7.0 ([ce857f7](https://github.com/angelacorte/fieldVMC/commit/ce857f7b28230c4331bab095edf9bfd9044944ed))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.5.1 [skip ci] ([bb7baf0](https://github.com/angelacorte/fieldVMC/commit/bb7baf0212f2417eba33783ceba1ecff9040203e))
+
 ## [1.5.1](https://github.com/angelacorte/fieldVMC/compare/1.5.0...1.5.1) (2025-01-16)
 
 ### Dependency updates
