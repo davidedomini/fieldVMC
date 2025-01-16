@@ -1,3 +1,52 @@
+## [1.5.0](https://github.com/angelacorte/fieldVMC/compare/1.4.9...1.5.0) (2025-01-16)
+
+### Features
+
+* add custom extractors ([c03dfc6](https://github.com/angelacorte/fieldVMC/commit/c03dfc641e89f9259480810b31246723b7946a91))
+* add extractors to simulation yaml ([88278b0](https://github.com/angelacorte/fieldVMC/commit/88278b0a735d0429745de4513c489f0744676386))
+* add network degree extractor ([1b0e14e](https://github.com/angelacorte/fieldVMC/commit/1b0e14e54307ce2b928c7a3a018adaec8d1fad55))
+* add network diameter extractor ([3dbf068](https://github.com/angelacorte/fieldVMC/commit/3dbf0682b475b66348dfd35c49914d5bdc7d6bf7))
+* add new python plotter ([dd742d2](https://github.com/angelacorte/fieldVMC/commit/dd742d2fe04f47ec081dec2414d9f05cb11f0808))
+* add termination for batch experiments ([31c7bb1](https://github.com/angelacorte/fieldVMC/commit/31c7bb1fe360110392823f95cae1226c06a84385))
+* change simulations termination type ([0ee4e06](https://github.com/angelacorte/fieldVMC/commit/0ee4e065d8f45e2269d1a3f3af8d4e711566a2a8))
+* dockerize classicVMC and fixed leader FieldVMC simulations ([94715b6](https://github.com/angelacorte/fieldVMC/commit/94715b6360af21b293fdee99b2f9fd272fed1d74))
+
+### Dependency updates
+
+* **deps:** update alpine docker tag to v3.21.2 ([b112ed5](https://github.com/angelacorte/fieldVMC/commit/b112ed5b8c6cc31c84223f17078fd3df34c78cb7))
+
+### Bug Fixes
+
+* add seeds ([5e63e9f](https://github.com/angelacorte/fieldVMC/commit/5e63e9f49cdd26d9bc1ee5eb9629b2cc440ef3b2))
+* add variable for spawning wait ([02261ff](https://github.com/angelacorte/fieldVMC/commit/02261ff1e8eda9c2e8f53d3ddf2611268690260c))
+* **ci:** simulation ARG ([a636503](https://github.com/angelacorte/fieldVMC/commit/a6365034ff96c52281f26fea74f700f236cd9b11))
+* comment create charts in build adn deploy ([8514325](https://github.com/angelacorte/fieldVMC/commit/8514325a37b0bb5ef0018054dba300aa92c680db))
+* comment create charts in build adn deploy ([d0c3b68](https://github.com/angelacorte/fieldVMC/commit/d0c3b68d7078b00e17bb1380cdd837cafad3ee98))
+* comment create charts in build adn deploy ([627de10](https://github.com/angelacorte/fieldVMC/commit/627de100f5f21156503c95ee8a8f71f524472bdb))
+* remove classic-vmc from data to evaluate ([236488f](https://github.com/angelacorte/fieldVMC/commit/236488f5281d53c09fdfd1cf41efa5e444070e1a))
+* remove destruction of nodes in fieldVMC ([ee2d210](https://github.com/angelacorte/fieldVMC/commit/ee2d21048b000d2e759bb4f33631a75d3817317a))
+* remove useless ARGs ([b6ce804](https://github.com/angelacorte/fieldVMC/commit/b6ce8040edc6bf08a280089f56131ea4927a5e6e))
+* remove useless environment variables ([073f01c](https://github.com/angelacorte/fieldVMC/commit/073f01c5529689bcd99be11b567e08ce52ca8cb9))
+* rollback to charts evaluation ([506a3e0](https://github.com/angelacorte/fieldVMC/commit/506a3e0145991e459a442eb870dd03747c6d1916))
+* temporary disable charts generation in docker compose ([fb549d9](https://github.com/angelacorte/fieldVMC/commit/fb549d98b53f7b93c1bfdf4c39f82a9741eca868))
+* temporary disable successful condition on charts generation ([39b28e2](https://github.com/angelacorte/fieldVMC/commit/39b28e23c8dea255d14b1ae3f26ee6ef46ba1a9e))
+* temporary remove charts from release ([e626f61](https://github.com/angelacorte/fieldVMC/commit/e626f6138d1068b570fd2463577928b604ed8ea7))
+* update ENV variables and ARG ([9b875c5](https://github.com/angelacorte/fieldVMC/commit/9b875c5dbc76ef573c13c260b80e1ddb17cd2fe6))
+* wrong dependency for charts ([dbba171](https://github.com/angelacorte/fieldVMC/commit/dbba171cf7352a8757d2e820eadb9c1e359e8d36))
+* wrong Dockerfile location ([5e294b2](https://github.com/angelacorte/fieldVMC/commit/5e294b28fde80560d96e49204f0727f5847f0810))
+
+### General maintenance
+
+* add children count molecule ([d19c755](https://github.com/angelacorte/fieldVMC/commit/d19c7557301dd0b5b649c15b7911e6b98ae54d49))
+* **build:** remove override in batch simulations ([ce15345](https://github.com/angelacorte/fieldVMC/commit/ce15345deb5f677a01982ba5b0143d831189b6c8))
+* change max seed ([5100380](https://github.com/angelacorte/fieldVMC/commit/51003809aebd48cabeb3e79d38fbd7637448392a))
+* **release:** update gradle.properties .env versions to 1.4.9 [skip ci] ([424eb8d](https://github.com/angelacorte/fieldVMC/commit/424eb8d0c9d4c62186f641ac417fe52939bcdbf6))
+* remove useless comments ([0d2af35](https://github.com/angelacorte/fieldVMC/commit/0d2af35768620b7536ecb73ccc4ee7afa41e5ee7))
+
+### Style improvements
+
+* put variables in lexicographic order ([e4abf53](https://github.com/angelacorte/fieldVMC/commit/e4abf53b4ac2ffa321e2680d9ec95d2a9dd6fd7c))
+
 ## [1.4.9](https://github.com/angelacorte/fieldVMC/compare/1.4.8...1.4.9) (2025-01-07)
 
 ### Bug Fixes
