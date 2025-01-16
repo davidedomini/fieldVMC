@@ -60,8 +60,8 @@ services:
 
   finish:
     depends_on:
-      charts:
-        condition: service_completed_successfully
+#      charts:
+#        condition: service_completed_successfully
       prepare:
         condition: service_completed_successfully
     image: alpine:3.21.0
