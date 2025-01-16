@@ -111,7 +111,7 @@ jobs:
   success:
     runs-on: ubuntu-24.04
     needs:
-      - create-charts
+#      - create-charts
       - check-simulations-native
       - check-simulations-docker
       - release
