@@ -197,7 +197,7 @@ if __name__ == '__main__':
     # How to name the summary of the processed data
     pickleOutput = 'data_summary'
     # Experiment prefixes: one per experiment (root of the file name)
-    experiments = ['fixed-leader', 'classic-vmc'] #
+    experiments = ['fixed-leader'] #, 'classic-vmc'
     floatPrecision = '{: 0.3f}'
     # Number of time samples
     timeSamples = 10
@@ -471,12 +471,12 @@ if __name__ == '__main__':
         current_experiment_errors = stdevs[experiment]
         generate_all_charts(current_experiment_means, current_experiment_errors, basedir=f'{experiment}')
         to_show = [
-            'children-count[mean]',
             'local-success[mean]',
             'resource[mean]',
             'success[mean]',
             'local-resource[mean]',
         ]
+            # 'children-count[mean]',
         for data in to_show:
             current_experiment_means[data].plot.line()
             plt.savefig(f'{output_directory}/{experiment}_{data}.pdf')
