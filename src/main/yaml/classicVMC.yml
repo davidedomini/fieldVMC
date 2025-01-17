@@ -105,14 +105,14 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
         parameters: [*resourceLowerBound, *maxResource]
 
-#launcher:
-#  type: DefaultLauncher
-#  parameters: {
-#    batch: ["seed", "constCompetitionRate", "maxChildren", "maxResource", "maxSuccess", "minSpawnWait", "resourceLowerBound"],
-#    autoStart: true,
-#    showProgress: true,
-#    parallelism: 2
-#  }
+launcher:
+  type: DefaultLauncher
+  parameters: {
+    batch: ["seed", "constCompetitionRate", "maxChildren", "maxResource", "maxSuccess", "minSpawnWait", "resourceLowerBound"],
+    autoStart: true,
+    showProgress: true,
+    parallelism: 2
+  }
 
 terminate:
     type: StableForSteps

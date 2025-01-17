@@ -82,6 +82,15 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
         parameters: [ *cloningRange, *maxChildren, *minSpawnWait ]
 
+launcher:
+  type: DefaultLauncher
+  parameters: {
+    batch: ["seed", "maxChildren", "maxResource", "minSpawnWait", "resourceLowerBound"],  # "maxSuccess",
+    autoStart: true,
+    showProgress: true,
+    parallelism: 2
+  }
+
 terminate:
   type: StableForSteps
   parameters: [ 1000, 3 ]
@@ -99,23 +108,23 @@ export:
       - type: NetworkDegree
         parameters: []
       - molecule: children-count
-        aggregators: [ min, max, mean, stdev ]
+        aggregators: [ min, max, mean, std ]
         value-filter: onlyfinite
         precision: 3
       - molecule: local-success
-        aggregators: [ min, max, mean, stdev ]
+        aggregators: [ min, max, mean, std ]
         value-filter: onlyfinite
         precision: 3
       - molecule: resource
-        aggregators: [ min, max, mean, stdev ]
+        aggregators: [ min, max, mean, std ]
         value-filter: onlyfinite
         precision: 3
       - molecule: success
-        aggregators: [ min, max, mean, stdev ]
+        aggregators: [ min, max, mean, std ]
         value-filter: onlyfinite
         precision: 3
       - molecule: local-resource
-        aggregators: [ min, max, mean, stdev ]
+        aggregators: [ min, max, mean, std ]
         value-filter: onlyfinite
         precision: 3
 
