@@ -195,13 +195,13 @@ if __name__ == '__main__':
     # How to name the summary of the processed data
     pickleOutput = 'data_summary'
     # Experiment prefixes: one per experiment (root of the file name)
-    experiments = ['fixed-leader'] #, 'classic-vmc'
+    experiments = ['fixed-leader', 'classic-vmc']
     floatPrecision = '{: 0.3f}'
     # Number of time samples
     timeSamples = 10
     # time management
     minTime = 0
-    maxTime = 10
+    maxTime = 1000
     timeColumnName = 'time'
     logarithmicTime = False
     # One or more variables are considered random and "flattened"
@@ -314,6 +314,8 @@ if __name__ == '__main__':
                 # Collect all files for the experiment of interest
                 import fnmatch
 
+                if "classic-vmc" in experiment:
+                    maxTime = 4000
                 allfiles = filter(lambda file: fnmatch.fnmatch(file, experiment + '_*.csv'), os.listdir(directory))
                 allfiles = [directory + '/' + name for name in allfiles]
                 allfiles.sort()
@@ -469,17 +471,23 @@ if __name__ == '__main__':
         current_experiment_errors = stdevs[experiment]
         generate_all_charts(current_experiment_means, current_experiment_errors, basedir=f'{experiment}')
         to_show = [
+            "nodes",
+            "network-diameter",
+            "network-degree[mean]",
             'children-count[mean]',
+            'success[mean]',
             'local-success[mean]',
             'resource[mean]',
-            'success[mean]',
             'local-resource[mean]',
         ]
         for data in to_show:
             current_experiment_means[data].plot.line()
+            plt.fill_between(current_experiment_means[timeColumnName],
+                             current_experiment_means[data] - current_experiment_errors[data],
+                             current_experiment_means[data] + current_experiment_errors[data],
+                             alpha=0.2)
+
             plt.savefig(f'{output_directory}/{experiment}_{data}.pdf')
             plt.clf()
-
-
 
 # Custom charting
