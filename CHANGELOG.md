@@ -1,3 +1,15 @@
+## [1.7.0](https://github.com/angelacorte/fieldVMC/compare/1.6.0...1.7.0) (2025-01-17)
+
+### Features
+
+* add launcher specs for batch ([0c687c6](https://github.com/angelacorte/fieldVMC/commit/0c687c63ce62cc260ce56a40dad54f1b7b3eec7b))
+* improve plotting with stdev area ([01e68a9](https://github.com/angelacorte/fieldVMC/commit/01e68a9c97d2c21d6c61cc63fce74fc4fc6cfab2))
+
+### General maintenance
+
+* change simulation default parameters to be as similar as possible ([96d85a5](https://github.com/angelacorte/fieldVMC/commit/96d85a536a60cd85b9c073811aad5ce1e395a8b5))
+* **release:** update gradle.properties .env versions to 1.6.0 [skip ci] ([e88fa8b](https://github.com/angelacorte/fieldVMC/commit/e88fa8b775ab1258b86cbc16910292d1f10f7220))
+
 ## [1.6.0](https://github.com/angelacorte/fieldVMC/compare/1.5.2...1.6.0) (2025-01-16)
 
 ### Features
