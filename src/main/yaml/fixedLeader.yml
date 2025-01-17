@@ -15,7 +15,7 @@ variables:
   #    language: kotlin
   maxResource: &maxResource
     type: ArbitraryVariable
-    parameters: [ 500.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+    parameters: [ 200.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
   #    formula: System.getenv("MAX_RESOURCE").toDouble() #500.0
   #    language: kotlin
   maxSuccess: &maxSuccess
@@ -29,7 +29,7 @@ variables:
     formula: cloningRange * 1.01
   resourceLowerBound: &resourceLowerBound
     type: LinearVariable
-    parameters: [ 1.0, 1.0, 10.0, 1.0 ]
+    parameters: [ 5.0, 1.0, 10.0, 1.0 ]
   #    formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
   #    language: kotlin
   seed: &seed
@@ -108,23 +108,23 @@ export:
       - type: NetworkDegree
         parameters: []
       - molecule: children-count
-        aggregators: [ min, max, mean, std ]
+        aggregators: [ min, max, mean, stdev ]
         value-filter: onlyfinite
         precision: 3
       - molecule: local-success
-        aggregators: [ min, max, mean, std ]
+        aggregators: [ min, max, mean, stdev ]
         value-filter: onlyfinite
         precision: 3
       - molecule: resource
-        aggregators: [ min, max, mean, std ]
+        aggregators: [ min, max, mean, stdev ]
         value-filter: onlyfinite
         precision: 3
       - molecule: success
-        aggregators: [ min, max, mean, std ]
+        aggregators: [ min, max, mean, stdev ]
         value-filter: onlyfinite
         precision: 3
       - molecule: local-resource
-        aggregators: [ min, max, mean, std ]
+        aggregators: [ min, max, mean, stdev ]
         value-filter: onlyfinite
         precision: 3
 

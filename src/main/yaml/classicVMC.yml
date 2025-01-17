@@ -2,8 +2,7 @@ variables:
   cloningRange: &cloningRange
     formula: 5
   constCompetitionRate: &constCompetitionRate
-    type: LinearVariable
-    parameters: [ 2.0, 1.0, 2.0, 0.2]
+    1
   constConsumptionRate: &constConsumptionRate
     0.1
   constProductionRate: &constProductionRate
@@ -29,7 +28,7 @@ variables:
 #    language: kotlin
   minSpawnWait: &minSpawnWait
     type: LinearVariable
-    parameters: [ 21.0, 1.0, 71.0, 10.0 ]
+    parameters: [ 40.0, 1.0, 71.0, 10.0 ]
 #    formula: System.getenv("MIN_SPAWN_WAIT").toInt() #21
 #    language: kotlin
   range: &range

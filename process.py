@@ -15,7 +15,9 @@ def cmap_xmap(function, cmap):
     should map the [0, 1] segment to itself, or you are in for surprises.
 
     See also cmap_xmap.
-    """
+    ""    """
+    import matplotlib.pyplot as plt
+    cmap = plt.get_cmap('viridis')
     cdict = cmap._segmentdata
     function_to_map = lambda x: (function(x[0]), x[1], x[2])
     for key in ('red', 'green', 'blue'):
