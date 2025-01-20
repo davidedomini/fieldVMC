@@ -16,12 +16,6 @@ services:
     build:
       context: .
       dockerfile: ./docker/fixedLeaderFieldVMC/Dockerfile
-    environment:
-      LEADER_RADIUS: 100.0
-      MAX_CHILDREN: 3
-      MAX_RESOURCE: 1000.0
-      MIN_SPAWN_WAIT: 40.0
-      RESOURCE_LOWER_BOUND: 1.0
     depends_on:
       - prepare
     volumes:
@@ -32,13 +26,6 @@ services:
     build:
       context: .
       dockerfile: ./docker/classicVMC/Dockerfile
-    environment:
-      CLONING_RANGE: 5
-      MAX_CHILDREN: 3
-      MAX_RESOURCE: 3.0
-      MAX_SUCCESS: 500.0
-      MIN_SPAWN_WAIT: 21
-      RESOURCE_LOWER_BOUND: 5.0
     depends_on:
       - prepare
     volumes:
@@ -49,6 +36,8 @@ services:
       prepare:
         condition: service_completed_successfully
       classic-vmc-simulation:
+        condition: service_completed_successfully
+      fieldVMC-fixed-leader-simulation:
         condition: service_completed_successfully
     image: angelacortecchia/${PROJECT_NAME:-unknown}-charts:${VERSION:-latest}
     build:
