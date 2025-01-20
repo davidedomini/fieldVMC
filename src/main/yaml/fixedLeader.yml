@@ -85,7 +85,7 @@ deployments:
 launcher:
   type: DefaultLauncher
   parameters: {
-    batch: ["seed", "maxChildren", "maxResource", "minSpawnWait", "resourceLowerBound"],  # "maxSuccess",
+    batch: ["seed", "maxChildren", "maxResource", "resourceLowerBound"],  #"minSpawnWait", "maxSuccess",
     autoStart: true,
     showProgress: true,
     parallelism: 2
@@ -108,7 +108,7 @@ export:
       - type: NetworkDegree
         parameters: []
       - molecule: children-count
-        aggregators: [ min, max, mean, stdev ]
+        aggregators: [ max, mean, stdev ]
         value-filter: onlyfinite
         precision: 3
       - molecule: local-success
