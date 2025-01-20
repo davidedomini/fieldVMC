@@ -15,11 +15,13 @@ variables:
   #    language: kotlin
   maxResource: &maxResource
     type: ArbitraryVariable
-    parameters: [ 200.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+    parameters: [ 350.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
   #    formula: System.getenv("MAX_RESOURCE").toDouble() #500.0
   #    language: kotlin
   maxSuccess: &maxSuccess
-    formula: maxResource #success same as resource
+    type: ArbitraryVariable
+    parameters: [ 500.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+#    formula: maxResource #success same as resource
 #  minSpawnWait: &minSpawnWait
 #    type: LinearVariable
 #    parameters: [ 40.0, 1.0, 71.0, 10.0 ]
@@ -93,7 +95,7 @@ launcher:
 
 terminate:
   type: StableForSteps
-  parameters: [ 300, 3 ]
+  parameters: [ 200, 3 ]
 
 export:
   - type: CSVExporter

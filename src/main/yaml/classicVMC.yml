@@ -18,7 +18,7 @@ variables:
 #    language: kotlin
   maxResource: &maxResource
     type: ArbitraryVariable
-    parameters: [ 3.0, [ 1.5, 3.0, 4.5, 6.0, 7.5 ] ]
+    parameters: [ 1.5, [ 1.5, 3.0, 4.5, 6.0, 7.5 ] ]
 #    parameters: [ 3.0, [ 1.0, 2.0, 3.0, 5.0, 10.0 ] ]
 #    formula: System.getenv("MAX_RESOURCE").toDouble() #1
 #    language: kotlin
@@ -64,7 +64,7 @@ seeds:
 
 layers:
   - type: BidimensionalGaussianLayer
-    parameters: [5, 25, *maxSuccess, *gaussianShape ]
+    parameters: [0, 25, *maxSuccess, *gaussianShape ]
     molecule: successSource
 
 incarnation: collektive
@@ -117,7 +117,7 @@ launcher:
 
 terminate:
     type: StableForSteps
-    parameters: [ 300, 3 ]
+    parameters: [ 200, 3 ]
 
 export:
   - type: CSVExporter
