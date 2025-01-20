@@ -1,3 +1,20 @@
+## [1.8.0](https://github.com/angelacorte/fieldVMC/compare/1.7.1...1.8.0) (2025-01-20)
+
+### Features
+
+* remove the wait before spawning ([2aa2e7f](https://github.com/angelacorte/fieldVMC/commit/2aa2e7fb2667afa70f5e8cc49dc731b7251f78af))
+
+### Bug Fixes
+
+* adapt simulations to be similar ([9d50cf8](https://github.com/angelacorte/fieldVMC/commit/9d50cf835258783975729aa286fd6ed65f0875f0))
+
+### General maintenance
+
+* add placeholder data ([40c9746](https://github.com/angelacorte/fieldVMC/commit/40c9746379d4f1ef8a4b46e8df2d71625d12c81a))
+* delete old data ([17607ac](https://github.com/angelacorte/fieldVMC/commit/17607ac3998c383099fbdbab88100f391155445c))
+* **release:** update gradle.properties .env versions to 1.7.1 [skip ci] ([bd6ed86](https://github.com/angelacorte/fieldVMC/commit/bd6ed86a7238fc0b62efbf8f4279b1bbd625c814))
+* remove useless aggregator min from children-count ([0118190](https://github.com/angelacorte/fieldVMC/commit/0118190c99968553a6d950f361edca093e47b9e8))
+
 ## [1.7.1](https://github.com/angelacorte/fieldVMC/compare/1.7.0...1.7.1) (2025-01-20)
 
 ### Dependency updates
