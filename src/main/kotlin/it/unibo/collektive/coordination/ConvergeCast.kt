@@ -22,16 +22,18 @@ fun <T, ID : Comparable<ID>> Aggregate<ID>.convergeCast(
     local: T,
     disambiguateParent: (ID, ID) -> ID = { a, b -> minOf(a, b) },
     reduce: (T, T) -> T,
-): T = share(local) { field ->
-    val parent = findParent(potential, disambiguateParent)
-    val neighborParents = neighboring(parent) // Each device is mapped to its parent
-    val childrenValues = neighborParents.alignedMap(field) { itsParent, itsLocal ->
-        Channel(isFromChild = itsParent == localId, itsLocal)
+): T =
+    share(local) { field ->
+        val parent = findParent(potential, disambiguateParent)
+        val neighborParents = neighboring(parent) // Each device is mapped to its parent
+        val childrenValues =
+            neighborParents.alignedMap(field) { itsParent, itsLocal ->
+                Channel(isFromChild = itsParent == localId, itsLocal)
+            }
+        childrenValues.fold(local) { accumulator, channel ->
+            if (channel.isFromChild) reduce(accumulator, channel.localValue) else accumulator
+        }
     }
-    childrenValues.fold(local) { accumulator, channel ->
-        if (channel.isFromChild) reduce(accumulator, channel.localValue) else accumulator
-    }
-}
 
 /**
  * Spreads the [localResource] to the children of this node, according to the [localSuccess] of each child.
@@ -42,28 +44,31 @@ fun <ID : Comparable<ID>> Aggregate<ID>.spreadToChildren(
     localResource: Double,
     localSuccess: Double,
     disambiguateParent: (ID, ID) -> ID = { a, b -> minOf(a, b) },
-): Double = exchanging(localResource) { resource ->
-    val parent = findParent(potential, disambiguateParent) // the parent of this device
-    val myLocalResources = resource.mapWithId { id, neighborResource ->
-        if (id == parent) neighborResource else 0.0
-    }.fold(localResource) { a, b -> a + b }
-    val neighborParents = neighboring(parent) // Each device is mapped to its parent
-    val childrenSuccess: Field<ID, Double> = neighborParents
-        .alignedMap(neighboring(localSuccess)) { itsParent, itsSuccess ->
-            when {
-                itsParent == localId -> itsSuccess
-                else -> 0.0
+): Double =
+    exchanging(localResource) { resource ->
+        val parent = findParent(potential, disambiguateParent) // the parent of this device
+        val myLocalResources =
+            resource.mapWithId { id, neighborResource ->
+                if (id == parent) neighborResource else 0.0
+            }.fold(localResource) { a, b -> a + b }
+        val neighborParents = neighboring(parent) // Each device is mapped to its parent
+        val childrenSuccess: Field<ID, Double> =
+            neighborParents
+                .alignedMap(neighboring(localSuccess)) { itsParent, itsSuccess ->
+                    when {
+                        itsParent == localId -> itsSuccess
+                        else -> 0.0
+                    }
+                }
+        val selfConsumption = myLocalResources / childrenSuccess.fold(1) { a, b -> a + (1.takeIf { b > 0 } ?: 0) }
+        if (potential > 0.0) env["resource"] = selfConsumption
+        val resourcesToSpread = myLocalResources - selfConsumption
+        val overallChildrenSuccess = childrenSuccess.hood(Double.NEGATIVE_INFINITY) { a, b -> a + b }
+        childrenSuccess.map { if (overallChildrenSuccess <= 0) 0.0 else it * resourcesToSpread / overallChildrenSuccess }
+            .yielding {
+                neighboring(myLocalResources)
             }
-        }
-    val selfConsumption = myLocalResources / childrenSuccess.fold(1) { a, b -> a + (1.takeIf { b > 0 } ?: 0) }
-    if (potential > 0.0) env["resource"] = selfConsumption
-    val resourcesToSpread = myLocalResources - selfConsumption
-    val overallChildrenSuccess = childrenSuccess.hood(Double.NEGATIVE_INFINITY) { a, b -> a + b }
-    childrenSuccess.map { if (overallChildrenSuccess <= 0) 0.0 else it * resourcesToSpread / overallChildrenSuccess }
-        .yielding {
-            neighboring(myLocalResources)
-        }
-}.localValue
+    }.localValue
 
 /**
  * Finds the parent of this node in the spanning tree built according to the maximum decrease in [potential].

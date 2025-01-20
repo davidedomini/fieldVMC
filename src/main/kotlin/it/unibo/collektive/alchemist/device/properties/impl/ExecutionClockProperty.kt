@@ -14,8 +14,7 @@ class ExecutionClockProperty<T, P : Position<P>>(
 ) : ExecutionClock, NodeProperty<T> {
     private var clock: Clock = Clock()
 
-    override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> =
-        ExecutionClockProperty(node, environment)
+    override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = ExecutionClockProperty(node, environment)
 
     override fun currentClock(): Clock = clock
 

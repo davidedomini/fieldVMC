@@ -1,7 +1,6 @@
 package it.unibo.collektive.alchemist.device.sensors
 
 interface SuccessSensor {
-
     /**
      * Set the [success] accumulated at the current node.
      */

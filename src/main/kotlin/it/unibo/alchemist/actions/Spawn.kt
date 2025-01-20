@@ -15,7 +15,6 @@ import it.unibo.collektive.alchemist.device.properties.Cycle.SPAWNING
 import it.unibo.collektive.alchemist.device.properties.impl.ExecutionClockProperty
 import it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
 import it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
-import it.unibo.collektive.utils.Stability
 import it.unibo.common.calculateAngle
 import it.unibo.common.minus
 import it.unibo.common.plus
@@ -50,9 +49,10 @@ class Spawn<T : Any, P : Position<P>>(
         )
 
     override fun execute() {
-        val neighbors = environment.getNeighborhood(node)
-            .filterNot { n -> n.id == node.id }
-            .map { it to it.asProperty<T, ExecutionClockProperty<T, P>>() }
+        val neighbors =
+            environment.getNeighborhood(node)
+                .filterNot { n -> n.id == node.id }
+                .map { it to it.asProperty<T, ExecutionClockProperty<T, P>>() }
         val current = node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
         val parent = neighbors.firstOrNull { (n, _) -> node.getConcentration(SimpleMolecule("parent")) == n.id } // if null then it is root
         val children = neighbors.filter { (n, _) -> n.getConcentration(SimpleMolecule("parent")) == node.id }
@@ -90,21 +90,21 @@ class Spawn<T : Any, P : Position<P>>(
                     val x = cloningRange * cos(angle)
                     val y = cloningRange * sin(angle)
                     val absoluteDestination = localPosition + (x to y)
-                    node.setConcentration(SimpleMolecule("children-count"),
-                        (node.getConcentration(SimpleMolecule("children-count")) as Int + 1) as T
+                    node.setConcentration(
+                        SimpleMolecule("children-count"),
+                        (node.getConcentration(SimpleMolecule("children-count")) as Int + 1) as T,
                     )
                     spawn(absoluteDestination)
                 }
                 else -> { }
             }
-
         }
     }
 
     override fun getContext(): Context? = Context.NEIGHBORHOOD
 
     private fun spawn(coordinate: Pair<Double, Double>) {
-        val spawningTime = environment.simulation.time + DoubleTime(randomGenerator.nextRandomDouble(0.0.nextUp() .. 0.1))
+        val spawningTime = environment.simulation.time + DoubleTime(randomGenerator.nextRandomDouble(0.0.nextUp()..0.1))
         val cloneOfThis = node.cloneNode(spawningTime)
         val nodeClock = node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
         cloneOfThis.setConcentration(SimpleMolecule("parent"), node.id as T)

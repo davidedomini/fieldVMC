@@ -17,7 +17,10 @@ interface EnvironmentLayer {
     /**
      * Get the value at a given position of the [name] layer or returns the [default].
      */
-    fun <T> getFromLayerOrDefault(name: String, default: T): T
+    fun <T> getFromLayerOrDefault(
+        name: String,
+        default: T,
+    ): T
 
     /**
      * Checks if the layer exists inside the simulation environment.

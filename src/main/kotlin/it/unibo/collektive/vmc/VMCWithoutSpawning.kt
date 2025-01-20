@@ -20,7 +20,7 @@ fun Aggregate<Int>.withoutSpawning(
     distanceS: DistanceSensor,
     leaderS: LeaderSensor,
     resourceS: ResourceSensor,
-    successS: SuccessSensor
+    successS: SuccessSensor,
 ): Double {
     val isLeader = isLeader(distanceS, leaderS, resourceS)
     val potential = findPotential(distanceS, isLeader)

@@ -13,7 +13,7 @@ class NetworkDiameter() : Extractor<Int> {
         environment: Environment<T, *>,
         reaction: Actionable<T>?,
         time: Time,
-        step: Long
+        step: Long,
     ): Map<String, Int> {
         val diameter = findDiameter(environment)
         return mapOf(NAME to diameter)

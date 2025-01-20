@@ -12,8 +12,7 @@ class LeaderSensorProperty<T, P : Position<P>>(
     private val environment: Environment<T, P>,
     override val node: Node<T>,
 ) : LeaderSensor, NodeProperty<T> {
-    override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> =
-        LeaderSensorProperty(leaderRadius, environment, node)
+    override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = LeaderSensorProperty(leaderRadius, environment, node)
 
     override fun isLeader(): Boolean {
         val leaderMolecule = SimpleMolecule("leader")
@@ -26,6 +25,5 @@ class LeaderSensorProperty<T, P : Position<P>>(
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun <ID : Any> setLeaderId(id: ID) =
-        node.setConcentration(SimpleMolecule("leaderId"), id as T)
+    override fun <ID : Any> setLeaderId(id: ID) = node.setConcentration(SimpleMolecule("leaderId"), id as T)
 }

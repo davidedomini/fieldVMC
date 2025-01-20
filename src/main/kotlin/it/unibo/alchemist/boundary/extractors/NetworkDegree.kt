@@ -15,48 +15,48 @@ class NetworkDegree
         private val filter: ExportFilter = CommonFilters.ONLYFINITE.filteringPolicy,
         aggregatorNames: List<String> = listOf("max", "mean", "stdev"),
         precision: Int = 2,
-) : AbstractDoubleExporter(precision) {
+    ) : AbstractDoubleExporter(precision) {
+        private companion object {
+            private const val NAME = "network-degree"
+        }
 
-    private companion object {
-        private const val NAME = "network-degree"
-    }
+        private val aggregators: Map<String, UnivariateStatistic> =
+            aggregatorNames
+                .associateWith { StatUtil.makeUnivariateStatistic(it) }
+                .filter { it.value.isPresent }
+                .map { it.key to it.value.get() }
+                .toMap()
 
-    private val aggregators: Map<String, UnivariateStatistic> =
-        aggregatorNames
-            .associateWith { StatUtil.makeUnivariateStatistic(it) }
-            .filter { it.value.isPresent }
-            .map { it.key to it.value.get() }
-            .toMap()
+        override val columnNames: List<String> =
+            aggregators.keys
+                .takeIf { it.isNotEmpty() }
+                ?.map { "$NAME[$it]" }
+                ?: listOf("$NAME@node-id")
 
-    override val columnNames: List<String> =
-        aggregators.keys
-            .takeIf { it.isNotEmpty() }
-            ?.map { "$NAME[$it]" }
-            ?: listOf("$NAME@node-id")
+        fun <T> calculateDegreeStatistics(environment: Environment<T, *>): Map<String, Double> {
+            val degrees = environment.nodes.map { environment.getNeighborhood(it).size() }
 
-    fun <T> calculateDegreeStatistics(environment: Environment<T, *>): Map<String, Double> {
-        val degrees = environment.nodes.map { environment.getNeighborhood(it).size() }
+            val maxDegree = degrees.maxOrNull()?.toDouble() ?: 0.0
+            val averageDegree = degrees.average()
+            val variance =
+                degrees.fold(0.0) { acc, degree ->
+                    acc + (degree - averageDegree) * (degree - averageDegree)
+                } / degrees.size
+            val stdDeviation = sqrt(variance)
 
-        val maxDegree = degrees.maxOrNull()?.toDouble() ?: 0.0
-        val averageDegree = degrees.average()
-        val variance = degrees.fold(0.0) { acc, degree ->
-            acc + (degree - averageDegree) * (degree - averageDegree)
-        } / degrees.size
-        val stdDeviation = sqrt(variance)
+            return mapOf(
+                "$NAME.max" to maxDegree,
+                "$NAME.average" to averageDegree,
+                "$NAME.std_deviation" to stdDeviation,
+            )
+        }
 
-        return mapOf(
-            "$NAME.max" to maxDegree,
-            "$NAME.average" to averageDegree,
-            "$NAME.std_deviation" to stdDeviation
-        )
-    }
-
-    override fun <T> extractData(
-        environment: Environment<T, *>,
-        reaction: Actionable<T>?,
-        time: Time,
-        step: Long
-    ): Map<String, Double> = calculateDegreeStatistics(environment)
+        override fun <T> extractData(
+            environment: Environment<T, *>,
+            reaction: Actionable<T>?,
+            time: Time,
+            step: Long,
+        ): Map<String, Double> = calculateDegreeStatistics(environment)
 //        val stats = calculateDegreeStatistics(environment)
 //        val filtered = environment.nodes
 //            .map { n -> environment.getNeighborhood(n).size() }
@@ -66,4 +66,4 @@ class NetworkDegree
 //            "$singleColumnName[$aggregatorName]" to aggregator.evaluate(filtered)
 //        }.toMap()
 //    }
-}
+    }

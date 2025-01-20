@@ -1,10 +1,6 @@
 package it.unibo.collektive.alchemist.device.sensors
 
-import it.unibo.collektive.aggregate.api.Aggregate
-
-
 interface DeviceSpawn {
-
     /**
      * Spawns a new node in the given [coordinate].
      */

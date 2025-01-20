@@ -13,9 +13,7 @@ class ResourceSensorProperty<T, P : Position<P>>(
     override val resourceLowerBound: Double,
     override val maxResource: Double,
 ) : ResourceSensor, NodeProperty<T> {
-
-    override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> =
-        ResourceSensorProperty(environment, node, resourceLowerBound, maxResource)
+    override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = ResourceSensorProperty(environment, node, resourceLowerBound, maxResource)
 
     override fun getResource(): Double =
         when (val layerValue = environment.getLayer(localResource).get().getValue(environment.getPosition(node))) {
@@ -24,8 +22,7 @@ class ResourceSensorProperty<T, P : Position<P>>(
         }
 
     @Suppress("UNCHECKED_CAST")
-    override fun setCurrentOverallResource(resource: Double) =
-        node.setConcentration(resourceMolecule, resource as T)
+    override fun setCurrentOverallResource(resource: Double) = node.setConcentration(resourceMolecule, resource as T)
 
     companion object {
         private val resourceMolecule = SimpleMolecule("resource")
