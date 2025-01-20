@@ -107,7 +107,7 @@ deployments:
 launcher:
   type: DefaultLauncher
   parameters: {
-    batch: ["seed", "constCompetitionRate", "maxChildren", "maxResource", "maxSuccess", "minSpawnWait", "resourceLowerBound"],
+    batch: ["seed", "maxChildren", "maxResource", "maxSuccess", "minSpawnWait", "resourceLowerBound"],
     autoStart: true,
     showProgress: true,
     parallelism: 2
