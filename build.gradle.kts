@@ -112,7 +112,7 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
                 args(
                     "--override",
                     "terminate: { type: AfterTime, parameters: [2] } ",
-                    "launcher: { parameters: { batch: [seed], autoStart: true } }",
+//                    "launcher: { parameters: { batch: [seed], autoStart: true } }",
                 )
             } else {
                 this.additionalConfiguration()
@@ -137,8 +137,8 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
             maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
             File("data").mkdirs()
             args(
-//                "--override",
-//                "launcher: { parameters: { batch: [seed], autoStart: true } }",
+                "--override",
+                "launcher: { parameters: { batch: [seed], autoStart: true } }",
                 "--verbosity",
                 "error",
             )
