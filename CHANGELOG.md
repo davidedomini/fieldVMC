@@ -1,3 +1,26 @@
+## [1.7.1](https://github.com/angelacorte/fieldVMC/compare/1.7.0...1.7.1) (2025-01-20)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v12.2.0 ([7c92739](https://github.com/angelacorte/fieldVMC/commit/7c9273993c45e4d9317244e5a8915d94fdd964c8))
+
+### Bug Fixes
+
+* **ci:** change simulation check in CI ([8125b96](https://github.com/angelacorte/fieldVMC/commit/8125b96a1c8ec2b2392bd7e07613484497c0cd74))
+* **ci:** change simulation check in CI ([80851dc](https://github.com/angelacorte/fieldVMC/commit/80851dcdb504b311a387f497a418b8b08b7b5d4b))
+* remove competition rate from batch ([adb9118](https://github.com/angelacorte/fieldVMC/commit/adb91188f840dda3252f4e2720849f47dadf0399))
+* remove unused env variables in dockerfile ([2f57f7f](https://github.com/angelacorte/fieldVMC/commit/2f57f7f9eefe4c43db91df1ff0c3ae61b0e03303))
+
+### General maintenance
+
+* adapt classic vmc batch values to fieldvmc ([9d57cac](https://github.com/angelacorte/fieldVMC/commit/9d57caca64eee583213027f8a0830e5b6a31605f))
+* **build:** override launcher parameters in ci ([8651950](https://github.com/angelacorte/fieldVMC/commit/8651950f4ef2c6916104d185af1129d55519f4ed))
+* **release:** update gradle.properties .env versions to 1.7.0 [skip ci] ([7227b43](https://github.com/angelacorte/fieldVMC/commit/7227b43131856324610c2e2632ab064a75a3b230))
+
+### Style improvements
+
+* run ktlint formatter ([b6265f9](https://github.com/angelacorte/fieldVMC/commit/b6265f94852dd0c3a0213ca4efd91903f487f8c1))
+
 ## [1.7.0](https://github.com/angelacorte/fieldVMC/compare/1.6.0...1.7.0) (2025-01-17)
 
 ### Features
