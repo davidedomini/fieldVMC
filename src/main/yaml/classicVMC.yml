@@ -28,9 +28,9 @@ variables:
 #    parameters: [ 500.0, [ 100.0, 300.0, 500.0, 1000.0 ] ]
 #    formula: System.getenv("MAX_SUCCESS").toDouble() #500.0
 #    language: kotlin
-  minSpawnWait: &minSpawnWait
-    type: LinearVariable
-    parameters: [ 40.0, 1.0, 71.0, 10.0 ]
+#  minSpawnWait: &minSpawnWait
+#    type: LinearVariable
+#    parameters: [ 40.0, 1.0, 71.0, 10.0 ]
 #    formula: System.getenv("MIN_SPAWN_WAIT").toInt() #21
 #    language: kotlin
   range: &range
@@ -82,7 +82,7 @@ _pool: &program
       - type: FindMax
         parameters: []
       - type: Spawn
-        parameters: [ *cloningRange, *resourceLowerBound, *maxChildren, *minSpawnWait ]
+        parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ] #, *minSpawnWait
 
 deployments:
   - type: Point
@@ -117,7 +117,7 @@ launcher:
 
 terminate:
     type: StableForSteps
-    parameters: [ 1000, 3 ]
+    parameters: [ 300, 3 ]
 
 export:
   - type: CSVExporter

@@ -31,7 +31,6 @@ class Spawn<T : Any, P : Position<P>>(
     private val cloningRange: Double,
     private val resourceThreshold: Double,
     private val maxChildren: Int,
-    private val minSpawnWait: Int,
 ) : AbstractAction<T>(node) {
     override fun cloneAction(
         node: Node<T>,
@@ -45,7 +44,6 @@ class Spawn<T : Any, P : Position<P>>(
             cloningRange,
             resourceThreshold,
             maxChildren,
-            minSpawnWait,
         )
 
     override fun execute() {
@@ -68,7 +66,7 @@ class Spawn<T : Any, P : Position<P>>(
             spawnChildren(localResource)
             node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
         } else if (parent != null && parent.second.currentClock().action == SPAWNING && children.isEmpty() && current.action == MAX) { // I am a leaf
-            if (parent.first.getConcentration(SimpleMolecule("max-leaf-id")) == node.id && current.time % minSpawnWait == 0) { // I'm the max
+            if (parent.first.getConcentration(SimpleMolecule("max-leaf-id")) == node.id ) { // I'm the max
                 // I should spawn
                 val localResource = node.getConcentration(SimpleMolecule("resource")) as Double
                 spawnChildren(localResource)

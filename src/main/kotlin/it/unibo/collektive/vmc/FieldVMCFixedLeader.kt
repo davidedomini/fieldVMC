@@ -2,7 +2,6 @@ package it.unibo.collektive.vmc
 
 import it.unibo.alchemist.collektive.device.DistanceSensor
 import it.unibo.collektive.aggregate.api.Aggregate
-import it.unibo.collektive.aggregate.api.operators.share
 import it.unibo.collektive.alchemist.device.sensors.*
 import it.unibo.collektive.coordination.findParent
 import it.unibo.collektive.field.Field.Companion.fold
@@ -10,9 +9,8 @@ import it.unibo.collektive.lib.convergeSuccess
 import it.unibo.collektive.lib.findPotential
 import it.unibo.collektive.lib.obtainLocalSuccess
 import it.unibo.collektive.lib.spreadResource
-import it.unibo.collektive.utils.Spawner
-import it.unibo.collektive.utils.Stability
-import it.unibo.collektive.utils.determineStability
+import it.unibo.collektive.utils.SpawnerNoStability
+import it.unibo.collektive.utils.determineSpawn
 
 /**
  * Entrypoint of the VMC algorithm, using spawning and destroying after stability policies.
@@ -46,15 +44,7 @@ fun Aggregate<Int>.fixedRootStability(
         val neighbors = neighboring(locationS.coordinates())
         val localPosition = neighbors.localValue
         val neighborPositions = locationS.surroundings()
-        val now = devSpawn.currentTime()
-        share(Stability()) { neighborhoodStability ->
-            val lastChanged = evolve(now to listOf(potential, localSuccess, success, localResource)) { last ->
-                val current = listOf(potential, localSuccess, success, localResource)
-                if (current == last.second) { last } else { now to current }
-            }.first
-            val localStability = neighborhoodStability.localValue
-            determineStability(childrenCount, localResource, lastChanged, now, potential, localPosition, neighborPositions, localStability, devSpawn, env, random, resourceS)
-        }
+        determineSpawn(childrenCount, localResource, localPosition, neighborPositions, devSpawn, random, resourceS)
     }
 }
 
@@ -65,7 +55,7 @@ fun Aggregate<Int>.vmcFixedLeader(
     locationS: LocationSensor,
     resourceS: ResourceSensor,
     successS: SuccessSensor,
-    spawner: Spawner,
+    spawner: SpawnerNoStability,
 ): Double {
     val isLeader = env.get<Boolean>("leader")
     val potential = findPotential(distanceS, isLeader)

@@ -20,9 +20,9 @@ variables:
   #    language: kotlin
   maxSuccess: &maxSuccess
     formula: maxResource #success same as resource
-  minSpawnWait: &minSpawnWait
-    type: LinearVariable
-    parameters: [ 40.0, 1.0, 71.0, 10.0 ]
+#  minSpawnWait: &minSpawnWait
+#    type: LinearVariable
+#    parameters: [ 40.0, 1.0, 71.0, 10.0 ]
   #    formula: System.getenv("MIN_SPAWN_WAIT").toDouble() #40.0 / 20.0
   #    language: kotlin
   range: &range
@@ -80,7 +80,7 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
         parameters: [*resourceLowerBound, *maxResource]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
-        parameters: [ *cloningRange, *maxChildren, *minSpawnWait ]
+        parameters: [ *cloningRange, *maxChildren ] #, *minSpawnWait
 
 launcher:
   type: DefaultLauncher
@@ -93,7 +93,7 @@ launcher:
 
 terminate:
   type: StableForSteps
-  parameters: [ 1000, 3 ]
+  parameters: [ 300, 3 ]
 
 export:
   - type: CSVExporter
