@@ -109,7 +109,11 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
 //                },
 //            )
             if (System.getenv("CI") == "true") {
-                args("--override", "terminate: { type: AfterTime, parameters: [2] } ")
+                args(
+                    "--override",
+                    "terminate: { type: AfterTime, parameters: [2] } ",
+                    "launcher: { parameters: { batch: [seed], autoStart: true } }",
+                )
             } else {
                 this.additionalConfiguration()
             }
