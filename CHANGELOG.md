@@ -1,3 +1,18 @@
+## [1.8.3](https://github.com/angelacorte/fieldVMC/compare/1.8.2...1.8.3) (2025-01-21)
+
+### Bug Fixes
+
+* change way to evaluate network degree in classicVMC ([af8b198](https://github.com/angelacorte/fieldVMC/commit/af8b1983949c9a2ed6d9e2ee5e49e2130c52dd48))
+
+### General maintenance
+
+* minors in simulations setup ([7453a24](https://github.com/angelacorte/fieldVMC/commit/7453a24a4c27fd9a7173ca8c4b24dd9fe9b42a74))
+* **release:** update gradle.properties .env versions to 1.8.2 [skip ci] ([7434a02](https://github.com/angelacorte/fieldVMC/commit/7434a028e96239154e047de83297e8c3309e76d2))
+
+### Refactoring
+
+* correct name of metric node degree ([2d880af](https://github.com/angelacorte/fieldVMC/commit/2d880af2f8b3cf4b511b251edb4ceb6bc814704a))
+
 ## [1.8.2](https://github.com/angelacorte/fieldVMC/compare/1.8.1...1.8.2) (2025-01-21)
 
 ### Dependency updates
