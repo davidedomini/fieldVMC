@@ -10,7 +10,7 @@ import it.unibo.alchemist.util.StatUtil
 import org.apache.commons.math3.stat.descriptive.UnivariateStatistic
 import kotlin.math.sqrt
 
-class NetworkDegree
+class NodeDegree
     @JvmOverloads
     constructor(
         val checkChildren: Boolean = false,
