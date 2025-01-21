@@ -18,8 +18,8 @@ variables:
 #    language: kotlin
   maxResource: &maxResource
     type: ArbitraryVariable
-    parameters: [ 1.5, [ 1.5, 3.0, 4.5, 6.0, 7.5 ] ]
-#    parameters: [ 3.0, [ 1.0, 2.0, 3.0, 5.0, 10.0 ] ]
+    parameters: [ 3.0, [ 1.0, 2.0, 3.0, 5.0, 10.0 ] ]
+#    parameters: [ 1.5, [ 1.5, 3.0, 4.5, 6.0, 7.5 ] ]
 #    formula: System.getenv("MAX_RESOURCE").toDouble() #1
 #    language: kotlin
   maxSuccess: &maxSuccess
@@ -50,7 +50,7 @@ variables:
     0.9
   seed: &seed
     min: 0
-    max: 10
+    max: 100
     step: 1
     default: 0
 
@@ -129,7 +129,7 @@ export:
       - time
       - type: NetworkDiameter
       - type: NumberOfNodes
-      - type: NetworkDegree
+      - type: NodeDegree
         parameters: [ true ]
       - molecule: children-count
         aggregators: [ max, mean, stdev ]
@@ -147,10 +147,10 @@ export:
         aggregators: [ min, max, mean, stdev ]
         value-filter: onlyfinite
         precision: 3
-      - molecule: local-resource
-        aggregators: [ min, max, mean, stdev ]
-        value-filter: onlyfinite
-        precision: 3
+#      - molecule: local-resource
+#        aggregators: [ min, max, mean, stdev ]
+#        value-filter: onlyfinite
+#        precision: 3
 
 # from command line: CLONING_RANGE=5 CONST_COMPETITION_RATE=2 CONST_CONSUMPTION_RATE=0.1 CONST_PRODUCTION_RATE=0.1 CONST_TRANSFER_RATE=0.5 DEFAULT=0 MAX=20 MAX_CHILDREN=3 MAX_RESOURCE=3.0 MAX_SUCCESS=500.0 MIN=0 MIN_SPAWN_WAIT=21 RESOURCE_LOWER_BOUND=5.0 SENSOR_COMPETITION_RATE=0.1 SENSOR_PRODUCTION_RATE=1.0 SENSOR_TRANSFER_RATE=0.5 VESSELS_ADAPTATION_RATE=0.9 ./gradlew runClassicVMCGraphic
 #    formula: System.getenv("CLONING_RANGE").toInt() #5

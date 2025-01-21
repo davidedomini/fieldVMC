@@ -36,7 +36,7 @@ variables:
   #    language: kotlin
   seed: &seed
     min: 0
-    max: 10
+    max: 100
     step: 1
     default: 0
 network-model:
@@ -107,7 +107,7 @@ export:
       - time
       - type: NetworkDiameter
       - type: NumberOfNodes
-      - type: NetworkDegree
+      - type: NodeDegree
         parameters: []
       - molecule: children-count
         aggregators: [ max, mean, stdev ]
