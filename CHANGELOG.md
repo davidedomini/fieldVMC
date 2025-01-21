@@ -1,3 +1,18 @@
+## [1.8.1](https://github.com/angelacorte/fieldVMC/compare/1.8.0...1.8.1) (2025-01-21)
+
+### Dependency updates
+
+* **deps:** update alchemist to v37 ([cb38b2d](https://github.com/angelacorte/fieldVMC/commit/cb38b2d6e5a71a3d4a3edf5f7134a35ce9f2fb15))
+
+### Bug Fixes
+
+* adapt to new alchemist version ([0c612ac](https://github.com/angelacorte/fieldVMC/commit/0c612ac1b1df782e9862e0bf87c9ef2cd9b4c8f9))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.8.0 [skip ci] ([f62ea39](https://github.com/angelacorte/fieldVMC/commit/f62ea39f4a7e5be4e1c6b7f0ee06c258e22536a5))
+* restore placeholder data ([de18617](https://github.com/angelacorte/fieldVMC/commit/de1861763654758bf1a887350b47b4723aac84f0))
+
 ## [1.8.0](https://github.com/angelacorte/fieldVMC/compare/1.7.1...1.8.0) (2025-01-20)
 
 ### Features
