@@ -130,7 +130,7 @@ export:
       - type: NetworkDiameter
       - type: NumberOfNodes
       - type: NetworkDegree
-        parameters: [ ]
+        parameters: [ true ]
       - molecule: children-count
         aggregators: [ max, mean, stdev ]
         value-filter: onlyfinite

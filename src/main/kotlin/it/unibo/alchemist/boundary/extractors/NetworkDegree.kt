@@ -5,6 +5,7 @@ import it.unibo.alchemist.boundary.exportfilters.CommonFilters
 import it.unibo.alchemist.model.Actionable
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Time
+import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.alchemist.util.StatUtil
 import org.apache.commons.math3.stat.descriptive.UnivariateStatistic
 import kotlin.math.sqrt
@@ -12,6 +13,7 @@ import kotlin.math.sqrt
 class NetworkDegree
     @JvmOverloads
     constructor(
+        val checkChildren: Boolean = false,
         private val filter: ExportFilter = CommonFilters.ONLYFINITE.filteringPolicy,
         aggregatorNames: List<String> = listOf("max", "mean", "stdev"),
         precision: Int = 2,
@@ -34,8 +36,17 @@ class NetworkDegree
                 ?: listOf("$NAME@node-id")
 
         fun <T> calculateDegreeStatistics(environment: Environment<T, *>): Map<String, Double> {
-            val degrees = environment.nodes.map { environment.getNeighborhood(it).size() }
-
+            val degrees = environment.nodes.map { node ->
+                val neighbors = environment.getNeighborhood(node)
+                if(checkChildren) {
+                    neighbors.filter { n ->
+                        n.getConcentration(SimpleMolecule("parent")) == node.id ||
+                            node.getConcentration(SimpleMolecule("parent")) == n.id
+                    }.size
+                } else {
+                    neighbors.size()
+                }
+            }
             val maxDegree = degrees.maxOrNull()?.toDouble() ?: 0.0
             val averageDegree = degrees.average()
             val variance =
