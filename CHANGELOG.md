@@ -1,3 +1,13 @@
+## [1.8.2](https://github.com/angelacorte/fieldVMC/compare/1.8.1...1.8.2) (2025-01-21)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v12.3.0 ([#118](https://github.com/angelacorte/fieldVMC/issues/118)) ([5cf56e0](https://github.com/angelacorte/fieldVMC/commit/5cf56e023f86e5020e42b04fb11bafeb418f7063))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.8.1 [skip ci] ([f7e34bb](https://github.com/angelacorte/fieldVMC/commit/f7e34bbc4004b33c39a82fd8473e758f9bee4078))
+
 ## [1.8.1](https://github.com/angelacorte/fieldVMC/compare/1.8.0...1.8.1) (2025-01-21)
 
 ### Dependency updates
