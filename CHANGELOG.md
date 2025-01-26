@@ -1,3 +1,24 @@
+## [1.8.4](https://github.com/angelacorte/fieldVMC/compare/1.8.3...1.8.4) (2025-01-26)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v12.3.1 ([3cda2a0](https://github.com/angelacorte/fieldVMC/commit/3cda2a00cbe90456c03049643ac4796ec917e15c))
+* **deps:** update alchemist to v37.1.3 ([99ccd65](https://github.com/angelacorte/fieldVMC/commit/99ccd658d4af664452605781fc2b31b770dbc815))
+* **deps:** update alchemist to v37.1.4 ([78b9779](https://github.com/angelacorte/fieldVMC/commit/78b97795ab6b7e6a9e120677ed308de48da6d5aa))
+* **deps:** update alchemist to v37.1.5 ([35a3211](https://github.com/angelacorte/fieldVMC/commit/35a3211889102d568af172d5c7e92074333a365e))
+* **deps:** update plugin com.gradle.enterprise to v3.19.1 ([aedea3a](https://github.com/angelacorte/fieldVMC/commit/aedea3acb3b73a1e76a771aa29292cc337027971))
+* **deps:** update plugin gitsemver to v3.1.8 ([c31c800](https://github.com/angelacorte/fieldVMC/commit/c31c800049704ef0f27f4e15fbbe851135abf359))
+* **deps:** update plugin multijvmtesting to v3.2.0 ([6bb4fa0](https://github.com/angelacorte/fieldVMC/commit/6bb4fa0e2be31b9880a5bf1fd4e025ee06f99fa3))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.7.3 ([f08f844](https://github.com/angelacorte/fieldVMC/commit/f08f8447d655b18f5568a6d49615d40a62ef8390))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.7.6 ([dab758b](https://github.com/angelacorte/fieldVMC/commit/dab758bc38fc77cccfef9ac9219e028572f8c015))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.8.3 [skip ci] ([50d0efe](https://github.com/angelacorte/fieldVMC/commit/50d0efe898d59a135458f83df8ca2576449d19b1))
+
 ## [1.8.3](https://github.com/angelacorte/fieldVMC/compare/1.8.2...1.8.3) (2025-01-21)
 
 ### Bug Fixes
