@@ -1,3 +1,20 @@
+## [1.8.5](https://github.com/angelacorte/fieldVMC/compare/1.8.4...1.8.5) (2025-01-27)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin.jvm to v2.1.10 ([057b0a0](https://github.com/angelacorte/fieldVMC/commit/057b0a042de7ba86c4ea4bdb5ced3e225a44a8cc))
+* **deps:** update plugin gitsemver to v3.1.9 ([a4f68af](https://github.com/angelacorte/fieldVMC/commit/a4f68af4321b0f632a334f38fd851b6d568ba31b))
+* **deps:** update plugin gitsemver to v4 ([0082ac1](https://github.com/angelacorte/fieldVMC/commit/0082ac1c789649d899add74f07c6beae44747782))
+* **deps:** update plugin multijvmtesting to v3.2.1 ([531e8d2](https://github.com/angelacorte/fieldVMC/commit/531e8d2538026a29acf99becaa38aa5f6a5ee312))
+
+### Build and continuous integration
+
+* **deps:** update actions/setup-node action to v4.2.0 ([1c9b91c](https://github.com/angelacorte/fieldVMC/commit/1c9b91c5b0eecb05952f4b8b00d12400a4ca05a1))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.8.4 [skip ci] ([9b3d5a3](https://github.com/angelacorte/fieldVMC/commit/9b3d5a325769ab8daadd242049ad2bcb8b9c0545))
+
 ## [1.8.4](https://github.com/angelacorte/fieldVMC/compare/1.8.3...1.8.4) (2025-01-26)
 
 ### Dependency updates
