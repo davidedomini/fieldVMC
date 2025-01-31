@@ -1,3 +1,18 @@
+## [1.8.6](https://github.com/angelacorte/fieldVMC/compare/1.8.5...1.8.6) (2025-01-31)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v12.3.3 ([e35ca62](https://github.com/angelacorte/fieldVMC/commit/e35ca62e79b284a9c2fb33e4e259ac933871a6ae))
+* **deps:** update alchemist to v37.1.6 ([8b90530](https://github.com/angelacorte/fieldVMC/commit/8b9053091da30d051006dd6d4216aca6a70628f9))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.7.8 ([f0e29ee](https://github.com/angelacorte/fieldVMC/commit/f0e29ee421a4c2904283a1844018cf37f1c04b23))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.8.5 [skip ci] ([53089b7](https://github.com/angelacorte/fieldVMC/commit/53089b7826c28a51db5bec0099578b9bf2f52c37))
+
 ## [1.8.5](https://github.com/angelacorte/fieldVMC/compare/1.8.4...1.8.5) (2025-01-27)
 
 ### Dependency updates
