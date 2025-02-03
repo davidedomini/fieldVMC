@@ -1,3 +1,23 @@
+## [1.8.7](https://github.com/angelacorte/fieldVMC/compare/1.8.6...1.8.7) (2025-02-03)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v13 ([5eedb9e](https://github.com/angelacorte/fieldVMC/commit/5eedb9e5319b8313b6059035db59732e9d43ca4c))
+* **deps:** update alchemist to v37.1.7 ([aa5f624](https://github.com/angelacorte/fieldVMC/commit/aa5f62484a2a6d705ad11b07d4e76ce213296c3d))
+* **deps:** update dependency gradle to v8.12.1 ([ed564ec](https://github.com/angelacorte/fieldVMC/commit/ed564ec7e601105d075e183f9059200f1fe07ff2))
+* **deps:** update dependency xarray to v2025.1.2 ([7ae8ec9](https://github.com/angelacorte/fieldVMC/commit/7ae8ec9ef726b1608fffad47404d5cd9d970801a))
+* **deps:** update plugin gitsemver to v4.0.2 ([c17c587](https://github.com/angelacorte/fieldVMC/commit/c17c5872989be42ec0869d183b7328b46d8cc92f))
+* **deps:** update plugin kotlin-qa to v0.78.0 ([5000e19](https://github.com/angelacorte/fieldVMC/commit/5000e19b83d74dd79a4d11516426c026388cbf48))
+* **deps:** update plugin multijvmtesting to v3.2.2 ([34e343d](https://github.com/angelacorte/fieldVMC/commit/34e343d9753c431f66479147da550b6a249eee8d))
+
+### Bug Fixes
+
+* correct distanceTo import as for Collektive v13 ([844830b](https://github.com/angelacorte/fieldVMC/commit/844830b99277514dd9e89f5981643a15f7c0f9c7))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.8.6 [skip ci] ([507aac4](https://github.com/angelacorte/fieldVMC/commit/507aac41d4ef718b3813e9268e680c8879f62d11))
+
 ## [1.8.6](https://github.com/angelacorte/fieldVMC/compare/1.8.5...1.8.6) (2025-01-31)
 
 ### Dependency updates
