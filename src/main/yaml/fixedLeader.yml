@@ -105,10 +105,11 @@ export:
       exportPath: "data"
     data:
       - time
-      - type: NetworkDiameter
       - type: NumberOfNodes
+      - type: NetworkHub
+      - type: NetworkDensity
       - type: NodeDegree
-        parameters: []
+#        parameters: []
       - molecule: children-count
         aggregators: [ max, mean, stdev ]
         value-filter: onlyfinite

@@ -127,8 +127,9 @@ export:
       exportPath: "data"
     data:
       - time
-      - type: NetworkDiameter
       - type: NumberOfNodes
+      - type: NetworkHub
+      - type: NetworkDensity
       - type: NodeDegree
         parameters: [ true ]
       - molecule: children-count
