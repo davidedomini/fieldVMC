@@ -109,25 +109,27 @@ export:
       - type: NetworkHub
       - type: NetworkDensity
       - type: NodeDegree
-#        parameters: []
+        parameters:
+          filter: onlyfinite
+          aggregators: [ max, mean, variance, median ]
       - molecule: children-count
-        aggregators: [ max, mean, stdev ]
+        aggregators: [ max, mean, variance, median ]
         value-filter: onlyfinite
         precision: 3
       - molecule: local-success
-        aggregators: [ min, max, mean, stdev ]
+        aggregators: [ min, max, mean, variance, median ]
         value-filter: onlyfinite
         precision: 3
       - molecule: resource
-        aggregators: [ min, max, mean, stdev ]
+        aggregators: [ min, max, mean, variance, median ]
         value-filter: onlyfinite
         precision: 3
       - molecule: success
-        aggregators: [ min, max, mean, stdev ]
+        aggregators: [ min, max, mean, variance, median ]
         value-filter: onlyfinite
         precision: 3
       - molecule: local-resource
-        aggregators: [ min, max, mean, stdev ]
+        aggregators: [ min, max, mean, variance, median ]
         value-filter: onlyfinite
         precision: 3
 
