@@ -51,28 +51,32 @@ class DrawTreeNodes : Effect {
             val localResource = node.getConcentration(resource).toDouble()
             val localSuccess = node.getConcentration(localSuccess).toDouble()
             val isLeader = node.getConcentration(leader) == true
-            val size: Double = when {
-                localResource > 0 && localSuccess > 0 -> localResource / maxResource + localSuccess / maxSuccess
-                localResource > 0 -> localResource / maxResource
-                localSuccess > 0 -> localSuccess / maxSuccess
-                else -> 0.0.nextUp()
-            }
+            val size: Double =
+                when {
+                    localResource > 0 && localSuccess > 0 -> localResource / maxResource + localSuccess / maxSuccess
+                    localResource > 0 -> localResource / maxResource
+                    localSuccess > 0 -> localSuccess / maxSuccess
+                    else -> 0.0.nextUp()
+                }
             val sizeAsPosition: P = environment.makePosition(size, size)
             val sizeFromLocation = sizeAsPosition + nodePosition.coordinates
-            val sizeInScreenCoordinates = (wormhole.getViewPoint(sizeFromLocation) - viewPoint)
-                .let { Point(abs(it.x), abs(it.y)) }
-                .takeIf { it.x > minNodeSize && it.y > minNodeSize }
-                ?: Point(minNodeSize, minNodeSize)
-            val boundingBoxSize = when {
-                isLeader -> sizeInScreenCoordinates
-                else -> sizeInScreenCoordinates / 2
-            }
-            val boundingBox = listOf(
-                viewPoint + boundingBoxSize,
-                viewPoint + boundingBoxSize.mirrorX(),
-                viewPoint + boundingBoxSize.mirrorY(),
-                viewPoint - boundingBoxSize,
-            )
+            val sizeInScreenCoordinates =
+                (wormhole.getViewPoint(sizeFromLocation) - viewPoint)
+                    .let { Point(abs(it.x), abs(it.y)) }
+                    .takeIf { it.x > minNodeSize && it.y > minNodeSize }
+                    ?: Point(minNodeSize, minNodeSize)
+            val boundingBoxSize =
+                when {
+                    isLeader -> sizeInScreenCoordinates
+                    else -> sizeInScreenCoordinates / 2
+                }
+            val boundingBox =
+                listOf(
+                    viewPoint + boundingBoxSize,
+                    viewPoint + boundingBoxSize.mirrorX(),
+                    viewPoint + boundingBoxSize.mirrorY(),
+                    viewPoint - boundingBoxSize,
+                )
             if (isLeader) {
                 g.stroke = BasicStroke(0.1f * sizeInScreenCoordinates.x.toFloat(), BasicStroke.CAP_ROUND, BasicStroke.CAP_BUTT)
 //                g.drawLine(viewPoint.x, viewPoint.y - boundingBoxSize.y, viewPoint.x, viewPoint.y + sizeInScreenCoordinates.y)
@@ -95,11 +99,12 @@ class DrawTreeNodes : Effect {
                 }
             }
             if (boundingBox.any { wormhole.isInsideView(it) }) {
-                g.color = Color.getHSBColor(
-                    (localResource / maxResource).toFloat() * 0.8f,
-                    1.0f,
-                    (localSuccess / maxSuccess).toFloat() / 2 + 0.5f,
-                )
+                g.color =
+                    Color.getHSBColor(
+                        (localResource / maxResource).toFloat() * 0.8f,
+                        1.0f,
+                        (localSuccess / maxSuccess).toFloat() / 2 + 0.5f,
+                    )
                 g.fillOval(
                     viewPoint.x - sizeInScreenCoordinates.x / 2,
                     viewPoint.y - sizeInScreenCoordinates.y / 2,
@@ -128,28 +133,35 @@ class DrawTreeNodes : Effect {
         val leader = SimpleMolecule("leader")
         val minNodeSize = 10
 
-        private fun Any?.toInt(): Int? = when (this) {
-            is Int -> this
-            is Number -> this.toInt()
-            is String -> this.toInt()
-            null -> null
-            Unit -> null
-            else -> error("Unexpected integer: $this")
-        }
+        private fun Any?.toInt(): Int? =
+            when (this) {
+                is Int -> this
+                is Number -> this.toInt()
+                is String -> this.toInt()
+                null -> null
+                Unit -> null
+                else -> error("Unexpected integer: $this")
+            }
 
-        private fun Any?.toDouble(): Double = when (this) {
-            is Double -> this
-            is Number -> this.toDouble()
-            null -> 0.0
-            Unit -> 0.0
-            else -> error("Unexpected integer: $this")
-        }
+        private fun Any?.toDouble(): Double =
+            when (this) {
+                is Double -> this
+                is Number -> this.toDouble()
+                null -> 0.0
+                Unit -> 0.0
+                else -> error("Unexpected integer: $this")
+            }
 
         private operator fun Point.plus(other: Point): Point = Point(x + other.x, y + other.y)
+
         private operator fun Point.minus(other: Point): Point = Point(x - other.x, y - other.y)
+
         private operator fun Point.times(factor: Int): Point = Point((x * factor), (y * factor))
+
         private operator fun Point.div(factor: Int): Point = Point((x / factor), (y / factor))
+
         private fun Point.mirrorX(): Point = Point(-x, y)
+
         private fun Point.mirrorY(): Point = Point(x, -y)
     }
 }

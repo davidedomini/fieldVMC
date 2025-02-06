@@ -15,7 +15,10 @@ import kotlin.math.sin
 
 typealias Spawner = Aggregate<Int>.(devSpawn: DeviceSpawn, locationSensor: LocationSensor, potential: Double, localSuccess: Double, success: Double, localResource: Double) -> Unit
 
-data class Stability(val spawnStable: Boolean = false, val destroyStable: Boolean = false) {
+data class Stability(
+    val spawnStable: Boolean = false,
+    val destroyStable: Boolean = false,
+) {
     infix fun and(other: Stability): Boolean = spawnStable && other.spawnStable && destroyStable && other.destroyStable
 }
 
@@ -51,7 +54,10 @@ fun Aggregate<Int>.determineStability(
 //            devSpawn.selfDestroy()
             Stability(spawnStable = false, destroyStable = false)
         }
-        neighborPositions.isEmpty() || localResource / (2 + childrenCount) > resourceS.resourceLowerBound && childrenCount < devSpawn.maxChildren && everyoneIsStable -> {
+        neighborPositions.isEmpty() ||
+            localResource / (2 + childrenCount) > resourceS.resourceLowerBound &&
+            childrenCount < devSpawn.maxChildren &&
+            everyoneIsStable -> {
             val relativePositions = neighborPositions.map { it - localPosition }
             val angles = relativePositions.map { atan2(it.second, it.first) }.sorted()
             val angle = calculateAngle(angles, random, devSpawn.maxChildren)

@@ -47,14 +47,15 @@ dependencies {
 val maxHeap: Long? by project
 val heap: Long =
     maxHeap ?: if (System.getProperty("os.name").lowercase().contains("linux")) {
-        ByteArrayOutputStream().use { output ->
-            exec {
-                executable = "bash"
-                args = listOf("-c", "cat /proc/meminfo | grep MemAvailable | grep -o '[0-9]*'")
-                standardOutput = output
-            }
-            output.toString().trim().toLong() / 1024
-        }.also { println("Detected ${it}MB RAM available.") } * 9 / 10
+        ByteArrayOutputStream()
+            .use { output ->
+                exec {
+                    executable = "bash"
+                    args = listOf("-c", "cat /proc/meminfo | grep MemAvailable | grep -o '[0-9]*'")
+                    standardOutput = output
+                }
+                output.toString().trim().toLong() / 1024
+            }.also { println("Detected ${it}MB RAM available.") } * 9 / 10
     } else {
         // Guess 16GB RAM of which 2 used by the OS
         14 * 1024L
@@ -91,7 +92,8 @@ fun String.capitalizeString(): String =
 /*
  * Scan the folder with the simulation files, and create a task for each one of them.
  */
-File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
+File(rootProject.rootDir.path + "/src/main/yaml")
+    .listFiles()
     ?.filter { it.extension == "yml" }
     ?.sortedBy { it.nameWithoutExtension }
     ?.forEach {

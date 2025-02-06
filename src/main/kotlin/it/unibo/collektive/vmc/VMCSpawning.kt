@@ -41,28 +41,56 @@ fun Aggregate<Int>.spawnAndDestroyAfterStability(
     random: RandomGenerator,
     resourceS: ResourceSensor,
     successS: SuccessSensor,
-): Double = with(distanceS) {
-    vmc(devSpawn, distanceS, env, leaderS, locationS, resourceS, successS) { devSpawn, locationSensor, potential: Double, localSuccess: Double, success: Double, localResource: Double ->
-        val children = neighboring(findParent(potential))
-        env["children-around"] = children
-        env["myParent"] = children.localValue
-        val childrenCount = children
-            .fold(0) { acc, parent -> acc + if (parent == localId) 1 else 0 }
-        env["children-count"] = childrenCount
-        val neighbors = neighboring(locationSensor.coordinates())
-        val localPosition = neighbors.localValue
-        val neighborPositions = locationSensor.surroundings()
-        val now = devSpawn.currentTime()
-        share(Stability()) { neighborhoodStability ->
-            val lastChanged = evolve(now to listOf(potential, localSuccess, success, localResource)) { last ->
-                val current = listOf(potential, localSuccess, success, localResource)
-                if (current == last.second) { last } else { now to current }
-            }.first
-            val localStability = neighborhoodStability.localValue
-            determineStability(childrenCount, localResource, lastChanged, now, potential, localPosition, neighborPositions, localStability, devSpawn, env, random, resourceS)
+): Double =
+    with(distanceS) {
+        vmc(
+            devSpawn,
+            distanceS,
+            env,
+            leaderS,
+            locationS,
+            resourceS,
+            successS,
+        ) { devSpawn, locationSensor, potential: Double, localSuccess: Double, success: Double, localResource: Double ->
+            val children = neighboring(findParent(potential))
+            env["children-around"] = children
+            env["myParent"] = children.localValue
+            val childrenCount =
+                children
+                    .fold(0) { acc, parent -> acc + if (parent == localId) 1 else 0 }
+            env["children-count"] = childrenCount
+            val neighbors = neighboring(locationSensor.coordinates())
+            val localPosition = neighbors.localValue
+            val neighborPositions = locationSensor.surroundings()
+            val now = devSpawn.currentTime()
+            share(Stability()) { neighborhoodStability ->
+                val lastChanged =
+                    evolve(now to listOf(potential, localSuccess, success, localResource)) { last ->
+                        val current = listOf(potential, localSuccess, success, localResource)
+                        if (current == last.second) {
+                            last
+                        } else {
+                            now to current
+                        }
+                    }.first
+                val localStability = neighborhoodStability.localValue
+                determineStability(
+                    childrenCount,
+                    localResource,
+                    lastChanged,
+                    now,
+                    potential,
+                    localPosition,
+                    neighborPositions,
+                    localStability,
+                    devSpawn,
+                    env,
+                    random,
+                    resourceS,
+                )
+            }
         }
     }
-}
 
 /**
  * The VMC algorithm with the spawning and destroying of nodes.

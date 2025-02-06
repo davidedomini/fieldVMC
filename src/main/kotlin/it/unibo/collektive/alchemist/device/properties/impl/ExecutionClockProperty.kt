@@ -11,7 +11,8 @@ import it.unibo.collektive.alchemist.device.properties.ExecutionClock
 class ExecutionClockProperty<T, P : Position<P>>(
     override val node: Node<T>,
     private val environment: Environment<T, P>,
-) : ExecutionClock, NodeProperty<T> {
+) : ExecutionClock,
+    NodeProperty<T> {
     private var clock: Clock = Clock()
 
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = ExecutionClockProperty(node, environment)

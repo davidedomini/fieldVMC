@@ -63,7 +63,9 @@ enum class Cycle {
     /**
      * The node has just been spawned.
      */
-    SPAWNING;
+    SPAWNING,
+
+    ;
 
     /**
      * Returns the opposite direction of the current one.

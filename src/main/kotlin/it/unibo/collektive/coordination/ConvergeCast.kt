@@ -9,7 +9,10 @@ import it.unibo.collektive.field.Field.Companion.hood
 import it.unibo.collektive.field.operations.min
 
 // A field mapping input channels to this device to the value channelled in
-data class Channel<T>(val isFromChild: Boolean, val localValue: T)
+data class Channel<T>(
+    val isFromChild: Boolean,
+    val localValue: T,
+)
 
 /**
  * Aggregate a field of type T within a spanning tree built according to the maximum
@@ -48,9 +51,10 @@ fun <ID : Comparable<ID>> Aggregate<ID>.spreadToChildren(
     exchanging(localResource) { resource ->
         val parent = findParent(potential, disambiguateParent) // the parent of this device
         val myLocalResources =
-            resource.mapWithId { id, neighborResource ->
-                if (id == parent) neighborResource else 0.0
-            }.fold(localResource) { a, b -> a + b }
+            resource
+                .mapWithId { id, neighborResource ->
+                    if (id == parent) neighborResource else 0.0
+                }.fold(localResource) { a, b -> a + b }
         val neighborParents = neighboring(parent) // Each device is mapped to its parent
         val childrenSuccess: Field<ID, Double> =
             neighborParents
@@ -64,7 +68,8 @@ fun <ID : Comparable<ID>> Aggregate<ID>.spreadToChildren(
         if (potential > 0.0) env["resource"] = selfConsumption
         val resourcesToSpread = myLocalResources - selfConsumption
         val overallChildrenSuccess = childrenSuccess.hood(Double.NEGATIVE_INFINITY) { a, b -> a + b }
-        childrenSuccess.map { if (overallChildrenSuccess <= 0) 0.0 else it * resourcesToSpread / overallChildrenSuccess }
+        childrenSuccess
+            .map { if (overallChildrenSuccess <= 0) 0.0 else it * resourcesToSpread / overallChildrenSuccess }
             .yielding {
                 neighboring(myLocalResources)
             }
@@ -79,7 +84,8 @@ fun <ID : Comparable<ID>> Aggregate<ID>.findParent(
 ): ID {
     val neighboringPotential = neighboring(potential)
     val localMinimum = neighboringPotential.min(potential)
-    return neighboringPotential.asSequence()
+    return neighboringPotential
+        .asSequence()
         .filter { (_, v) -> v == localMinimum }
         .map { it.first }
         .reduce(disambiguateParent) // the parent

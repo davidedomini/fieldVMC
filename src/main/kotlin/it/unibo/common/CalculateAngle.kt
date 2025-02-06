@@ -31,7 +31,10 @@ fun calculateAngle(
         else -> {
             val fullCircle = angles + (angles.first() + 2 * PI)
 
-            data class Angle(val from: Double, val arc: Double) : Comparable<Angle> {
+            data class Angle(
+                val from: Double,
+                val arc: Double,
+            ) : Comparable<Angle> {
                 override fun compareTo(other: Angle): Int = compareBy(Angle::arc).thenBy(Angle::from).compare(this, other)
             }
             val minArc = 2 * PI / maxChildren

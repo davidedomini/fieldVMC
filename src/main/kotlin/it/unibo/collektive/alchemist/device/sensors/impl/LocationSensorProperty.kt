@@ -9,7 +9,8 @@ import it.unibo.collektive.alchemist.device.sensors.LocationSensor
 class LocationSensorProperty<T : Any, P : Position<P>>(
     private val environment: Environment<T, P>,
     override val node: Node<T>,
-) : LocationSensor, NodeProperty<T> {
+) : LocationSensor,
+    NodeProperty<T> {
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = LocationSensorProperty(environment, node)
 
     override fun coordinates(): Pair<Double, Double> {

@@ -8,13 +8,13 @@ import it.unibo.alchemist.model.NodeProperty
 import it.unibo.alchemist.model.Position
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.collektive.alchemist.device.sensors.SuccessSensor
-import kotlin.jvm.optionals.getOrNull
 
 class SuccessSensorProperty<T, P : Position<P>>(
     private val maxSuccess: Double,
     override val node: Node<T>,
     private val environment: Environment<T, P>,
-) : SuccessSensor, NodeProperty<T> {
+) : SuccessSensor,
+    NodeProperty<T> {
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = SuccessSensorProperty(maxSuccess, node, environment)
 
     @Suppress("UNCHECKED_CAST")
@@ -28,7 +28,10 @@ class SuccessSensorProperty<T, P : Position<P>>(
     override fun getLocalSuccess(): Double = getFromLayer("successSource") // ?: random.nextDouble(0.0, maxSuccess)
 
     private fun <T> getFromLayer(name: String): T =
-        (environment.getLayer(SimpleMolecule(name))?.getValue(environment.getPosition(node)) ?: IllegalStateException("Layer $name not found")) as T
+        (
+            environment.getLayer(SimpleMolecule(name))?.getValue(environment.getPosition(node))
+                ?: IllegalStateException("Layer $name not found")
+        ) as T
 
     override fun toString(): String = this::class.simpleName!!
 }

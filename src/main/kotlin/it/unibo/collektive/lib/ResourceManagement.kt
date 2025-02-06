@@ -13,11 +13,10 @@ fun <ID : Comparable<ID>> Aggregate<ID>.spreadResource(
     resourceSensor: ResourceSensor,
     potential: Double,
     localSuccess: Double,
-): Double {
-    return spreadToChildren(env, potential, if (potential > 0) 0.0 else resourceSensor.getResource(), localSuccess).also {
+): Double =
+    spreadToChildren(env, potential, if (potential > 0) 0.0 else resourceSensor.getResource(), localSuccess).also {
         resourceSensor.setCurrentOverallResource(it)
     }
-}
 
 /**
  * Given a fixed [resource] value for the root, spreads the available resources to the children of this device,

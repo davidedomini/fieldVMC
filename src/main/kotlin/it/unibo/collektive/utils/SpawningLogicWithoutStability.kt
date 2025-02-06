@@ -14,9 +14,9 @@ import kotlin.math.sin
 
 typealias SpawnerNoStability = Aggregate<Int>.(devSpawn: DeviceSpawn, locationSensor: LocationSensor, potential: Double, localSuccess: Double, success: Double, localResource: Double) -> Unit
 
-//data class Stability(val spawnStable: Boolean = false, val destroyStable: Boolean = false) {
+// data class Stability(val spawnStable: Boolean = false, val destroyStable: Boolean = false) {
 //    infix fun and(other: Stability): Boolean = spawnStable && other.spawnStable && destroyStable && other.destroyStable
-//}
+// }
 
 /**
  * The policies that determine if a node should be spawned or destroyed.
@@ -34,12 +34,14 @@ fun Aggregate<Int>.determineSpawn(
     random: RandomGenerator,
     resourceS: ResourceSensor,
 ) {
-    if ( neighborPositions.isEmpty() ||
-        localResource / (2 + childrenCount) > resourceS.resourceLowerBound && childrenCount < devSpawn.maxChildren ) {
+    if (neighborPositions.isEmpty() ||
+        localResource / (2 + childrenCount) > resourceS.resourceLowerBound &&
+        childrenCount < devSpawn.maxChildren
+    ) {
         val relativePositions = neighborPositions.map { it - localPosition }
         val angles = relativePositions.map { atan2(it.second, it.first) }.sorted()
         val angle = calculateAngle(angles, random, devSpawn.maxChildren)
-        if(!angle.isNaN()) {
+        if (!angle.isNaN()) {
             val x = devSpawn.cloningRange * cos(angle)
             val y = devSpawn.cloningRange * sin(angle)
             val absoluteDestination = localPosition + (x to y)

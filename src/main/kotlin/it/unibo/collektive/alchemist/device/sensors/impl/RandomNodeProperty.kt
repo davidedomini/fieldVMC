@@ -8,7 +8,8 @@ import org.apache.commons.math3.random.RandomGenerator
 class RandomNodeProperty<T>(
     override val node: Node<T>,
     private val randomGenerator: RandomGenerator,
-) : it.unibo.collektive.alchemist.device.sensors.RandomGenerator, NodeProperty<T> {
+) : it.unibo.collektive.alchemist.device.sensors.RandomGenerator,
+    NodeProperty<T> {
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = RandomNodeProperty(node, randomGenerator)
 
     override fun nextRandomDouble(): Double = randomGenerator.nextDouble()

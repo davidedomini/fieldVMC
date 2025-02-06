@@ -33,20 +33,29 @@ fun Aggregate<Int>.fixedRootStability(
     random: RandomGenerator,
     resourceS: ResourceSensor,
     successS: SuccessSensor,
-): Double = with(distanceS) {
-    vmcFixedLeader(devSpawn, distanceS, env, locationS, resourceS, successS) { devSpawn, locationS, potential: Double, localSuccess: Double, success: Double, localResource: Double ->
-        val children = neighboring(findParent(potential))
-        env["children-around"] = children
-        env["myParent"] = children.localValue
-        val childrenCount = children
-            .fold(0) { acc, parent -> acc + if (parent == localId) 1 else 0 }
-        env["children-count"] = childrenCount
-        val neighbors = neighboring(locationS.coordinates())
-        val localPosition = neighbors.localValue
-        val neighborPositions = locationS.surroundings()
-        determineSpawn(childrenCount, localResource, localPosition, neighborPositions, devSpawn, random, resourceS)
+): Double =
+    with(distanceS) {
+        vmcFixedLeader(
+            devSpawn,
+            distanceS,
+            env,
+            locationS,
+            resourceS,
+            successS,
+        ) { devSpawn, locationS, potential: Double, localSuccess: Double, success: Double, localResource: Double ->
+            val children = neighboring(findParent(potential))
+            env["children-around"] = children
+            env["myParent"] = children.localValue
+            val childrenCount =
+                children
+                    .fold(0) { acc, parent -> acc + if (parent == localId) 1 else 0 }
+            env["children-count"] = childrenCount
+            val neighbors = neighboring(locationS.coordinates())
+            val localPosition = neighbors.localValue
+            val neighborPositions = locationS.surroundings()
+            determineSpawn(childrenCount, localResource, localPosition, neighborPositions, devSpawn, random, resourceS)
+        }
     }
-}
 
 fun Aggregate<Int>.vmcFixedLeader(
     devSpawn: DeviceSpawn,

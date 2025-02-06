@@ -6,12 +6,12 @@ import it.unibo.alchemist.model.NodeProperty
 import it.unibo.alchemist.model.Position
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentLayer
-import kotlin.jvm.optionals.getOrNull
 
 class LayerProperty<T, P : Position<P>>(
     private val environment: Environment<T, P>,
     override val node: Node<T>,
-) : EnvironmentLayer, NodeProperty<T> {
+) : EnvironmentLayer,
+    NodeProperty<T> {
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = LayerProperty(environment, node)
 
     @Suppress("UNCHECKED_CAST")

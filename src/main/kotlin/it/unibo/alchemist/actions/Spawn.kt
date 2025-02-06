@@ -48,7 +48,8 @@ class Spawn<T : Any, P : Position<P>>(
 
     override fun execute() {
         val neighbors =
-            environment.getNeighborhood(node)
+            environment
+                .getNeighborhood(node)
                 .filterNot { n -> n.id == node.id }
                 .map { it to it.asProperty<T, ExecutionClockProperty<T, P>>() }
         val current = node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
@@ -66,7 +67,7 @@ class Spawn<T : Any, P : Position<P>>(
             spawnChildren(localResource)
             node.asProperty<T, ExecutionClockProperty<T, P>>().nextClock()
         } else if (parent != null && parent.second.currentClock().action == SPAWNING && children.isEmpty() && current.action == MAX) { // I am a leaf
-            if (parent.first.getConcentration(SimpleMolecule("max-leaf-id")) == node.id ) { // I'm the max
+            if (parent.first.getConcentration(SimpleMolecule("max-leaf-id")) == node.id) { // I'm the max
                 // I should spawn
                 val localResource = node.getConcentration(SimpleMolecule("resource")) as Double
                 spawnChildren(localResource)
