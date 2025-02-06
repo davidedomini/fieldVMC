@@ -13,11 +13,11 @@ import org.apache.commons.math3.stat.descriptive.UnivariateStatistic
 class NodeDegree
     @JvmOverloads
     constructor(
-        val checkChildren: Boolean = false,
-        private val filter: ExportFilter = CommonFilters.ONLYFINITE.filteringPolicy,
-        aggregatorNames: List<String> = listOf("max", "mean", "stdev"),
+        private val filter: ExportFilter,
+        aggregators: List<String>,
+        private val checkChildren: Boolean = false,
         precision: Int = 2,
-    ) : AbstractAggregatingDoubleExporter(filter, aggregatorNames, precision) {
+    ) : AbstractAggregatingDoubleExporter(filter, aggregators, precision) {
     private companion object {
         private const val NAME = "network-degree"
     }
@@ -25,14 +25,14 @@ class NodeDegree
     override val columnName: String = NAME
 
     private val aggregators: Map<String, UnivariateStatistic> =
-        aggregatorNames
+        aggregators
             .associateWith { StatUtil.makeUnivariateStatistic(it) }
             .filter { it.value.isPresent }
             .map { it.key to it.value.get() }
             .toMap()
 
     override val columnNames: List<String> =
-        aggregators.keys
+        this@NodeDegree.aggregators.keys
             .takeIf { it.isNotEmpty() }
             ?.map { "$NAME[$it]" }
             ?: listOf("$NAME@node-id")
