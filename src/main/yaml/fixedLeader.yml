@@ -108,6 +108,9 @@ export:
       - type: NumberOfNodes
       - type: NetworkHub
       - type: NetworkDensity
+        parameters:
+          filter: onlyfinite
+          aggregators: [ max, mean, variance, median ]
       - type: NodeDegree
         parameters:
           filter: onlyfinite
