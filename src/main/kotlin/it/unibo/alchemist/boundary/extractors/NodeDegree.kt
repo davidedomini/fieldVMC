@@ -22,8 +22,7 @@ class NodeDegree
         private const val NAME = "network-degree"
     }
 
-    override val colunmName: String
-        get() = NAME
+    override val columnName: String = NAME
 
     private val aggregators: Map<String, UnivariateStatistic> =
         aggregatorNames
