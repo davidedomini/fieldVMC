@@ -6,13 +6,11 @@ import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.Time
 import it.unibo.alchemist.model.molecules.SimpleMolecule
-import it.unibo.alchemist.util.StatUtil
-import org.apache.commons.math3.stat.descriptive.UnivariateStatistic
 
 class NodeDegree
     @JvmOverloads
     constructor(
-        private val filter: ExportFilter,
+        filter: ExportFilter,
         aggregators: List<String>,
         private val checkChildren: Boolean = false,
         precision: Int = 2,
@@ -22,20 +20,6 @@ class NodeDegree
         }
 
         override val columnName: String = NAME
-
-        private val aggregators: Map<String, UnivariateStatistic> =
-            aggregators
-                .associateWith { StatUtil.makeUnivariateStatistic(it) }
-                .filter { it.value.isPresent }
-                .map { it.key to it.value.get() }
-                .toMap()
-
-        override val columnNames: List<String> =
-            this@NodeDegree
-                .aggregators.keys
-                .takeIf { it.isNotEmpty() }
-                ?.map { "$NAME[$it]" }
-                ?: listOf("$NAME@node-id")
 
         override fun <T> getData(
             environment: Environment<T, *>,
