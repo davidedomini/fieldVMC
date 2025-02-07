@@ -107,32 +107,36 @@ export:
       - time
       - type: NumberOfNodes
       - type: NetworkHub
+      - type: NetworkDiameter
+        parameters:
+          filter: onlyfinite
+          aggregators: [ max, mean, variance, median, StandardDeviation ]
       - type: NetworkDensity
         parameters:
           filter: onlyfinite
-          aggregators: [ max, mean, variance, median ]
+          aggregators: [ max, mean, variance, median, StandardDeviation ]
       - type: NodeDegree
         parameters:
           filter: onlyfinite
-          aggregators: [ max, mean, variance, median ]
+          aggregators: [ max, mean, variance, median, StandardDeviation ]
       - molecule: children-count
-        aggregators: [ max, mean, variance, median ]
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
         value-filter: onlyfinite
         precision: 3
       - molecule: local-success
-        aggregators: [ min, max, mean, variance, median ]
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
         value-filter: onlyfinite
         precision: 3
       - molecule: resource
-        aggregators: [ min, max, mean, variance, median ]
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
         value-filter: onlyfinite
         precision: 3
       - molecule: success
-        aggregators: [ min, max, mean, variance, median ]
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
         value-filter: onlyfinite
         precision: 3
       - molecule: local-resource
-        aggregators: [ min, max, mean, variance, median ]
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
         value-filter: onlyfinite
         precision: 3
 
