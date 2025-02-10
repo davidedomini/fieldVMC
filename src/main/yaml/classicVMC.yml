@@ -12,8 +12,9 @@ variables:
   gaussianShape: &gaussianShape
     5
   maxChildren: &maxChildren
-    type: ArbitraryVariable
-    parameters: [ 3.0, [1.0, 2.0, 3.0, 5.0 ] ]
+    3.0
+#    type: ArbitraryVariable
+#    parameters: [ 3.0, [1.0, 2.0, 3.0, 5.0 ] ]
 #    formula: System.getenv("MAX_CHILDREN").toInt() #3
 #    language: kotlin
   maxResource: &maxResource
@@ -50,7 +51,7 @@ variables:
     0.9
   seed: &seed
     min: 0
-    max: 100
+    max: 10
     step: 1
     default: 0
 
@@ -109,7 +110,7 @@ deployments:
 launcher:
   type: DefaultLauncher
   parameters: {
-    batch: ["seed", "maxChildren", "maxResource", "maxSuccess", "resourceLowerBound"], #"minSpawnWait",
+    batch: ["seed", "maxResource", "maxSuccess", "resourceLowerBound"], #"minSpawnWait",
     autoStart: true,
     showProgress: true,
     parallelism: 2
@@ -117,7 +118,7 @@ launcher:
 
 terminate:
     type: StableForSteps
-    parameters: [ 200, 3 ]
+    parameters: [ 200, 2 ]
 
 export:
   - type: CSVExporter
@@ -132,7 +133,7 @@ export:
       - type: NetworkDiameter
         parameters:
           filter: onlyfinite
-          aggregators: [ max, mean, variance, median, StandardDeviation ]
+          aggregators: [ max, mean, median ]
       - type: NetworkDensity
         parameters:
           filter: onlyfinite
