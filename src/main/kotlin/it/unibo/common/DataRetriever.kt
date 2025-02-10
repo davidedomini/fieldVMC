@@ -6,7 +6,10 @@ import kotlin.text.isNotBlank
 import kotlin.text.startsWith
 
 object DataRetriever {
-    fun retrieveData(experiments: List<String>, path: String): Map<String, Double> {
+    fun retrieveData(
+        experiments: List<String>,
+        path: String,
+    ): Map<String, Double> {
         val data = mutableMapOf<String, Double>()
         experiments.forEach { experiment ->
             val experimentFiles = getExperimentFiles(path, experiment)
@@ -30,9 +33,10 @@ object DataRetriever {
         return data
     }
 
-    private fun getExperimentFiles(path: String, experiment: String): Array<File> {
-        return File(path).listFiles { _, name -> name.startsWith(experiment) && name.endsWith(".csv") } ?: emptyArray()
-    }
+    private fun getExperimentFiles(
+        path: String,
+        experiment: String,
+    ): Array<File> = File(path).listFiles { _, name -> name.startsWith(experiment) && name.endsWith(".csv") } ?: emptyArray()
 
     private fun processFile(file: File): Pair<List<String>, List<String>> {
         val lines = file.readLines()
@@ -41,40 +45,56 @@ object DataRetriever {
             throw IllegalArgumentException("No valid data found in file: ${file.name}")
         }
 
-        val cleanedLines = lines.subList(dataStartIndex, lines.size)
-            .mapIndexed { index, line -> if (index == 0) line.removePrefix("# ") else line }
-            .takeWhile { !it.contains("#", ignoreCase = true) }
-            .filter { it.isNotBlank() }
+        val cleanedLines =
+            lines
+                .subList(dataStartIndex, lines.size)
+                .mapIndexed { index, line -> if (index == 0) line.removePrefix("# ") else line }
+                .takeWhile { !it.contains("#", ignoreCase = true) }
+                .filter { it.isNotBlank() }
 
-        val header = cleanedLines.first().split(" ").map { it.trim() }.dropLastWhile { it.isEmpty() }
+        val header =
+            cleanedLines
+                .first()
+                .split(" ")
+                .map { it.trim() }
+                .dropLastWhile { it.isEmpty() }
         var lastRow = cleanedLines.last().split(" ").map { it.trim() }
 
         return Pair(header, lastRow)
     }
 
-    private fun writeCleanedData(path: String, experiment: String, columnNames: List<String>, collectedRows: List<List<String>>) {
-        val outputFile = File("$path/cleaned_${experiment}.csv")
-        val outputContent = buildString {
-            append(columnNames.joinToString(" "))  // Header row
-            append("\n")
-            collectedRows.forEach { row ->
-                append(row.joinToString(" "))  // Append each last row
+    private fun writeCleanedData(
+        path: String,
+        experiment: String,
+        columnNames: List<String>,
+        collectedRows: List<List<String>>,
+    ) {
+        val outputFile = File("$path/cleaned_$experiment.csv")
+        val outputContent =
+            buildString {
+                append(columnNames.joinToString(" ")) // Header row
                 append("\n")
+                collectedRows.forEach { row ->
+                    append(row.joinToString(" ")) // Append each last row
+                    append("\n")
+                }
             }
-        }
         outputFile.writeText(outputContent)
     }
 
-    private fun computeMeanValues(experiment: String, columnNames: List<String>, collectedRows: List<List<String>>): Map<String, Double> {
-        return columnNames.mapIndexed { index, column ->
-            val meanValue = collectedRows.mapNotNull { it[index].toDoubleOrNull() }.average()
-            "$experiment@$column" to meanValue
-        }.toMap()
-    }
+    private fun computeMeanValues(
+        experiment: String,
+        columnNames: List<String>,
+        collectedRows: List<List<String>>,
+    ): Map<String, Double> =
+        columnNames
+            .mapIndexed { index, column ->
+                val meanValue = collectedRows.mapNotNull { it[index].toDoubleOrNull() }.average()
+                "$experiment@$column" to meanValue
+            }.toMap()
 }
 
-
-//private fun retrieveData(): Map<String, Double> {
+// private fun retrieveData(): Map<String, Double> {
 //    val path = Paths.get("").toAbsolutePath().toString() + "/data"
 //    val data = mutableMapOf<String, Double>()
 //    listOf("classic-vmc", "fixed-leader").forEach { experiment ->
@@ -101,4 +121,4 @@ object DataRetriever {
 //        }
 //    }
 //    return data
-//}
+// }

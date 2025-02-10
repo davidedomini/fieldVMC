@@ -32,15 +32,16 @@ class NetworkDensity
                     .toMutableMap()
             return environment.nodes.associateWith { n ->
                 val nodePos = environment.getPosition(n).coordinates
-                outers = outers.mapValues { (key, value) ->
-                    when {
-                        key == "right" && (value.isNaN() || nodePos[0] > value) -> nodePos[0]
-                        key == "left" && (value.isNaN() || nodePos[0] < value) -> nodePos[0]
-                        key == "top" && (value.isNaN() || nodePos[1] > value) -> nodePos[1]
-                        key == "bottom" && (value.isNaN() || nodePos[1] < value) -> nodePos[1]
-                        else -> value
-                    }
-                } as MutableMap<String, Double>
+                outers =
+                    outers.mapValues { (key, value) ->
+                        when {
+                            key == "right" && (value.isNaN() || nodePos[0] > value) -> nodePos[0]
+                            key == "left" && (value.isNaN() || nodePos[0] < value) -> nodePos[0]
+                            key == "top" && (value.isNaN() || nodePos[1] > value) -> nodePos[1]
+                            key == "bottom" && (value.isNaN() || nodePos[1] < value) -> nodePos[1]
+                            else -> value
+                        }
+                    } as MutableMap<String, Double>
                 // Calculate the area of the rectangle given by the outermost nodes
                 val area = (outers["right"]!! - outers["left"]!!) * (outers["top"]!! - outers["bottom"]!!)
                 environment.nodeCount / area

@@ -17,14 +17,16 @@ class NetworkDiameter
         private companion object {
             private const val NAME: String = "network-diameter"
         }
+
         override val columnName: String = NAME
 
         override fun <T> getData(
             environment: Environment<T, *>,
             reaction: Actionable<T>?,
             time: Time,
-            step: Long
-        ): Map<Node<T>, Double> = environment.networkDiameterByHopDistance().let { diameter ->
+            step: Long,
+        ): Map<Node<T>, Double> =
+            environment.networkDiameterByHopDistance().let { diameter ->
                 environment.nodes.associateWith { diameter }
             }
     }
