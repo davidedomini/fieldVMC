@@ -474,7 +474,10 @@ if __name__ == '__main__':
         generate_all_charts(current_experiment_means, current_experiment_errors, basedir=f'{experiment}')
         to_show = [
             "nodes",
-            "network-diameter",
+            "network-hub-xCoord",
+            "network-hub-yCoord",
+            "network-diameter[mean]",
+            "network-density[mean]",
             "network-degree[mean]",
             'children-count[mean]',
             'success[mean]',
