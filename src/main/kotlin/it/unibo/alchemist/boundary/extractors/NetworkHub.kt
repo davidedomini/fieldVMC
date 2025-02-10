@@ -5,26 +5,26 @@ import it.unibo.alchemist.model.Actionable
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Time
 
-class NetworkHub : Extractor<Pair<Double, Double>> {
+class NetworkHub : Extractor<Double> {
+    private companion object {
+        private const val NAME: String = "network-hub"
+    }
+
     override val columnNames: List<String>
-        get() = listOf<String>(NAME)
+        get() = listOf<String>("$NAME-xCoord", "$NAME-yCoord")
 
     override fun <T> extractData(
         environment: Environment<T, *>,
         reaction: Actionable<T>?,
         time: Time,
         step: Long,
-    ): Map<String, Pair<Double, Double>> {
+    ): Map<String, Double> {
         val sum =
             environment.fold(0.0 to 0.0) { acc, next ->
                 val nodePos = environment.getPosition(next)
                 acc.first + nodePos.coordinates[0] to acc.second + nodePos.coordinates[1]
             }
         val center = sum.first / environment.nodeCount to sum.second / environment.nodeCount
-        return mapOf(NAME to center)
-    }
-
-    private companion object {
-        private const val NAME: String = "network-hub"
+        return center.toList().mapIndexed { index, value -> "$NAME@$index" to value }.toMap()
     }
 }
