@@ -86,9 +86,11 @@ deployments:
         parameters: [ *cloningRange, *maxChildren ] #, *minSpawnWait
 
 launcher:
-  type: DefaultLauncher
+  type: it.unibo.alchemist.boundary.launchers.NelderMeadLauncher
   parameters: {
-    batch: ["seed", "maxResource", "resourceLowerBound", "maxSuccess"],  #"minSpawnWait", "maxSuccess",
+    variables: ["maxResource", "resourceLowerBound", "maxSuccess"],
+    metrics: ["nodes", "hub", "diameter", "density", "degree"],
+    maxBatchSize: 10,
     autoStart: true,
     showProgress: true,
     parallelism: 2
