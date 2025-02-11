@@ -1,9 +1,6 @@
 package it.unibo.common
 
 import java.io.File
-import kotlin.text.contains
-import kotlin.text.isNotBlank
-import kotlin.text.startsWith
 
 object DataRetriever {
     fun retrieveData(
@@ -92,33 +89,29 @@ object DataRetriever {
                 val meanValue = collectedRows.mapNotNull { it[index].toDoubleOrNull() }.average()
                 "$experiment@$column" to meanValue
             }.toMap()
-}
 
-// private fun retrieveData(): Map<String, Double> {
-//    val path = Paths.get("").toAbsolutePath().toString() + "/data"
-//    val data = mutableMapOf<String, Double>()
-//    listOf("classic-vmc", "fixed-leader").forEach { experiment ->
-//        val baseFileName = "$path/$experiment.csv"
-//        val inputFile = File(baseFileName)
-//        val outputFile = File("$path/cleaned_$experiment.csv")
-//        val lines = inputFile.readLines()
-//        val dataStartIndex = lines.indexOfFirst { it.startsWith("# time") }
-//        if (dataStartIndex == -1) {
-//            IllegalArgumentException("No valid data found in the file.")
-//        }
-//        val cleanedLines = lines.subList(dataStartIndex, lines.size)
-//            .mapIndexed { index, line -> if (index == 0) line.removePrefix("# ") else line }
-//            .takeWhile { !it.contains("#", ignoreCase = true) }
-//            .filter { it.isNotBlank() }
-//        outputFile.writeText(cleanedLines.joinToString("\n"))
-//        // Extract column names and last row values
-//        val header = cleanedLines.first().split(" ").map { it.trim() }
-//        val lastRow = cleanedLines.last().split(" ").map { it.trim().toDoubleOrNull() ?: Double.NaN }
-//        // Store column to last row value mapping
-//        // Store column to last row value mapping with experiment prefix
-//        header.zip(lastRow).forEach { (column, value) ->
-//            data["$experiment@$column"] = value
-//        }
-//    }
-//    return data
-// }
+    fun meanOnCleanedData(experiments: List<String>, path: String): Map<String, Double> {
+        val data = mutableMapOf<String, Double>()
+        experiments.forEach { experiment ->
+            val cleanedFile = File("$path/cleaned_$experiment.csv")
+            if (!cleanedFile.exists()) {
+                throw IllegalArgumentException("No cleaned file found for experiment: $experiment")
+            }
+            val lines = cleanedFile.readLines()
+            val dataStartIndex = lines.indexOfFirst { it.startsWith("time") }
+            if (dataStartIndex == -1) {
+                throw IllegalArgumentException("No valid data found in file: ${cleanedFile.name}")
+            }
+            val header =
+                lines
+                    .first()
+                    .split(" ")
+                    .map { it.trim() }
+                    .dropLastWhile { it.isEmpty() }
+            //for each row in the file, compute the mean value for each column
+            val mean = lines.last().split(" ").map { it.trim() }
+            data.putAll(computeMeanValues(experiment, header, listOf(mean)))
+        }
+        return data
+    }
+}
