@@ -25,6 +25,7 @@ sourceSets {
             implementation(libs.bundles.alchemist)
             implementation(libs.bundles.collektive)
             implementation(kotlin("reflect"))
+            implementation(libs.rrmxmx)
         }
         resources {
             srcDir("src/main/protelis")
@@ -126,10 +127,10 @@ File(rootProject.rootDir.path + "/src/main/yaml")
             args(
                 "--override",
                 "monitors: { type: SwingGUI, parameters: { graphics: effects/${it.nameWithoutExtension}.json } }",
-                "--override",
-                "launcher: { parameters: { batch: [], autoStart: false } }",
-                "--verbosity",
-                "error",
+//                "--override",
+                //"launcher: { parameters: { batch: [], autoStart: false } }",
+                //"--verbosity",
+                //"error",
             )
         }
         runAllGraphic.dependsOn(graphic)
