@@ -41,14 +41,12 @@ object DataRetriever {
         if (dataStartIndex == -1) {
             throw IllegalArgumentException("No valid data found in file: ${file.name}")
         }
-
         val cleanedLines =
             lines
                 .subList(dataStartIndex, lines.size)
                 .mapIndexed { index, line -> if (index == 0) line.removePrefix("# ") else line }
                 .takeWhile { !it.contains("#", ignoreCase = true) }
                 .filter { it.isNotBlank() }
-
         val header =
             cleanedLines
                 .first()
@@ -90,7 +88,10 @@ object DataRetriever {
                 "$experiment@$column" to meanValue
             }.toMap()
 
-    fun meanOnCleanedData(experiments: List<String>, path: String): Map<String, Double> {
+    fun meanOnCleanedData(
+        experiments: List<String>,
+        path: String,
+    ): Map<String, Double> {
         val data = mutableMapOf<String, Double>()
         experiments.forEach { experiment ->
             val cleanedFile = File("$path/cleaned_$experiment.csv")
