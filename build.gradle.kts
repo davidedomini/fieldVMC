@@ -128,9 +128,9 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                 "--override",
                 "monitors: { type: SwingGUI, parameters: { graphics: effects/${it.nameWithoutExtension}.json } }",
 //                "--override",
-                //"launcher: { parameters: { batch: [], autoStart: false } }",
-                //"--verbosity",
-                //"error",
+                // "launcher: { parameters: { batch: [], autoStart: false } }",
+                 "--verbosity",
+                 "error",
             )
         }
         runAllGraphic.dependsOn(graphic)
@@ -140,8 +140,8 @@ File(rootProject.rootDir.path + "/src/main/yaml")
             maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
             File("data").mkdirs()
             args(
-                "--override",
-                "launcher: { parameters: { batch: [seed], autoStart: true } }",
+//                "--override",
+//                "launcher: { parameters: { batch: [seed], autoStart: true } }",
                 "--verbosity",
                 "error",
             )
