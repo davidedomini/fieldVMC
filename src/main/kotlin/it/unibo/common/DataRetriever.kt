@@ -98,6 +98,7 @@ object DataRetriever {
             if (!cleanedFile.exists()) {
                 throw IllegalArgumentException("No cleaned file found for experiment: $experiment")
             }
+            // todo if the file does not exist, try to create it
             val lines = cleanedFile.readLines()
             val dataStartIndex = lines.indexOfFirst { it.startsWith("time") }
             if (dataStartIndex == -1) {
