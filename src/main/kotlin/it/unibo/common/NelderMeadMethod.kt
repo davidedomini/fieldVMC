@@ -2,16 +2,36 @@ package it.unibo.common
 
 import kotlin.math.pow
 
-class NelderMeadAlgorithm(
+/**
+ * Nelder-Mead optimization method.
+ * Given an initial [simplex], this method iteratively refines the simplex to minimize a given [objective] function.
+ * The method is suitable for optimizing functions that are continuous but not differentiable.
+ * Other parameters are:
+ * - [alpha]: Reflection coefficient (standard value is 1.0);
+ * - [gamma]: Expansion coefficient (standard value is 2.0);
+ * - [rho]: Contraction coefficient (standard value is 0.5);
+ * - [sigma]: Shrink coefficient (standard value is 0.5);
+ * - [maxIterations]: Maximum number of iterations;
+ * - [tolerance]: Termination condition (small variation in function values).
+ */
+class NelderMeadMethod(
+    val simplex: Array<DoubleArray>,
     private val objective: (DoubleArray) -> Double,
-    private val maxIterations: Int = 1000,
-    private val tolerance: Double = 1e-2
+    private val maxIterations: Int,
+    private val tolerance: Double,
+    private val alpha: Double, // Reflection coefficient
+    private val gamma: Double, // Expansion coefficient
+    private val rho: Double, // Contraction coefficient
+    private val sigma: Double, // Shrink coefficient
 ) {
-    fun optimize(simplex: Array<DoubleArray>): DoubleArray {
+    /**
+     * Apply the Nelder-Mead optimization method to the given [simplex] and [objective] function.
+     */
+    fun optimize(): DoubleArray {
         val numPoints = simplex.size
         val numDims = simplex[0].size
         require(numPoints == numDims + 1) {
-            "Simplex must have one more vertex than the number of dimensions"
+            "The vertices of the initial simplex must be one more than the number of dimensions"
         }
         repeat(maxIterations) {
             // Sort simplex by function values
@@ -19,20 +39,16 @@ class NelderMeadAlgorithm(
             val best = simplex[0]
             val worst = simplex[numPoints - 1]
             val secondWorst = simplex[numPoints - 2]
-
             // Compute centroid (excluding worst point)
             val centroid = DoubleArray(numDims) { j ->
                 simplex.take(numPoints - 1).sumOf { it[j] } / (numPoints - 1)
             }
-
             // Reflection
-            val alpha = 1.0
             val reflected = centroid.mapIndexed { j, v -> v + alpha * (v - worst[j]) }.toDoubleArray()
             val reflectedValue = objective(reflected)
 
             if (reflectedValue < objective(best)) {
                 // Expansion
-                val gamma = 2.0
                 val expanded = centroid.mapIndexed { j, v -> v + gamma * (reflected[j] - v) }.toDoubleArray()
                 if (objective(expanded) < reflectedValue) {
                     simplex[numPoints - 1] = expanded
@@ -44,7 +60,6 @@ class NelderMeadAlgorithm(
                 simplex[numPoints - 1] = reflected
             } else {
                 // Contraction
-                val rho = 0.5
                 val contracted = if (reflectedValue < objective(worst)) {
                     centroid.mapIndexed { j, v -> v + rho * (reflected[j] - v) }.toDoubleArray()
                 } else {
@@ -54,13 +69,11 @@ class NelderMeadAlgorithm(
                     simplex[numPoints - 1] = contracted
                 } else {
                     // Shrink simplex
-                    val sigma = 0.5
                     for (i in 1 until numPoints) {
                         simplex[i] = simplex[i].mapIndexed { j, v -> best[j] + sigma * (v - best[j]) }.toDoubleArray()
                     }
                 }
             }
-
             // Check termination condition (small variation in function values)
             val functionValues = simplex.map { objective(it) }
             val maxDiff = functionValues.maxOrNull()!! - functionValues.minOrNull()!!
@@ -71,15 +84,26 @@ class NelderMeadAlgorithm(
 }
 
 fun main() {
-    val objectiveFunction: (DoubleArray) -> Double = { x -> (x[0] - 3).pow(2) + (x[1] - 3).pow(3) }
-    val initialSimplex = arrayOf(
-        doubleArrayOf(0.0, 0.0),
-        doubleArrayOf(10.0, 10.0),
-        doubleArrayOf(2.0, 0.0)
-    )
+    val objectiveFunction: (DoubleArray) -> Double = { x ->
+        (x[0]).pow(2) + (x[1]).pow(2)
+    }
+    val initialSimplex =
+        arrayOf(
+            doubleArrayOf(0.0, 0.0),
+            doubleArrayOf(10.0, 10.0),
+            doubleArrayOf(2.0, 0.0)
+        )
 
-    val optimizer = NelderMeadAlgorithm(objectiveFunction)
-    val result = optimizer.optimize(initialSimplex)
+    val result = NelderMeadMethod(
+        simplex = initialSimplex,
+        objective = objectiveFunction,
+        maxIterations = 1000,
+        tolerance = 1e-2,
+        alpha = 1.0,
+        gamma = 2.0,
+        rho = 0.5,
+        sigma = 0.5,
+    ).optimize()
     println("Optimal solution: x = ${result.joinToString()}")
     println("Objective value: ${objectiveFunction(result)}")
     println("Ideal ${objectiveFunction(doubleArrayOf(3.0, 3.0))}")
