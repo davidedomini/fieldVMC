@@ -6,28 +6,14 @@ variables:
     5
   leaderRadius: &leaderRadius
     100.0
-  #    formula: System.getenv("LEADER_RADIUS").toDouble() # 100.0
-  #    language: kotlin
   maxChildren: &maxChildren
     3.0
-#    type: ArbitraryVariable
-#    parameters: [ 3.0, [ 1.0, 2.0, 3.0, 5.0 ] ]
-  #    formula: System.getenv("MAX_CHILDREN").toInt() #3
-  #    language: kotlin
   maxResource: &maxResource
     type: ArbitraryVariable
     parameters: [ 350.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
-  #    formula: System.getenv("MAX_RESOURCE").toDouble() #500.0
-  #    language: kotlin
   maxSuccess: &maxSuccess
     type: ArbitraryVariable
     parameters: [ 500.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
-#    formula: maxResource #success same as resource
-#  minSpawnWait: &minSpawnWait
-#    type: LinearVariable
-#    parameters: [ 40.0, 1.0, 71.0, 10.0 ]
-  #    formula: System.getenv("MIN_SPAWN_WAIT").toDouble() #40.0 / 20.0
-  #    language: kotlin
   range: &range
     formula: cloningRange * 1.01
   resourceLowerBound: &resourceLowerBound
@@ -35,11 +21,21 @@ variables:
     parameters: [ 5.0, 1.0, 10.0, 1.0 ]
   #    formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
   #    language: kotlin
+#  classicVMCResult: &classicVMCResult
+#    formula: |
+#      geometricMean(
+#        meanOnCleanedData(listOf("classic-vmc"), Paths.get("").toAbsolutePath().toString() + "/data").values,
+#      )
+#    language: kotlin
+  goal: &goal #classicVMCResult
+    formula: |
+      it.unibo.Goal()
+    language: kotlin
   seed: &seed
     min: 0
     max: 10
     step: 1
-    default: 0
+    default: 2
 network-model:
   type: ConnectWithinDistance
   parameters: *range
@@ -57,8 +53,6 @@ incarnation: collektive
 
 _pool: &program
   - time-distribution: 1
-#      type: DiracComb
-#      parameters: [ 0, 1 ]
     type: Event
     actions:
       - type: RunCollektiveProgram
@@ -88,12 +82,13 @@ deployments:
 launcher:
   type: it.unibo.alchemist.boundary.launchers.NelderMeadLauncher
   parameters: {
+    objectiveFunction: *goal,
     variables: ["maxResource", "resourceLowerBound", "maxSuccess"],
-    metrics: ["nodes", "hub", "diameter", "density", "degree"],
-    maxBatchSize: 10,
+    seedName: "seeds",
+    repetitions: 2,
     autoStart: true,
-    showProgress: true,
-    parallelism: 2
+    parallelism: 1,
+    maxIterations: 1,
   }
 
 terminate:
