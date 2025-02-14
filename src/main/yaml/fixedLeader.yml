@@ -73,17 +73,26 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
         parameters: [ *cloningRange, *maxChildren ] #, *minSpawnWait
 
-launcher:
-  type: it.unibo.alchemist.boundary.launchers.NelderMeadLauncher
-  parameters: {
-    objectiveFunction: *goal,
-    variables: ["maxResource", "resourceLowerBound", "maxSuccess"],
-    seedName: "seeds",
-    repetitions: 2,
-    autoStart: true,
-    parallelism: 1,
-    maxIterations: 1,
-  }
+#launcher:
+#  type: DefaultLauncher
+#  parameters: {
+#    batch: ["seed", "maxResource", "maxSuccess", "resourceLowerBound"], #"minSpawnWait",
+#    autoStart: true,
+#    showProgress: true,
+#    parallelism: 2
+#  }
+
+#launcher:
+#  type: it.unibo.alchemist.boundary.launchers.NelderMeadLauncher
+#  parameters: {
+#    objectiveFunction: *goal,
+#    variables: ["maxResource", "resourceLowerBound", "maxSuccess"],
+#    seedName: "seeds",
+#    repetitions: 2,
+#    autoStart: true,
+#    parallelism: 1,
+#    maxIterations: 1,
+#  }
 
 terminate:
   type: StableForSteps
