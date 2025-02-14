@@ -18,29 +18,19 @@ variables:
 #    formula: System.getenv("MAX_CHILDREN").toInt() #3
 #    language: kotlin
   maxResource: &maxResource
-    type: ArbitraryVariable
-    parameters: [ 3.0, [ 1.0, 2.0, 3.0, 5.0, 10.0 ] ]
-#    parameters: [ 1.5, [ 1.5, 3.0, 4.5, 6.0, 7.5 ] ]
-#    formula: System.getenv("MAX_RESOURCE").toDouble() #1
-#    language: kotlin
+    3.0
+#    type: ArbitraryVariable
+#    parameters: [ 3.0, [ 1.0, 2.0, 3.0, 5.0, 10.0 ] ]
   maxSuccess: &maxSuccess
-    type: ArbitraryVariable
-    parameters: [ 500.0, [ 250.0, 500.0, 750.0, 900.0 ] ]
-#    parameters: [ 500.0, [ 100.0, 300.0, 500.0, 1000.0 ] ]
-#    formula: System.getenv("MAX_SUCCESS").toDouble() #500.0
-#    language: kotlin
-#  minSpawnWait: &minSpawnWait
-#    type: LinearVariable
-#    parameters: [ 40.0, 1.0, 71.0, 10.0 ]
-#    formula: System.getenv("MIN_SPAWN_WAIT").toInt() #21
-#    language: kotlin
+    500.0
+#    type: ArbitraryVariable
+#    parameters: [ 500.0, [ 250.0, 500.0, 750.0, 900.0 ] ]
   range: &range
     formula: cloningRange * 1.01
   resourceLowerBound: &resourceLowerBound
-    type: LinearVariable
-    parameters: [ 5.0, 1.0, 10.0, 1.0 ]
-#    formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
-#    language: kotlin
+    5.0
+#    type: LinearVariable
+#    parameters: [ 5.0, 1.0, 10.0, 1.0 ]
   sensorCompetitionRate: &sensorCompetitionRate
     0.1
   sensorProductionRate: &sensorProductionRate
@@ -110,15 +100,17 @@ deployments:
 launcher:
   type: DefaultLauncher
   parameters: {
-    batch: ["seed", "maxResource", "maxSuccess", "resourceLowerBound"], #"minSpawnWait",
+    batch: ["seed"], #"minSpawnWait", , "maxResource", "maxSuccess", "resourceLowerBound"
     autoStart: true,
     showProgress: true,
     parallelism: 2
   }
 
 terminate:
-    type: StableForSteps
-    parameters: [ 200, 2 ]
+    - type: StableForSteps
+      parameters: [ 200, 2 ]
+    - type: AfterTime
+      parameters: [ 1000 ]
 
 export:
   - type: CSVExporter
@@ -158,10 +150,6 @@ export:
         aggregators: [ max, mean, variance, median, StandardDeviation ]
         value-filter: onlyfinite
         precision: 3
-#      - molecule: local-resource
-#        aggregators: [ min, max, mean, stdev ]
-#        value-filter: onlyfinite
-#        precision: 3
 
 # from command line: CLONING_RANGE=5 CONST_COMPETITION_RATE=2 CONST_CONSUMPTION_RATE=0.1 CONST_PRODUCTION_RATE=0.1 CONST_TRANSFER_RATE=0.5 DEFAULT=0 MAX=20 MAX_CHILDREN=3 MAX_RESOURCE=3.0 MAX_SUCCESS=500.0 MIN=0 MIN_SPAWN_WAIT=21 RESOURCE_LOWER_BOUND=5.0 SENSOR_COMPETITION_RATE=0.1 SENSOR_PRODUCTION_RATE=1.0 SENSOR_TRANSFER_RATE=0.5 VESSELS_ADAPTATION_RATE=0.9 ./gradlew runClassicVMCGraphic
 #    formula: System.getenv("CLONING_RANGE").toInt() #5
