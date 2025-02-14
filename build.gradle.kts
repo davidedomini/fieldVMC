@@ -128,9 +128,9 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                 "--override",
                 "monitors: { type: SwingGUI, parameters: { graphics: effects/${it.nameWithoutExtension}.json } }",
                 "--override",
-                 "launcher: { parameters: { batch: [], autoStart: false } }",
-                 "--verbosity",
-                 "error",
+                "launcher: { parameters: { batch: [], autoStart: false } }",
+                "--verbosity",
+                "error",
             )
         }
         runAllGraphic.dependsOn(graphic)
@@ -139,8 +139,9 @@ File(rootProject.rootDir.path + "/src/main/yaml")
             description = "Launches batch experiments for $capitalizedName"
             maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
             File("data").mkdirs()
-            if(capitalizedName == "FixedLeader"){
-                args("--override",
+            if (capitalizedName == "FixedLeader") {
+                args(
+                    "--override",
                     """
                     launcher:
                       type: DefaultLauncher
@@ -150,8 +151,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                         showProgress: true,
                         parallelism: 2
                       }
-                    """.trimIndent()
-
+                    """.trimIndent(),
                 )
             } else {
                 args(
@@ -168,7 +168,8 @@ File(rootProject.rootDir.path + "/src/main/yaml")
             description = "Launches Nelder Mead parameters optimizer for $capitalizedName"
             maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
             File("data").mkdirs()
-            args("--override",
+            args(
+                "--override",
                 """
                 variables:
                   goal: &goal
@@ -187,7 +188,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                     parallelism: 1,
                     maxIterations: 1,
                   }
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
         runAllOptimizer.dependsOn(optimizer)

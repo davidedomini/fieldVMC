@@ -2,7 +2,12 @@ package it.unibo.collektive.vmc
 
 import it.unibo.alchemist.collektive.device.DistanceSensor
 import it.unibo.collektive.aggregate.api.Aggregate
-import it.unibo.collektive.alchemist.device.sensors.*
+import it.unibo.collektive.alchemist.device.sensors.DeviceSpawn
+import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
+import it.unibo.collektive.alchemist.device.sensors.LocationSensor
+import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
+import it.unibo.collektive.alchemist.device.sensors.ResourceSensor
+import it.unibo.collektive.alchemist.device.sensors.SuccessSensor
 import it.unibo.collektive.coordination.findParent
 import it.unibo.collektive.field.Field.Companion.fold
 import it.unibo.collektive.lib.convergeSuccess
@@ -70,7 +75,9 @@ fun Aggregate<Int>.vmcFixedLeader(
     val potential = findPotential(distanceS, isLeader)
     val localSuccess = obtainLocalSuccess(successS)
     val success = convergeSuccess(successS, potential, localSuccess)
-    val localResource = spreadResource(env, potential, success, resourceS.maxResource).also { env["local-resource"] = it }
+    val localResource =
+        spreadResource(env, potential, success, resourceS.maxResource)
+            .also { env["local-resource"] = it }
     spawner(devSpawn, locationS, potential, localSuccess, success, localResource)
     return localResource
 }

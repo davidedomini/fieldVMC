@@ -25,16 +25,18 @@ fun geometricMean(metrics: Collection<Double>): Double =
  * - network degree.
  */
 fun target(): Double {
-    val metrics = listOf(
-        "classic-vmc@nodes",
-        "classic-vmc@network-hub-xCoord",
-        "classic-vmc@network-hub-yCoord",
-        "classic-vmc@network-diameter[mean]",
-        "classic-vmc@nodes-degree[mean]",
-    )
+    val metrics =
+        listOf(
+            "classic-vmc@nodes",
+            "classic-vmc@network-hub-xCoord",
+            "classic-vmc@network-hub-yCoord",
+            "classic-vmc@network-diameter[mean]",
+            "classic-vmc@nodes-degree[mean]",
+        )
     return geometricMean(
         meanOnCleanedData(listOf("classic-vmc"), Paths.get("").toAbsolutePath().toString() + "/data")
-            .filterKeys { it in metrics }.values,
+            .filterKeys { it in metrics }
+            .values,
     )
 }
 

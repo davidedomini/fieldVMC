@@ -49,20 +49,24 @@ class ResourceDistribution<T, P : Position<P>>(
                 .filterNot { n -> n.id == node.id }
                 .map { it to it.asProperty<T, ExecutionClockProperty<T, P>>() }
         val current = node.asProperty<T, ExecutionClockProperty<T, P>>().currentClock()
-        val parent = neighbors.firstOrNull { (n, _) -> node.getConcentration(SimpleMolecule("parent")) == n.id } // if null then it is root
+        val parent = neighbors.firstOrNull { (n, _) -> node.getConcentration(SimpleMolecule("parent")) == n.id }
         val children = neighbors.filter { (n, _) -> n.getConcentration(SimpleMolecule("parent")) == node.id }
         val childrenNotDone =
             children.filterNot { (_, c) ->
                 c.currentClock() == Clock(time = current.time, action = BACKWARD)
             }
         if ((parent == null && childrenNotDone.isEmpty()) ||
-            (current.action == BACKWARD && parent != null && parent.second.currentClock() == Clock(current.time, FORWARD))
+                (current.action == BACKWARD
+                    && parent != null
+                    && parent.second.currentClock() == Clock(current.time, FORWARD)
+                )
         ) {
             var availableResources = node.getConcentration(SimpleMolecule("resource")) as Double
             if (parent == null) { // root adds resources
                 availableResources = availableResources + resourceSensor.maxResource
             }
-            val remainingResources = availableResources - (availableResources * constConsumptionRate) // consume resources
+            // consume resources
+            val remainingResources = availableResources - (availableResources * constConsumptionRate)
             node.setConcentration(SimpleMolecule("resource"), remainingResources as T)
             if (children.isNotEmpty()) { // should not be a leaf to evaluate weight and resource distribution
                 val weightSum =

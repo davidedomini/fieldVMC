@@ -12,10 +12,27 @@ import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
-typealias SpawnerNoStability = Aggregate<Int>.(devSpawn: DeviceSpawn, locationSensor: LocationSensor, potential: Double, localSuccess: Double, success: Double, localResource: Double) -> Unit
+/**
+ * Type alias for a function that spawns devices in an aggregate given some parameters:
+ * - [devSpawn] the device spawn sensor;
+ * - [locationSensor] the location sensor;
+ * - [potential] the potential of the node;
+ * - [localSuccess] the local success of the node;
+ * - [success] the global success of the node;
+ * - [localResource] the local resources of the node.
+ */
+typealias SpawnerNoStability = Aggregate<Int>.(
+    devSpawn: DeviceSpawn,
+    locationSensor: LocationSensor,
+    potential: Double,
+    localSuccess: Double,
+    success: Double,
+    localResource: Double,
+) -> Unit
 
 // data class Stability(val spawnStable: Boolean = false, val destroyStable: Boolean = false) {
-//    infix fun and(other: Stability): Boolean = spawnStable && other.spawnStable && destroyStable && other.destroyStable
+//    infix fun and(other: Stability): Boolean =
+//    spawnStable && other.spawnStable && destroyStable && other.destroyStable
 // }
 
 /**

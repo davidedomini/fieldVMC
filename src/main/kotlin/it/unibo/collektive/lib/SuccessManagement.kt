@@ -16,4 +16,5 @@ fun <ID : Comparable<ID>> Aggregate<ID>.convergeSuccess(
 /**
  * Get the local success of the node.
  */
-fun obtainLocalSuccess(successSensor: SuccessSensor): Double = successSensor.getLocalSuccess().also { successSensor.setLocalSuccess(it) }
+fun obtainLocalSuccess(successSensor: SuccessSensor): Double =
+    successSensor.getLocalSuccess().also { successSensor.setLocalSuccess(it) }

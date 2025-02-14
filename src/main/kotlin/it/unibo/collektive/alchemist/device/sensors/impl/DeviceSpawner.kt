@@ -27,7 +27,8 @@ class DeviceSpawner<T, P : Position<P>>
 
         @Suppress("UNCHECKED_CAST")
         override fun spawn(coordinate: Pair<Double, Double>): Double {
-            val spawningTime = environment.simulation.time + DoubleTime(randomGenerator.nextDouble(0.0.nextUp(), 0.1))
+            val spawningTime =
+                environment.simulation.time + DoubleTime(randomGenerator.nextDouble(0.0.nextUp(), 0.1))
             val cloneOfThis = node.cloneNode(spawningTime)
             cloneOfThis.setConcentration(SimpleMolecule("leader"), false as T)
             val updatedPosition = environment.makePosition(*coordinate.toList().toTypedArray())

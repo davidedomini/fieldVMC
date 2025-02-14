@@ -11,7 +11,6 @@ import java.io.File
  * The mean value is computed by averaging the values of the last row of each file.
  */
 object DataRetriever {
-
     /**
      * Retrieve data from the simulation files.
      * The data is stored in a map where the key is the experiment name and the column name separated by a '@'.
@@ -36,8 +35,10 @@ object DataRetriever {
                 if (columnNames == null) {
                     columnNames = header
                 } else if (columnNames != header) {
-                    throw IllegalArgumentException("Column mismatch in file: ${file.name}.\n" +
-                            "Columns should be: $columnNames\nbut found: $header")
+                    throw IllegalArgumentException(
+                        "Column mismatch in file: ${file.name}.\n" +
+                            "Columns should be: $columnNames\nbut found: $header",
+                    )
                 }
                 collectedRows.add(lastRow)
             }
@@ -46,7 +47,6 @@ object DataRetriever {
         }
         return data
     }
-
 
     /**
      * Retrieves the list of files for a given [experiment] in the specified [path].
@@ -158,7 +158,7 @@ object DataRetriever {
                     .split(" ")
                     .map { it.trim() }
                     .dropLastWhile { it.isEmpty() }
-            //for each row in the file, compute the mean value for each column
+            // for each row in the file, compute the mean value for each column
             val mean = lines.last().split(" ").map { it.trim() }
             data.putAll(computeMeanValues(experiment, header, listOf(mean)))
         }
