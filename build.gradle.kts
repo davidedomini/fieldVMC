@@ -26,6 +26,7 @@ sourceSets {
             implementation(libs.bundles.collektive)
             implementation(kotlin("reflect"))
             implementation(libs.rrmxmx)
+            implementation(libs.slf4j)
         }
         resources {
             srcDir("src/main/protelis")
@@ -185,7 +186,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                     seedName: "seeds",
                     repetitions: 2,
                     autoStart: true,
-                    parallelism: 1,
+                    parallelism: 2,
                     maxIterations: 1,
                   }
                 """.trimIndent(),

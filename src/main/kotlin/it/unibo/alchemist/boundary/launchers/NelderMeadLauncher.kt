@@ -7,6 +7,10 @@ import it.unibo.alchemist.core.Simulation
 import it.unibo.alchemist.model.Environment
 import it.unibo.common.NelderMeadMethod
 import org.danilopianini.rrmxmx.RrmxmxRandom
+import org.slf4j.LoggerFactory
+import java.util.concurrent.ConcurrentLinkedDeque
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
 class NelderMeadLauncher
@@ -19,7 +23,7 @@ class NelderMeadLauncher
         private val autoStart: Boolean = false,
         private val parallelism: Int = Runtime.getRuntime().availableProcessors(),
         private val maxIterations: Int = 1000,
-        private val showProgress: Boolean = false,
+        private val showProgress: Boolean = true,
         private val seed: ULong = RrmxmxRandom.DEFAULT_SEED,
         private val tolerance: Double = 1e-2,
         private val alpha: Double = 1.0, // standard value for the reflection in Nelder-Mead method
@@ -32,19 +36,7 @@ class NelderMeadLauncher
             require(loader.variables.isNotEmpty() || variables.isNotEmpty()) {
                 "No variables found, can not optimize anything."
             }
-            // I need that the variables passed through the loader are numbers
             val simplexVertices: List<Map<String, Double>> = generateSymplexVertices(loader.variables)
-
-            // now I need to run #maxBatchSize times the simulations, with different seeds
-            // the generated results will be used in the objective function to optimize
-
-            fun Simulation<*, *>.configured() =
-                apply {
-                    if (autoStart) {
-                        play()
-                    }
-                }
-            val launchId = launchId.getAndIncrement()
             val seeds =
                 loader.variables[seedName]
                     ?.stream()
@@ -53,37 +45,96 @@ class NelderMeadLauncher
                         it.toInt()
                     }?.toList()
                     ?.take(repetitions) ?: listOf(repetitions)
-            // todo check on amount of instances/vertices
             when {
                 parallelism == 1 -> {
-                    NelderMeadMethod(
-                        simplex = simplexVertices.map { it.values.toDoubleArray() }.toTypedArray(),
-                        objective = { vertex ->
+                    loader.executeWithNelderMead(simplexVertices) { vertex ->
+                        val result = mutableListOf<Double>()
+                        for (s in seeds) {
+                            // associate keys to vertex values
+                            val simulationParameters = variables.associateWith { vertex[variables.indexOf(it)] } + (seedName to s)
+                            val simulation = loader.getWith<Any, Nothing>(simulationParameters).configured()
+                            simulation.run()
+                            result.add(objectiveFunction.invoke(simulation.environment))
+                        }
+                        result.average()
+                    }
+                }
+                else -> {
+                    val launchId = launchId.getAndIncrement()
+                    val workerId = AtomicInteger(0)
+                    val executor =
+                        Executors.newFixedThreadPool(parallelism) {
+                            Thread(it, "Alchemist Pool $launchId worker ${workerId.getAndIncrement()}")
+                        }
+                    val errorQueue = ConcurrentLinkedDeque<Throwable>()
+                    loader
+                        .executeWithNelderMead(simplexVertices) { vertex ->
                             val result = mutableListOf<Double>()
                             for (s in seeds) {
-                                //associate keys to vertex values
+                                // associate keys to vertex values
                                 val simulationParameters = variables.associateWith { vertex[variables.indexOf(it)] } + ("seed" to s)
-                                val simulation = loader.getWith<Any, Nothing>(simulationParameters)
-                                simulation.configured().run()
-                                val res = objectiveFunction.invoke(simulation.environment)
-                                result.add(res)
+                                executor.submit {
+                                    runCatching {
+                                        loader.getWith<Any?, Nothing>(simulationParameters).configured().also {
+                                            result.add(objectiveFunction.invoke(it.environment))
+                                        }
+                                    }.mapCatching { simulation ->
+                                        simulation.run()
+                                        simulation.error.ifPresent { throw it }
+                                        logger.info("Simulation with {} completed successfully", simulationParameters)
+                                    }.onFailure {
+                                        logger.error("Failure for simulation with $simulationParameters", it)
+                                        errorQueue.add(it)
+                                        executor.shutdownNow()
+                                    }.onSuccess {
+                                        if (showProgress) {
+                                            logger.info("Simulation with {} completed", simulationParameters)
+                                        }
+
+
+
+
+                                    }
+                                }
                             }
                             result.average()
-                        },
-                        maxIterations = maxIterations,
-                        tolerance = tolerance,
-                        alpha = alpha,
-                        gamma = gamma,
-                        rho = rho,
-                        sigma = sigma,
-                    ).optimize()
-                        .let { result ->
-                            variables.associateWith { result[variables.indexOf(it)] }
+                        }.also { println("===== RISULTATISSIMO $it") }
+                    executor.shutdown()
+                    executor.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS)
+                    if (errorQueue.isNotEmpty()) {
+                        throw errorQueue.reduce { previous, other ->
+                            previous.addSuppressed(other)
+                            previous
                         }
+                    }
                 }
-                else -> TODO()
             }
         }
+
+        private fun Loader.executeWithNelderMead(
+            simplexVertices: List<Map<String, Double>>,
+            executeFunction: (DoubleArray) -> Double,
+        ): Map<String, Double> =
+            NelderMeadMethod(
+                simplex = simplexVertices.map { it.values.toDoubleArray() }.toTypedArray(),
+                objective = executeFunction,
+                maxIterations = maxIterations,
+                tolerance = tolerance,
+                alpha = alpha,
+                gamma = gamma,
+                rho = rho,
+                sigma = sigma,
+            ).optimize()
+                .let { result ->
+                    this@NelderMeadLauncher.variables.associateWith { result[this@NelderMeadLauncher.variables.indexOf(it)] }
+                }
+
+        private fun Simulation<*, *>.configured() =
+            apply {
+                if (autoStart) {
+                    play()
+                }
+            }
 
         private fun generateSymplexVertices(loaderVariables: Map<String, Variable<*>>): List<Map<String, Double>> {
             val randomGenerator = RrmxmxRandom(seed)
@@ -114,6 +165,6 @@ class NelderMeadLauncher
 
             private val launchId = AtomicInteger(0)
 
-//            private val logger = LoggerFactory.getLogger(this::class.java)
+            private val logger = LoggerFactory.getLogger(this::class.java)
         }
     }

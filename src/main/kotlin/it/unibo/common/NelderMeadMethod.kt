@@ -28,6 +28,7 @@ class NelderMeadMethod(
     fun optimize(): DoubleArray {
         val numPoints = simplex.size
         val numDims = simplex[0].size
+        // todo array dim 0
         require(numPoints == numDims + 1) {
             "The vertices of the initial simplex must be one more than the number of dimensions"
         }
@@ -82,3 +83,6 @@ class NelderMeadMethod(
         return simplex[0]
     }
 }
+
+
+
