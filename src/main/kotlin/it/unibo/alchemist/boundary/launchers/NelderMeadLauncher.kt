@@ -7,10 +7,9 @@ import it.unibo.alchemist.core.Simulation
 import it.unibo.alchemist.model.Environment
 import it.unibo.common.NelderMeadMethod
 import org.danilopianini.rrmxmx.RrmxmxRandom
-import org.slf4j.LoggerFactory
-import java.util.concurrent.ConcurrentLinkedDeque
+import java.util.concurrent.Callable
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
 class NelderMeadLauncher
@@ -21,9 +20,7 @@ class NelderMeadLauncher
         private val seedName: String,
         private val repetitions: Int = 1,
         private val autoStart: Boolean = false,
-        private val parallelism: Int = Runtime.getRuntime().availableProcessors(),
         private val maxIterations: Int = 1000,
-        private val showProgress: Boolean = true,
         private val seed: ULong = RrmxmxRandom.DEFAULT_SEED,
         private val tolerance: Double = 1e-2,
         private val alpha: Double = 1.0, // standard value for the reflection in Nelder-Mead method
@@ -45,88 +42,62 @@ class NelderMeadLauncher
                         it.toInt()
                     }?.toList()
                     ?.take(repetitions) ?: listOf(repetitions)
-            when {
-                parallelism == 1 -> {
-                    loader.executeWithNelderMead(simplexVertices) { vertex ->
-                        val result = mutableListOf<Double>()
-                        for (s in seeds) {
-                            // associate keys to vertex values
-                            val simulationParameters = variables.associateWith { vertex[variables.indexOf(it)] } + (seedName to s)
-                            val simulation = loader.getWith<Any, Nothing>(simulationParameters).configured()
+            val executor =
+                Executors.newFixedThreadPool(defaultParallelism) {
+                    Thread(it, "Alchemist Nelder Mead worker #${AtomicInteger(0).getAndIncrement()}")
+                }
+//            val errorQueue = ConcurrentLinkedDeque<Throwable>()
+
+            loader.executeWithNelderMead(simplexVertices, executor) { vertex ->
+                val futureResults = seeds.map { currentSeed ->
+                    // associate keys to vertex values
+                    val simulationParameters = variables
+                        .associateWith { vertex[variables.indexOf(it)] } + (seedName to currentSeed)
+                    executor.submit(
+                        Callable {
+                            val simulation = loader.getWith<Any?, Nothing>(simulationParameters)
+                            simulation.play()
                             simulation.run()
-                            result.add(objectiveFunction.invoke(simulation.environment))
+                            if (simulation.error.isPresent) simulation.error.get()
+                            objectiveFunction(simulation.environment)
                         }
-                        result.average()
-                    }
+                    )
                 }
-                else -> {
-                    val launchId = launchId.getAndIncrement()
-                    val workerId = AtomicInteger(0)
-                    val executor =
-                        Executors.newFixedThreadPool(parallelism) {
-                            Thread(it, "Alchemist Pool $launchId worker ${workerId.getAndIncrement()}")
-                        }
-                    val errorQueue = ConcurrentLinkedDeque<Throwable>()
-                    loader
-                        .executeWithNelderMead(simplexVertices) { vertex ->
-                            val result = mutableListOf<Double>()
-                            for (s in seeds) {
-                                // associate keys to vertex values
-                                val simulationParameters = variables.associateWith { vertex[variables.indexOf(it)] } + ("seed" to s)
-                                executor.submit {
-                                    runCatching {
-                                        loader.getWith<Any?, Nothing>(simulationParameters).configured().also {
-                                            result.add(objectiveFunction.invoke(it.environment))
-                                        }
-                                    }.mapCatching { simulation ->
-                                        simulation.run()
-                                        simulation.error.ifPresent { throw it }
-                                        logger.info("Simulation with {} completed successfully", simulationParameters)
-                                    }.onFailure {
-                                        logger.error("Failure for simulation with $simulationParameters", it)
-                                        errorQueue.add(it)
-                                        executor.shutdownNow()
-                                    }.onSuccess {
-                                        if (showProgress) {
-                                            logger.info("Simulation with {} completed", simulationParameters)
-                                        }
-
-
-
-
-                                    }
-                                }
-                            }
-                            result.average()
-                        }.also { println("===== RISULTATISSIMO $it") }
-                    executor.shutdown()
-                    executor.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS)
-                    if (errorQueue.isNotEmpty()) {
-                        throw errorQueue.reduce { previous, other ->
-                            previous.addSuppressed(other)
-                            previous
-                        }
-                    }
-                }
+                futureResults.map { it.get() }.average()
+            }.also {
+                TODO("save the result into a csv")
             }
+//            executor.shutdown()
+//            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS)
+//            if (errorQueue.isNotEmpty()) {
+//                throw errorQueue.reduce { previous, other ->
+//                    previous.addSuppressed(other)
+//                    previous
+//                }
+//            }
+
         }
 
         private fun Loader.executeWithNelderMead(
             simplexVertices: List<Map<String, Double>>,
+            executorService: ExecutorService,
             executeFunction: (DoubleArray) -> Double,
         ): Map<String, Double> =
             NelderMeadMethod(
-                simplex = simplexVertices.map { it.values.toDoubleArray() }.toTypedArray(),
-                objective = executeFunction,
+                simplex = simplexVertices,
                 maxIterations = maxIterations,
                 tolerance = tolerance,
                 alpha = alpha,
                 gamma = gamma,
                 rho = rho,
                 sigma = sigma,
+                executorService = executorService,
+                objective = executeFunction,
             ).optimize()
                 .let { result ->
-                    this@NelderMeadLauncher.variables.associateWith { result[this@NelderMeadLauncher.variables.indexOf(it)] }
+                    this@NelderMeadLauncher.variables.associateWith {
+                        result[this@NelderMeadLauncher.variables.indexOf(it)]
+                    }
                 }
 
         private fun Simulation<*, *>.configured() =
@@ -162,9 +133,5 @@ class NelderMeadLauncher
              */
             @JvmStatic
             protected val defaultParallelism = Runtime.getRuntime().availableProcessors()
-
-            private val launchId = AtomicInteger(0)
-
-            private val logger = LoggerFactory.getLogger(this::class.java)
         }
     }
