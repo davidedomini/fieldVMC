@@ -3,6 +3,10 @@ package it.unibo.common
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import kotlin.math.PI
 
+/**
+ * Selects a [random] element from the iterable,
+ * with a probability proportional to the value returned by the [by] function.
+ */
 fun <T> Iterable<T>.randomElementWeighted(
     random: RandomGenerator,
     by: T.() -> Double,
@@ -19,6 +23,11 @@ fun <T> Iterable<T>.randomElementWeighted(
     return last()
 }
 
+/**
+ * Selects a random angle from the list of [angles],
+ * with a probability proportional to the angle's distance from the previous and next angle.
+ * The [maxChildren] parameter is used to calculate the minimum angle difference.
+ */
 fun calculateAngle(
     angles: List<Double>,
     random: RandomGenerator,
