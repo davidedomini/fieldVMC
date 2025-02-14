@@ -66,6 +66,7 @@ val taskSize = taskSizeFromProject ?: 512
 val threadCount = maxOf(1, minOf(Runtime.getRuntime().availableProcessors(), heap.toInt() / taskSize))
 val alchemistGroupBatch = "Run batch simulations"
 val alchemistGroupGraphic = "Run graphic simulations with Alchemist"
+val alchemistGroupOptimizer = "Run optimizer simulations with Alchemist"
 
 /*
  * This task is used to run all experiments in sequence
@@ -76,7 +77,11 @@ val runAllGraphic by tasks.register<DefaultTask>("runAllGraphic") {
 }
 val runAllBatch by tasks.register<DefaultTask>("runAllBatch") {
     group = alchemistGroupBatch
-    description = "Launches all experiments"
+    description = "Launches all experiments in batch mode"
+}
+val runAllOptimizer by tasks.register<DefaultTask>("runAllOptimizer") {
+    group = alchemistGroupOptimizer
+    description = "Launches all experiments with the optimizer enabled"
 }
 
 fun String.capitalizeString(): String =
@@ -106,16 +111,11 @@ File(rootProject.rootDir.path + "/src/main/yaml")
             mainClass.set("it.unibo.alchemist.Alchemist")
             classpath = sourceSets["main"].runtimeClasspath
             args("run", it.absolutePath)
-//            javaLauncher.set(
-//                javaToolchains.launcherFor {
-//                    languageVersion.set(JavaLanguageVersion.of(multiJvm.latestJava))
-//                },
-//            )
             if (System.getenv("CI") == "true") {
                 args(
                     "--override",
                     "terminate: { type: AfterTime, parameters: [2] } ",
-//                    "launcher: { parameters: { batch: [seed], autoStart: true } }",
+                    "launcher: { parameters: { batch: [seed], autoStart: true } }",
                 )
             } else {
                 this.additionalConfiguration()
@@ -127,8 +127,8 @@ File(rootProject.rootDir.path + "/src/main/yaml")
             args(
                 "--override",
                 "monitors: { type: SwingGUI, parameters: { graphics: effects/${it.nameWithoutExtension}.json } }",
-//                "--override",
-                // "launcher: { parameters: { batch: [], autoStart: false } }",
+                "--override",
+                 "launcher: { parameters: { batch: [], autoStart: false } }",
                  "--verbosity",
                  "error",
             )
@@ -139,14 +139,58 @@ File(rootProject.rootDir.path + "/src/main/yaml")
             description = "Launches batch experiments for $capitalizedName"
             maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
             File("data").mkdirs()
-            args(
-//                "--override",
-//                "launcher: { parameters: { batch: [seed], autoStart: true } }",
-                "--verbosity",
-                "error",
-            )
+            if(capitalizedName == "FixedLeader"){
+                args("--override",
+                    """
+                    launcher:
+                      type: DefaultLauncher
+                      parameters: {
+                        batch: ["seed", "maxResource", "maxSuccess", "resourceLowerBound"], #"minSpawnWait",
+                        autoStart: true,
+                        showProgress: true,
+                        parallelism: 2
+                      }
+                    """.trimIndent()
+
+                )
+            } else {
+                args(
+                    "--override",
+                    "launcher: { parameters: { batch: [seed], autoStart: true } }",
+                    "--verbosity",
+                    "error",
+                )
+            }
         }
         runAllBatch.dependsOn(batch)
+        val optimizer by basetask("run${capitalizedName}Optimizer") {
+            group = alchemistGroupOptimizer
+            description = "Launches Nelder Mead parameters optimizer for $capitalizedName"
+            maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
+            File("data").mkdirs()
+            args("--override",
+                """
+                variables:
+                  goal: &goal
+                    formula: |
+                      it.unibo.Goal()
+                    language: kotlin
+                    
+                launcher:
+                  type: it.unibo.alchemist.boundary.launchers.NelderMeadLauncher
+                  parameters: {
+                    objectiveFunction: *goal,
+                    variables: ["maxResource", "resourceLowerBound", "maxSuccess"],
+                    seedName: "seeds",
+                    repetitions: 2,
+                    autoStart: true,
+                    parallelism: 1,
+                    maxIterations: 1,
+                  }
+                """.trimIndent()
+            )
+        }
+        runAllOptimizer.dependsOn(optimizer)
     }
 
 tasks.withType(KotlinCompile::class).all {
