@@ -16,7 +16,7 @@ class NodeDegree
         precision: Int = 2,
     ) : AbstractAggregatingDoubleExporter(filter, aggregators, precision) {
         private companion object {
-            private const val NAME = "network-degree"
+            private const val NAME = "nodes-degree"
         }
 
         override val columnName: String = NAME
