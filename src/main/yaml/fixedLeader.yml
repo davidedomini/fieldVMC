@@ -21,13 +21,7 @@ variables:
     parameters: [ 5.0, 1.0, 10.0, 1.0 ]
   #    formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
   #    language: kotlin
-#  classicVMCResult: &classicVMCResult
-#    formula: |
-#      geometricMean(
-#        meanOnCleanedData(listOf("classic-vmc"), Paths.get("").toAbsolutePath().toString() + "/data").values,
-#      )
-#    language: kotlin
-  goal: &goal #classicVMCResult
+  goal: &goal
     formula: |
       it.unibo.Goal()
     language: kotlin
