@@ -36,7 +36,8 @@ object DataRetriever {
                 if (columnNames == null) {
                     columnNames = header
                 } else if (columnNames != header) {
-                    throw IllegalArgumentException("Column mismatch in file: ${file.name}")
+                    throw IllegalArgumentException("Column mismatch in file: ${file.name}.\n" +
+                            "Columns should be: $columnNames\nbut found: $header")
                 }
                 collectedRows.add(lastRow)
             }
@@ -133,12 +134,19 @@ object DataRetriever {
         path: String,
     ): Map<String, Double> {
         val data = mutableMapOf<String, Double>()
+        retrieveData(experiments, path) // to update the cleaned files
         experiments.forEach { experiment ->
-            val cleanedFile = File("$path/cleaned_$experiment.csv")
+            var cleanedFile = File("$path/cleaned_$experiment.csv")
             if (!cleanedFile.exists()) {
-                throw IllegalArgumentException("No cleaned file found for experiment: $experiment")
+                try {
+                    retrieveData(listOf(experiment), path)
+                    cleanedFile = File("$path/cleaned_$experiment.csv")
+                } catch (e: IllegalArgumentException) {
+                    if (e.message?.contains("No files found for experiment") == true) {
+                        throw IllegalArgumentException("No cleaned file found for experiment: $experiment")
+                    }
+                }
             }
-            // todo if the file does not exist, try to create it
             val lines = cleanedFile.readLines()
             val dataStartIndex = lines.indexOfFirst { it.startsWith("time") }
             if (dataStartIndex == -1) {
