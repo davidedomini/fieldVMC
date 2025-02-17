@@ -44,7 +44,9 @@ fun target(): Double {
  * The goal for the optimization.
  */
 class Goal : (Environment<*, *>) -> Double {
-    override fun invoke(env: Environment<*, *>): Double = env.minimize()
+    val target = target()
+
+    override fun invoke(env: Environment<*, *>): Double = env.minimize(target)
 }
 
 /**
@@ -58,7 +60,7 @@ class Goal : (Environment<*, *>) -> Double {
  * - network diameter;
  * - network degree.
  */
-fun Environment<*, *>.minimize(): Double =
+fun Environment<*, *>.minimize(target: Double): Double =
     networkHub().let { (xCoord, yCoord) ->
         val current =
             geometricMean(
@@ -70,7 +72,7 @@ fun Environment<*, *>.minimize(): Double =
                     nodesDegree(),
                 ),
             )
-        (target() - current).mod(2.0)
+        (target - current).mod(2.0)
     }
 
 /**
