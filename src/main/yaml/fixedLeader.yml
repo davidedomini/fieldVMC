@@ -87,10 +87,8 @@ deployments:
 #  parameters: {
 #    objectiveFunction: *goal,
 #    variables: ["maxResource", "resourceLowerBound", "maxSuccess"],
-#    seedName: "seeds",
+#    seedName: "seed",
 #    repetitions: 2,
-#    autoStart: true,
-#    parallelism: 1,
 #    maxIterations: 1,
 #  }
 

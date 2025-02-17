@@ -183,11 +183,9 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                   parameters: {
                     objectiveFunction: *goal,
                     variables: ["maxResource", "resourceLowerBound", "maxSuccess"],
-                    seedName: "seeds",
-                    repetitions: 2,
-                    autoStart: true,
-                    parallelism: 2,
-                    maxIterations: 1,
+                    seedName: "seed",
+                    repetitions: 5,
+                    maxIterations: 10,
                   }
                 """.trimIndent(),
             )
