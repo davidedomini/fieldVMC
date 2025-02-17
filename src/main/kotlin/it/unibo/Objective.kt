@@ -114,7 +114,7 @@ fun <T> Environment<T, *>.networkDensity(): List<Double> {
             .toMutableMap()
     return nodes
         .map { n ->
-            val nodePos = getPosition(n).coordinates
+            val nodePos = getPosition(n).coordinates.map { it + 10 } // Add 10 to avoid negative positions
             outers =
                 outers.mapValues { (key, value) ->
                     when {
@@ -128,5 +128,5 @@ fun <T> Environment<T, *>.networkDensity(): List<Double> {
             // Calculate the area of the rectangle given by the outermost nodes
             val area = (outers["right"]!! - outers["left"]!!) * (outers["top"]!! - outers["bottom"]!!)
             nodeCount / area
-        }
+        }.filterNot { it.isNaN() || it.isInfinite()}
 }

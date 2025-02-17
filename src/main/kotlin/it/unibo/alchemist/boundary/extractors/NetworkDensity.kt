@@ -31,7 +31,7 @@ class NetworkDensity
                     .associateWith { NaN }
                     .toMutableMap()
             return environment.nodes.associateWith { n ->
-                val nodePos = environment.getPosition(n).coordinates
+                val nodePos = environment.getPosition(n).coordinates.map { it + 10 } // Add 10 to avoid negative positions
                 outers =
                     outers.mapValues { (key, value) ->
                         when {
