@@ -167,9 +167,11 @@ if __name__ == '__main__':
         'local-success[mean]',
         'resource[mean]',
         'success[mean]',
-        'local-resource[mean]',
-        'network-diameter',
-        'network-degree[mean]',
+        'network-hub-xCoord',
+        'network-hub-yCoord',
+        'network-diameter[mean]',
+        'network-density[mean]',
+        'nodes-degree[mean]',
     ]
 
     for metric in metrics:
