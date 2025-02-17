@@ -24,7 +24,11 @@ value class Vertex(private val vertex: Map<String, Double>) {
 
     fun valuesToList(): List<Double> = vertex.values.toList()
 
+    fun keys(): Set<String> = vertex.keys
+
     operator fun get(index: Int) = valuesToList()[index]
+
+    fun keyAt(index: Int) = vertex.keys.filterIndexed { i, _ -> i == index}.first()
 }
 
 class NelderMeadMethod(
@@ -47,7 +51,7 @@ class NelderMeadMethod(
     /**
      * Apply the Nelder-Mead optimization method to the given [simplex] and [objective] function.
      */
-    fun optimize(): List<Double> {
+    fun optimize(): Vertex {
         require(simplex.isNotEmpty()) { "The initial simplex must not be empty" }
         val dimensions = simplex.first().size
         require(dimensions > 0) { "The number of dimensions must be greater than 0" }
@@ -57,36 +61,37 @@ class NelderMeadMethod(
         require(simplex.all { it.size == dimensions }) {
             "All vertices of the initial simplex must have the same number of dimensions"
         }
-        repeat(maxIterations) {
+        var symplexUpdated = simplex
+        repeat(maxIterations) { iteration ->
             // Sort simplex by function values
-            val sortedSimplex = simplex
+            val sortedSimplex = symplexUpdated
                 .map { it to cache[it.valuesToList()] }
                 .sortedBy { it.second.get() }
                 .map { it.first }
             val bestVertex: Vertex = sortedSimplex.first()
-            val worstVertex: Vertex = simplex.last()
-            val secondWorstVertex: Vertex = simplex[simplex.size - 2]
+            val worstVertex: Vertex = sortedSimplex.last()
+            val secondWorstVertex: Vertex = sortedSimplex[simplex.size - 2]
             val bestValue = cache[bestVertex.valuesToList()]
             val worstValues = worstVertex.valuesToList()
             // Compute centroid (excluding worst point)
             val centroid =
                 DoubleArray(dimensions) { index ->
-                    simplex.take(simplex.size - 1).sumOf { it.valuesToList()[index] } / (simplex.size - 1)
+                    sortedSimplex.take(simplex.size - 1).sumOf { it.valuesToList()[index] } / (simplex.size - 1)
                 }.toList()
             // Reflections
             val reflected: List<Double> = centroid.mapCentroid(alpha, worstValues)
             val reflectedValue = cache[reflected]
-            val newSymplex: List<Vertex> = if (reflectedValue < bestValue) {
+            val newSymplex = if (reflectedValue < bestValue) {
                 // Expansion
                 val expanded: List<Double> = centroid.mapCentroid(gamma, reflected)
                 if (cache[expanded] < reflectedValue) {
-                    simplex.updateLast(expanded)
+                    sortedSimplex.updateLastVertex(expanded)
                 } else {
-                    simplex.updateLast(reflected)
+                    sortedSimplex.updateLastVertex(reflected)
                 }
             } else if (reflectedValue < cache[secondWorstVertex.valuesToList()]) {
                 // Accept reflection
-                simplex.updateLast(reflected)
+                sortedSimplex.updateLastVertex(reflected)
             } else {
                 // Contraction
                 val contracted =
@@ -96,32 +101,40 @@ class NelderMeadMethod(
                         centroid.mapCentroid(rho, worstValues)
                     }
                 if (objective(contracted) < cache[worstValues]) {
-                    simplex.updateLast(contracted)
+                    sortedSimplex.updateLastVertex(contracted)
                 } else {
                     // Shrink simplex
-                    for (i in 1 until simplex.size) {
-                        simplex.mapIndexed { index, vertex ->
-                            if (i == index) {
-                                vertex.valuesToList().mapIndexed { at, value -> bestVertex[at] + sigma * (value - bestVertex[at]) }
-                            } else
-                                vertex
-                        }
+                    sortedSimplex.mapIndexed { index, vertex ->
+                        Vertex(
+                            vertex.valuesToList()
+                                .mapIndexed { at, value ->
+                                    val oldValue = bestVertex[at]
+                                    vertex.keyAt(at) to oldValue + sigma * (value - oldValue)
+                                }.toMap()
+                        )
                     }
                 }
             }
             // Check termination condition (small variation in function values)
-            val functionValues = simplex.map { cache[it.valuesToList()].get() }
+            val functionValues = newSymplex.map { cache[it.valuesToList()].get() }
+            symplexUpdated = newSymplex
             val maxDiff = functionValues.maxOrNull()!! - functionValues.minOrNull()!!
-            if (maxDiff < tolerance) return simplex.first().valuesToList()
+            if (maxDiff < tolerance) return symplexUpdated.first()
         }
-        return simplex.first().valuesToList()
+        return symplexUpdated.first()
     }
 
     private fun List<Double>.mapCentroid(coefficient: Double, values: List<Double>): List<Double> =
         mapIndexed { index, value -> value + coefficient * (values[index] - value) }
 
-    private fun List<Vertex>.updateLast(newVertex: List<Double>): List<Vertex> =
-        mapIndexed { i, value -> if(i == simplex.size - 1) newVertex else value}
+    private fun List<Vertex>.updateLastVertex(newVertex: List<Double>): List<Vertex> =
+        mapIndexed { index, vertex ->
+            if (index == simplex.size -1) {
+                Vertex(vertex.keys().mapIndexed { i, key ->
+                    key to newVertex[i]
+                }.toMap())
+            } else vertex
+        }
 
     companion object {
         operator fun Future<Double>.compareTo(other: Future<Double>): Int = get().compareTo(other.get())
@@ -129,6 +142,3 @@ class NelderMeadMethod(
         operator fun Double.compareTo(other: Future<Double>): Int = compareTo(other.get())
     }
 }
-
-
-
