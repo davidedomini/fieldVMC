@@ -3,13 +3,20 @@ package it.unibo.alchemist.boundary.launchers
 import it.unibo.alchemist.boundary.Launcher
 import it.unibo.alchemist.boundary.Loader
 import it.unibo.alchemist.boundary.Variable
-import it.unibo.alchemist.core.Simulation
 import it.unibo.alchemist.model.Environment
 import it.unibo.common.NelderMeadMethod
+import it.unibo.common.Vertex
 import org.danilopianini.rrmxmx.RrmxmxRandom
+import java.io.File
+import java.nio.file.Paths
+import java.time.LocalDateTime
 import java.util.concurrent.Callable
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ConcurrentLinkedDeque
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.Future
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
 class NelderMeadLauncher
@@ -19,7 +26,6 @@ class NelderMeadLauncher
         private val variables: List<String> = emptyList(),
         private val seedName: String,
         private val repetitions: Int = 1,
-        private val autoStart: Boolean = false,
         private val maxIterations: Int = 1000,
         private val seed: ULong = RrmxmxRandom.DEFAULT_SEED,
         private val tolerance: Double = 1e-2,
@@ -42,12 +48,12 @@ class NelderMeadLauncher
                         it.toInt()
                     }?.toList()
                     ?.take(repetitions) ?: listOf(repetitions)
+            val executorID = AtomicInteger(0)
             val executor =
-                Executors.newFixedThreadPool(defaultParallelism) {
-                    Thread(it, "Alchemist Nelder Mead worker #${AtomicInteger(0).getAndIncrement()}")
+                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()) {
+                    Thread(it, "Alchemist Nelder Mead worker #${executorID.getAndIncrement()}")
                 }
-//            val errorQueue = ConcurrentLinkedDeque<Throwable>()
-
+            val errorQueue = ConcurrentLinkedDeque<Throwable>()
             loader.executeWithNelderMead(simplexVertices, executor) { vertex ->
                 val futureResults = seeds.map { currentSeed ->
                     // associate keys to vertex values
@@ -58,33 +64,46 @@ class NelderMeadLauncher
                             val simulation = loader.getWith<Any?, Nothing>(simulationParameters)
                             simulation.play()
                             simulation.run()
-                            if (simulation.error.isPresent) simulation.error.get()
+                            if (simulation.error.isPresent) {
+                                errorQueue.add(simulation.error.get())
+                            }
                             objectiveFunction(simulation.environment)
                         }
                     )
                 }
-                futureResults.map { it.get() }.average()
+                CompletableFuture.completedFuture(futureResults.map { it.get() }.average())
             }.also {
-                TODO("save the result into a csv")
+                println("result is $it")
+                // write the result into a csv with as name the variables and the date of execution
+                val outputPath = Paths.get("").toAbsolutePath().toString() + "/data/NelderMeadMethod"
+                //if not exists create the directory
+                File(outputPath).mkdirs()
+                val outputFile = File("$outputPath/${variables.joinToString("_")}_maxIter${maxIterations}_${seedName}s${seeds.max()}_${LocalDateTime.now()}.csv")
+                val outputContent = buildString {
+                    append(variables.joinToString(" "))
+                    append("\n")
+                    append(it.entries.joinToString(" ") { it.value.toString() })
+                    append("\n")
+                }
+                outputFile.writeText(outputContent)
             }
-//            executor.shutdown()
-//            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS)
-//            if (errorQueue.isNotEmpty()) {
-//                throw errorQueue.reduce { previous, other ->
-//                    previous.addSuppressed(other)
-//                    previous
-//                }
-//            }
-
+            executor.shutdown()
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.HOURS)
+            if (errorQueue.isNotEmpty()) {
+                throw errorQueue.reduce { previous, other ->
+                    previous.addSuppressed(other)
+                    previous
+                }
+            }
         }
 
         private fun Loader.executeWithNelderMead(
             simplexVertices: List<Map<String, Double>>,
             executorService: ExecutorService,
-            executeFunction: (DoubleArray) -> Double,
+            executeFunction: (List<Double>) -> Future<Double>,
         ): Map<String, Double> =
             NelderMeadMethod(
-                simplex = simplexVertices,
+                simplex = simplexVertices.map { Vertex(it) },
                 maxIterations = maxIterations,
                 tolerance = tolerance,
                 alpha = alpha,
@@ -99,13 +118,6 @@ class NelderMeadLauncher
                         result[this@NelderMeadLauncher.variables.indexOf(it)]
                     }
                 }
-
-        private fun Simulation<*, *>.configured() =
-            apply {
-                if (autoStart) {
-                    play()
-                }
-            }
 
         private fun generateSymplexVertices(loaderVariables: Map<String, Variable<*>>): List<Map<String, Double>> {
             val randomGenerator = RrmxmxRandom(seed)
@@ -124,14 +136,5 @@ class NelderMeadLauncher
             return (0..variables.size).map {
                 instances.mapValues { (_, range) -> randomGenerator.nextDouble(range.start, range.endInclusive) }
             }
-        }
-
-        protected companion object {
-            /**
-             * If no specific number of parallel threads to use is specified, this value is used.
-             * Defaults to the number of logical cores detected by the JVM.
-             */
-            @JvmStatic
-            protected val defaultParallelism = Runtime.getRuntime().availableProcessors()
         }
     }
