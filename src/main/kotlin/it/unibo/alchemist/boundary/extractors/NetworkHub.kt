@@ -21,8 +21,9 @@ class NetworkHub : Extractor<Double> {
     ): Map<String, Double> {
         val sum =
             environment.fold(0.0 to 0.0) { acc, next ->
-                val nodePos = environment.getPosition(next)
-                acc.first + nodePos.coordinates[0] to acc.second + nodePos.coordinates[1]
+                // Add 10 to avoid negative positions
+                val nodePos = environment.getPosition(next).coordinates.map { it + 10 }
+                acc.first + nodePos[0] to acc.second + nodePos[1]
             }
         val center = sum.first / environment.nodeCount to sum.second / environment.nodeCount
         return center.toList().mapIndexed { index, value -> "$NAME@$index" to value }.toMap()

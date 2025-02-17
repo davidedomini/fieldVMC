@@ -30,6 +30,7 @@ fun target(): Double {
             "classic-vmc@nodes",
             "classic-vmc@network-hub-xCoord",
             "classic-vmc@network-hub-yCoord",
+            "classic-vmc@network-density[max]",
             "classic-vmc@network-diameter[mean]",
             "classic-vmc@nodes-degree[mean]",
         )
@@ -69,6 +70,7 @@ fun Environment<*, *>.minimize(target: Double): Double =
                     xCoord,
                     yCoord,
                     networkDiameterByHopDistance(),
+                    networkDensity().max(),
                     nodesDegree(),
                 ),
             )
@@ -81,8 +83,8 @@ fun Environment<*, *>.minimize(target: Double): Double =
  */
 fun <T> Environment<T, *>.networkHub(): Pair<Double, Double> =
     fold(0.0 to 0.0) { acc, next ->
-        val nodePos = this.getPosition(next)
-        acc.first + nodePos.coordinates[0] to acc.second + nodePos.coordinates[1]
+        val nodePos = this.getPosition(next).coordinates.map { it + 10 } // Add 10 to avoid negative positions
+        acc.first + nodePos[0] to acc.second + nodePos[1]
     }.let { sum ->
         sum.first / this.nodeCount to sum.second / this.nodeCount
     }
@@ -105,7 +107,7 @@ fun <T> Environment<T, *>.nodesDegree(): Double =
  * The area is the rectangle given by the outermost nodes in the network.
  * The result is the average of the network densities of all the nodes in the network.
  */
-fun <T> Environment<T, *>.networkDensity(): Double {
+fun <T> Environment<T, *>.networkDensity(): List<Double> {
     var outers: MutableMap<String, Double> =
         listOf<String>("top", "bottom", "right", "left")
             .associateWith { NaN }
@@ -126,5 +128,5 @@ fun <T> Environment<T, *>.networkDensity(): Double {
             // Calculate the area of the rectangle given by the outermost nodes
             val area = (outers["right"]!! - outers["left"]!!) * (outers["top"]!! - outers["bottom"]!!)
             nodeCount / area
-        }.average()
+        }
 }
