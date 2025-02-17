@@ -81,6 +81,10 @@ class NelderMeadMethod(
             // Reflections
             val reflected: List<Double> = centroid.mapCentroid(alpha, worstValues)
             val reflectedValue = cache[reflected]
+            require(reflectedValue.get().isFinite() && !reflectedValue.get().isNaN()) {
+                "Invalid objective function return value for reflection with $reflected = $reflectedValue.\n" +
+                    "Check the objective function implementation, the result should be a finite number."
+            }
             val newSymplex = if (reflectedValue < bestValue) {
                 // Expansion
                 val expanded: List<Double> = centroid.mapCentroid(gamma, reflected)
