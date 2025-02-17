@@ -1,4 +1,3 @@
-# from command line:  CLONING_RANGE=5 DEFAULT=0 LEADER_RADIUS=100.0 MAX=20 MAX_CHILDREN=3 MAX_RESOURCE=1000.0 MIN=0 MIN_SPAWN_WAIT=40.0 RESOURCE_LOWER_BOUND=1.0 ./gradlew runFixedLeaderGraphic
 variables:
   cloningRange: &cloningRange
     formula: 5
@@ -19,17 +18,12 @@ variables:
   resourceLowerBound: &resourceLowerBound
     type: LinearVariable
     parameters: [ 5.0, 1.0, 10.0, 1.0 ]
-  #    formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
-  #    language: kotlin
-  goal: &goal
-    formula: |
-      it.unibo.Goal()
-    language: kotlin
   seed: &seed
     min: 0
     max: 20
     step: 1
     default: 2
+
 network-model:
   type: ConnectWithinDistance
   parameters: *range
@@ -71,26 +65,7 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
         parameters: [*resourceLowerBound, *maxResource]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
-        parameters: [ *cloningRange, *maxChildren ] #, *minSpawnWait
-
-#launcher:
-#  type: DefaultLauncher
-#  parameters: {
-#    batch: ["seed", "maxResource", "maxSuccess", "resourceLowerBound"], #"minSpawnWait",
-#    autoStart: true,
-#    showProgress: true,
-#    parallelism: 2
-#  }
-
-#launcher:
-#  type: it.unibo.alchemist.boundary.launchers.NelderMeadLauncher
-#  parameters: {
-#    objectiveFunction: *goal,
-#    variables: ["maxResource", "resourceLowerBound", "maxSuccess"],
-#    seedName: "seed",
-#    repetitions: 2,
-#    maxIterations: 1,
-#  }
+        parameters: [ *cloningRange, *maxChildren ]
 
 terminate:
   type: StableForSteps
@@ -138,5 +113,3 @@ export:
         aggregators: [ max, mean, variance, median, StandardDeviation ]
         value-filter: onlyfinite
         precision: 3
-
-#RESOURCE_LOWER_BOUND=1.0;MIN=0;MAX=20;LEADER_RADIUS=100.0;CLONING_RANGE=5;MAX_RESOURCE=500.0;MIN_SPAWN_WAIT=40.0;DEFAULT=0;MAX_CHILDREN=3
