@@ -11,16 +11,6 @@ services:
         mkdir -p /experiment/charts
         chmod 777 /experiment/charts
 
-  fieldVMC-fixed-leader-simulation:
-    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
-    build:
-      context: .
-      dockerfile: ./docker/fixedLeaderFieldVMC/Dockerfile
-    depends_on:
-      - prepare
-    volumes:
-      - ./data:/experiment/data
-      
   classic-vmc-simulation:
     image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
     build:
@@ -31,11 +21,22 @@ services:
     volumes:
       - ./data:/experiment/data
 
-  charts:
+  fieldVMC-fixed-leader-simulation:
+    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
+    build:
+      context: .
+      dockerfile: ./docker/fixedLeaderFieldVMC/Dockerfile
     depends_on:
       prepare:
         condition: service_completed_successfully
       classic-vmc-simulation:
+        condition: service_completed_successfully
+    volumes:
+      - ./data:/experiment/data
+
+  charts:
+    depends_on:
+      prepare:
         condition: service_completed_successfully
       fieldVMC-fixed-leader-simulation:
         condition: service_completed_successfully
@@ -49,9 +50,11 @@ services:
 
   finish:
     depends_on:
-      charts:
-        condition: service_completed_successfully
       prepare:
+        condition: service_completed_successfully
+      fieldVMC-fixed-leader-simulation:
+        condition: service_completed_successfully
+      charts:
         condition: service_completed_successfully
     image: alpine:3.21.2
     volumes:
