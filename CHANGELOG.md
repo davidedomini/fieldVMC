@@ -1,3 +1,42 @@
+## [1.10.0](https://github.com/angelacorte/fieldVMC/compare/1.9.0...1.10.0) (2025-02-18)
+
+### Features
+
+* add function to determine whether terminate the simulation ([ccf6d05](https://github.com/angelacorte/fieldVMC/commit/ccf6d05fb3d92d02f13a8983ab603a5d24f48e41))
+* add metrics termination condition ([6ecf897](https://github.com/angelacorte/fieldVMC/commit/6ecf897e99679021fe3b6887bf630355ae44e0b0))
+* implement termination based on stability of metrics ([bf4f7e8](https://github.com/angelacorte/fieldVMC/commit/bf4f7e8444029be2f10f8257f9c64932914c1c35))
+
+### Dependency updates
+
+* **deps:** update alchemist to v38.0.1 ([#150](https://github.com/angelacorte/fieldVMC/issues/150)) ([b89bfd6](https://github.com/angelacorte/fieldVMC/commit/b89bfd63173ae8c974cc181978675e90142fa12e))
+* **deps:** update alpine docker tag to v3.21.3 ([338029b](https://github.com/angelacorte/fieldVMC/commit/338029baa3f934042ad289678c9b9fb3b892543d))
+* **deps:** update node.js to 22.14 ([#155](https://github.com/angelacorte/fieldVMC/issues/155)) ([0c9739c](https://github.com/angelacorte/fieldVMC/commit/0c9739ca1bf91e33685ad7f2a4947727b6d70f61))
+* **deps:** update python docker tag to v3.13.2 ([b84765d](https://github.com/angelacorte/fieldVMC/commit/b84765dd279eaaa818b3333997120f4b96361e16))
+
+### Bug Fixes
+
+* missing class name refactor ([c9c4d39](https://github.com/angelacorte/fieldVMC/commit/c9c4d395ad96cc26aa711753a58baeb77ffcf682))
+* reset steps checked counter ([5e1ceb5](https://github.com/angelacorte/fieldVMC/commit/5e1ceb5e388c8d51b960a1431b9e2c25ab4e06c6))
+
+### Build and continuous integration
+
+* add metrics termination condition for batch mode ([8d7440d](https://github.com/angelacorte/fieldVMC/commit/8d7440d0af10e32d50e7f0539a68ac1f48658e81))
+* **deps:** update actions/setup-python action to v5.4.0 ([bf47920](https://github.com/angelacorte/fieldVMC/commit/bf47920767870f7def9eb6ecaa58f54544ee9d34))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.7.9 ([c25603e](https://github.com/angelacorte/fieldVMC/commit/c25603e7f5f08fa42b04a86099edc4abff85e33a))
+* remove protelis dependency ([188d259](https://github.com/angelacorte/fieldVMC/commit/188d259f6d9f253582b3b4ea78c326d49e2203d7))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.9.0 [skip ci] ([7101430](https://github.com/angelacorte/fieldVMC/commit/7101430e15d86e8f66643fb629769fc569613c17))
+
+### Style improvements
+
+* use when instead of ifs ([da3d0f6](https://github.com/angelacorte/fieldVMC/commit/da3d0f6a5cb21456ed67649a5850e39040aa5831))
+
+### Refactoring
+
+* remove useless launcher definition ([556d641](https://github.com/angelacorte/fieldVMC/commit/556d641b7344280e0f6d4c8c319b423945f6f659))
+
 ## [1.9.0](https://github.com/angelacorte/fieldVMC/compare/1.8.7...1.9.0) (2025-02-18)
 
 ### Features
