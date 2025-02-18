@@ -134,6 +134,23 @@ File(rootProject.rootDir.path + "/src/main/yaml")
             description = "Launches batch experiments for $capitalizedName"
             maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
             File("data").mkdirs()
+            args("--override",
+                """
+                variables:
+                  metrics: &metrics
+                    formula: |
+                      it.unibo.MetricsToCheck()
+                    language: kotlin
+                    
+                terminate:
+                  type: MetricsStableForSteps
+                  parameters: {
+                    stepInterval: 200,
+                    equalInterval: 2,
+                    metricsToCheck: *metrics,
+                  }
+                """.trimIndent()
+            )
             if (capitalizedName == "FixedLeader") {
                 args(
                     "--override",
