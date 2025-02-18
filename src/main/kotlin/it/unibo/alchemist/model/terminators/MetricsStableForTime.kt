@@ -42,7 +42,7 @@ constructor(
                 lastChecked = simulationTime
                 when {
                     lastUpdatedMetrics == metrics -> {
-                        timeStabilitySuccess + checkedInterval // add last checked if is not the first iter
+                        timeStabilitySuccess += checkedInterval
                         if(timeStabilitySuccess >= stableForTime) {
                             timeStabilitySuccess = ZERO
                             ++equalSuccess >= equalTimes
