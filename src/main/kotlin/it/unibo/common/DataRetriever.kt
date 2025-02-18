@@ -1,6 +1,5 @@
 package it.unibo.common
 
-import org.apache.tools.ant.taskdefs.condition.Os
 import java.io.File
 
 /**
@@ -97,11 +96,8 @@ object DataRetriever {
         columnNames: List<String>,
         collectedRows: List<List<String>>,
     ) {
-        val separator = when {
-            Os.isFamily(Os.FAMILY_WINDOWS) -> "\\"
-            else -> "/"
-        }
-        val outputFile = File("$path${separator}cleaned_$experiment.csv")
+
+        val outputFile = File("$path${File.separator}cleaned_$experiment.csv")
         val outputContent =
             buildString {
                 append(columnNames.joinToString(" ")) // Header row
@@ -142,15 +138,11 @@ object DataRetriever {
         retrieveData(experiments, path) // to update the cleaned files
         experiments.forEach { experiment ->
             // check if so is windows or linux
-            val separator = when {
-                Os.isFamily(Os.FAMILY_WINDOWS) -> "\\"
-                else -> "/"
-            }
-            var cleanedFile = File("$path${separator}cleaned_$experiment.csv")
+            var cleanedFile = File("$path${File.separator}cleaned_$experiment.csv")
             if (!cleanedFile.exists()) {
                 try {
                     retrieveData(listOf(experiment), path)
-                    cleanedFile = File("$path${separator}cleaned_$experiment.csv")
+                    cleanedFile = File("$path${File.separator}cleaned_$experiment.csv")
                 } catch (e: IllegalArgumentException) {
                     if (e.message?.contains("No files found for experiment") == true) {
                         throw IllegalArgumentException("No cleaned file found for experiment: $experiment")

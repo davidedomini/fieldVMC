@@ -6,7 +6,6 @@ import it.unibo.alchemist.boundary.Variable
 import it.unibo.alchemist.model.Environment
 import it.unibo.common.NelderMeadMethod
 import it.unibo.common.Vertex
-import org.apache.tools.ant.taskdefs.condition.Os
 import org.danilopianini.rrmxmx.RrmxmxRandom
 import java.io.File
 import java.nio.file.Paths
@@ -78,11 +77,7 @@ class NelderMeadLauncher
                 val outputPath = Paths.get("").toAbsolutePath().toString() + "/data/NelderMeadMethod"
                 //if not exists create the directory
                 File(outputPath).mkdirs()
-                val separator = when {
-                    Os.isFamily(Os.FAMILY_WINDOWS) -> "\\"
-                    else -> "/"
-                }
-                val outputFile = File("$outputPath$separator${variables.joinToString("_")}_maxIter${maxIterations}_${seedName}s${seeds.max()}_${LocalDateTime.now()}.csv")
+                val outputFile = File("$outputPath${File.separator}${variables.joinToString("_")}_maxIter${maxIterations}_${seedName}s${seeds.max()}_${LocalDateTime.now()}.csv")
                 val outputContent = buildString {
                     append(variables.joinToString(" "))
                     append("\n")
