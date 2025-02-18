@@ -23,8 +23,10 @@ class MetricsStableForSteps<T>(
             "There should be at least one metric to check."
         }
         return if (lastUpdatedMetrics == metrics) {
-            if (++stepsChecked == stepInterval)
-                ++equalSuccess == equalInterval
+            if (++stepsChecked >= stepInterval){
+                stepsChecked = 0
+                ++equalSuccess >= equalInterval
+            }
             else false
         } else {
             lastUpdatedMetrics = metrics
