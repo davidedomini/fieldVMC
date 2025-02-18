@@ -13,24 +13,14 @@ variables:
     5
   maxChildren: &maxChildren
     3.0
-#    type: ArbitraryVariable
-#    parameters: [ 3.0, [1.0, 2.0, 3.0, 5.0 ] ]
-#    formula: System.getenv("MAX_CHILDREN").toInt() #3
-#    language: kotlin
   maxResource: &maxResource
     3.0
-#    type: ArbitraryVariable
-#    parameters: [ 3.0, [ 1.0, 2.0, 3.0, 5.0, 10.0 ] ]
   maxSuccess: &maxSuccess
     500.0
-#    type: ArbitraryVariable
-#    parameters: [ 500.0, [ 250.0, 500.0, 750.0, 900.0 ] ]
   range: &range
     formula: cloningRange * 1.01
   resourceLowerBound: &resourceLowerBound
     5.0
-#    type: LinearVariable
-#    parameters: [ 5.0, 1.0, 10.0, 1.0 ]
   sensorCompetitionRate: &sensorCompetitionRate
     0.1
   sensorProductionRate: &sensorProductionRate
@@ -96,15 +86,6 @@ deployments:
         parameters: [ *maxSuccess ]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
         parameters: [*resourceLowerBound, *maxResource]
-
-launcher:
-  type: DefaultLauncher
-  parameters: {
-    batch: ["seed"], #"minSpawnWait", , "maxResource", "maxSuccess", "resourceLowerBound"
-    autoStart: true,
-    showProgress: true,
-    parallelism: 2
-  }
 
 terminate:
     - type: StableForSteps
