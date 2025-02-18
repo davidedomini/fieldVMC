@@ -483,7 +483,6 @@ if __name__ == '__main__':
             'success[mean]',
             'local-success[mean]',
             'resource[mean]',
-            'local-resource[mean]',
         ]
         for data in to_show:
             current_experiment_means[data].plot.line()
