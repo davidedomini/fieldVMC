@@ -35,7 +35,7 @@ variables:
     language: kotlin
   seed: &seed
     min: 0
-    max: 10
+    max: 500
     step: 1
     default: 0
 
@@ -107,12 +107,6 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
         parameters: [*resourceLowerBound, *maxResource]
 
-#terminate:
-#    - type: StableForSteps
-#      parameters: [ 200, 2 ]
-#    - type: AfterTime
-#      parameters: [ 1000 ]
-
 export:
   - type: CSVExporter
     parameters:
@@ -151,40 +145,3 @@ export:
         aggregators: [ max, mean, variance, median, StandardDeviation ]
         value-filter: onlyfinite
         precision: 3
-
-# from command line: CLONING_RANGE=5 CONST_COMPETITION_RATE=2 CONST_CONSUMPTION_RATE=0.1 CONST_PRODUCTION_RATE=0.1 CONST_TRANSFER_RATE=0.5 DEFAULT=0 MAX=20 MAX_CHILDREN=3 MAX_RESOURCE=3.0 MAX_SUCCESS=500.0 MIN=0 MIN_SPAWN_WAIT=21 RESOURCE_LOWER_BOUND=5.0 SENSOR_COMPETITION_RATE=0.1 SENSOR_PRODUCTION_RATE=1.0 SENSOR_TRANSFER_RATE=0.5 VESSELS_ADAPTATION_RATE=0.9 ./gradlew runClassicVMCGraphic
-#    formula: System.getenv("CLONING_RANGE").toInt() #5
-#    language: kotlin
-#    formula: System.getenv("CONST_COMPETITION_RATE").toDouble() #2
-#    language: kotlin
-#    formula: System.getenv("CONST_CONSUMPTION_RATE").toDouble() 0.1
-#    language: kotlin
-#    formula: System.getenv("CONST_PRODUCTION_RATE").toDouble() #0.1
-#    language: kotlin
-#    formula: System.getenv("CONST_TRANSFER_RATE").toDouble() #0.5
-#    language: kotlin
-#    formula: System.getenv("MAX_CHILDREN").toInt() #3
-#    language: kotlin
-#    formula: System.getenv("MAX_RESOURCE").toDouble() #1
-#    language: kotlin
-#    formula: System.getenv("MAX_SUCCESS").toDouble() #500.0
-#    language: kotlin
-#    formula: System.getenv("MIN_SPAWN_WAIT").toInt() #21
-#    language: kotlin
-#    formula: System.getenv("CLONING_RANGE").toInt() * 1.01
-#    language: kotlin
-#    formula: System.getenv("RESOURCE_LOWER_BOUND").toDouble() #1.0
-#    language: kotlin
-#    formula: System.getenv("SENSOR_COMPETITION_RATE").toDouble() #0.1
-#    language: kotlin
-#    formula: System.getenv("SENSOR_PRODUCTION_RATE").toDouble() #1.0
-#    language: kotlin
-#    formula: System.getenv("SENSOR_TRANSFER_RATE").toDouble() #0.5
-#    language: kotlin
-#    formula: System.getenv("VESSELS_ADAPTATION_RATE").toDouble() #0.9
-#    language: kotlin
-#      formula: System.getenv("MIN").toDouble() #0
-#      language: kotlin
-#      formula: System.getenv("MAX").toDouble() #20
-#      language: kotlin
-#      formula: System.getenv("DEFAULT").toDouble() #0
