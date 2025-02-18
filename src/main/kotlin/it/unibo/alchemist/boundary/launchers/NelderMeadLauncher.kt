@@ -7,6 +7,7 @@ import it.unibo.alchemist.model.Environment
 import it.unibo.common.NelderMeadMethod
 import it.unibo.common.Vertex
 import org.danilopianini.rrmxmx.RrmxmxRandom
+import org.danilopianini.rrmxmx.RrmxmxRandom.Companion.DEFAULT_SEED
 import java.io.File
 import java.nio.file.Paths
 import java.time.LocalDateTime
@@ -18,6 +19,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
+import kotlin.Int.Companion.MAX_VALUE
 
 class NelderMeadLauncher
     @JvmOverloads
@@ -26,9 +28,9 @@ class NelderMeadLauncher
         private val variables: List<String> = emptyList(),
         private val seedName: String,
         private val repetitions: Int = 1,
-        private val maxIterations: Int = 1000,
-        private val seed: ULong = RrmxmxRandom.DEFAULT_SEED,
-        private val tolerance: Double = 1e-2,
+        private val maxIterations: Int = MAX_VALUE,
+        private val seed: ULong = DEFAULT_SEED,
+        private val tolerance: Double = 1e-6,
         private val alpha: Double = 1.0, // standard value for the reflection in Nelder-Mead method
         private val gamma: Double = 2.0, // standard value for the expansion in Nelder-Mead method
         private val rho: Double = 0.5, // standard value for the contraction in Nelder-Mead method
