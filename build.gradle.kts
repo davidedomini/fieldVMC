@@ -143,10 +143,11 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                     language: kotlin
                     
                 terminate:
-                  type: MetricsStableForSteps
+                  type: MetricsStableForTime
                   parameters: {
-                    stepInterval: 200,
-                    equalInterval: 2,
+                    stableForTime: 30.0,
+                    timeIntervalToCheck: 4.0,
+                    equalTimes: 3,
                     metricsToCheck: *metrics,
                   }
                 """.trimIndent()
