@@ -29,6 +29,10 @@ variables:
     0.5
   vesselsAdaptationRate: &vesselsAdaptationRate
     0.9
+  metrics: &metrics
+    formula: |
+      it.unibo.MetricsForTermination()
+    language: kotlin
   seed: &seed
     min: 0
     max: 10
@@ -65,6 +69,14 @@ _pool: &program
       - type: Spawn
         parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ] #, *minSpawnWait
 
+terminate:
+  type: MetricsStableForSteps
+  parameters: {
+    stepInterval: 500,
+    equalInterval: 3,
+    metricsToCheck: *metrics,
+  }
+
 deployments:
   - type: Point
     parameters: [0, 0]
@@ -87,11 +99,11 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
         parameters: [*resourceLowerBound, *maxResource]
 
-terminate:
-    - type: StableForSteps
-      parameters: [ 200, 2 ]
-    - type: AfterTime
-      parameters: [ 1000 ]
+#terminate:
+#    - type: StableForSteps
+#      parameters: [ 200, 2 ]
+#    - type: AfterTime
+#      parameters: [ 1000 ]
 
 export:
   - type: CSVExporter
