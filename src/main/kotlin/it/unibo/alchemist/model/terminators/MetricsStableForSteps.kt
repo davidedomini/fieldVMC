@@ -29,6 +29,8 @@ class MetricsStableForSteps<T>(
             }
             else false
         } else {
+            stepsChecked = 0
+            equalSuccess = 0
             lastUpdatedMetrics = metrics
             false
         }
