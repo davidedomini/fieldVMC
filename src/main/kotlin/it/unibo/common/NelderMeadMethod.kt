@@ -85,43 +85,41 @@ class NelderMeadMethod(
                 "Invalid objective function return value for reflection with $reflected = $reflectedValue.\n" +
                     "Check the objective function implementation, the result should be a finite number."
             }
-            val newSymplex = if (reflectedValue < bestValue) {
-                // Expansion
-                val expanded: List<Double> = centroid.mapCentroid(gamma, reflected)
-                if (cache[expanded] < reflectedValue) {
-                    sortedSimplex.updateLastVertex(expanded)
-                } else {
+            val newSimplex = when {
+                reflectedValue < bestValue -> { // expansion
+                    val expanded: List<Double> = centroid.mapCentroid(gamma, reflected)
+                    when {
+                        cache[expanded] < reflectedValue -> sortedSimplex.updateLastVertex(expanded)
+                        else -> sortedSimplex.updateLastVertex(reflected)
+                    }
+                }
+                reflectedValue < cache[secondWorstVertex.valuesToList()] -> { // accept reflection
                     sortedSimplex.updateLastVertex(reflected)
                 }
-            } else if (reflectedValue < cache[secondWorstVertex.valuesToList()]) {
-                // Accept reflection
-                sortedSimplex.updateLastVertex(reflected)
-            } else {
-                // Contraction
-                val contracted =
-                    if (reflectedValue < cache[worstValues]) {
-                        centroid.mapCentroid(rho, reflected)
-                    } else {
-                        centroid.mapCentroid(rho, worstValues)
+                else -> { // contraction
+                    val contracted = when {
+                        reflectedValue < cache[worstValues] -> centroid.mapCentroid(rho, reflected)
+                        else -> centroid.mapCentroid(rho, worstValues)
                     }
-                if (objective(contracted) < cache[worstValues]) {
-                    sortedSimplex.updateLastVertex(contracted)
-                } else {
-                    // Shrink simplex
-                    sortedSimplex.mapIndexed { index, vertex ->
-                        Vertex(
-                            vertex.valuesToList()
-                                .mapIndexed { at, value ->
-                                    val oldValue = bestVertex[at]
-                                    vertex.keyAt(at) to oldValue + sigma * (value - oldValue)
-                                }.toMap()
-                        )
+                    when {
+                        objective(contracted) < cache[worstValues] -> sortedSimplex.updateLastVertex(contracted)
+                        else -> { // shrink simplex
+                            sortedSimplex.mapIndexed { index, vertex ->
+                                Vertex(
+                                    vertex.valuesToList()
+                                        .mapIndexed { at, value ->
+                                            val oldValue = bestVertex[at]
+                                            vertex.keyAt(at) to oldValue + sigma * (value - oldValue)
+                                        }.toMap()
+                                )
+                            }
+                        }
                     }
                 }
             }
             // Check termination condition (small variation in function values)
-            val functionValues = newSymplex.map { cache[it.valuesToList()].get() }
-            symplexUpdated = newSymplex
+            val functionValues = newSimplex.map { cache[it.valuesToList()].get() }
+            symplexUpdated = newSimplex
             val maxDiff = functionValues.maxOrNull()!! - functionValues.minOrNull()!!
             if (maxDiff < tolerance) return symplexUpdated.first()
         }
