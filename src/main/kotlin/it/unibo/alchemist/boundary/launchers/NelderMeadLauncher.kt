@@ -74,7 +74,8 @@ class NelderMeadLauncher
                 CompletableFuture.completedFuture(futureResults.map { it.get() }.average())
             }.also {
                 // write the result into a csv with as name the variables and the date of execution
-                val outputPath = Paths.get("").toAbsolutePath().toString() + "/data/NelderMeadMethod"
+                val outputPath =
+                    Paths.get("").toAbsolutePath().toString() + "${File.separator}data${File.separator}NelderMeadMethod"
                 //if not exists create the directory
                 File(outputPath).mkdirs()
                 val outputFile = File("$outputPath${File.separator}${variables.joinToString("_")}_maxIter${maxIterations}_${seedName}s${seeds.max()}_${LocalDateTime.now()}.csv")
