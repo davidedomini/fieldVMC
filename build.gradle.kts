@@ -116,7 +116,6 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                 args(
                     "--override",
                     "terminate: { type: AfterTime, parameters: [2] } ",
-                    "launcher: { parameters: { batch: [seed], autoStart: true } }",
                 )
             } else {
                 this.additionalConfiguration()
@@ -147,17 +146,22 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                     launcher:
                       type: DefaultLauncher
                       parameters: {
-                        batch: ["seed", "maxResource", "maxSuccess", "resourceLowerBound"], #"minSpawnWait",
-                        autoStart: true,
-                        showProgress: true,
-                        parallelism: 2
+                        batch: ["seed", "maxResource", "maxSuccess", "resourceLowerBound"],
+                        autoStart: true
                       }
                     """.trimIndent(),
                 )
             } else {
                 args(
                     "--override",
-                    "launcher: { parameters: { batch: [seed], autoStart: true } }",
+                    """
+                    launcher:
+                      type: DefaultLauncher
+                      parameters: {
+                        batch: ["seed"],
+                        autoStart: true,
+                      }
+                    """.trimIndent(),
                     "--verbosity",
                     "error",
                 )
