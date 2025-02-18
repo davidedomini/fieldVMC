@@ -16,9 +16,7 @@ plugins {
 repositories {
     mavenCentral()
 }
-/*
- * Only required if you plan to use Protelis, remove otherwise
- */
+
 sourceSets {
     main {
         dependencies {
@@ -27,9 +25,6 @@ sourceSets {
             implementation(kotlin("reflect"))
             implementation(libs.caffeine)
             implementation(libs.rrmxmx)
-        }
-        resources {
-            srcDir("src/main/protelis")
         }
     }
 }
