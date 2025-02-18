@@ -1,3 +1,106 @@
+## [1.9.0](https://github.com/angelacorte/fieldVMC/compare/1.8.7...1.9.0) (2025-02-18)
+
+### Features
+
+* add also termination time ([5b5f943](https://github.com/angelacorte/fieldVMC/commit/5b5f9432aa0cc8a552acbe3960d02777336d4b77))
+* add data retriever object ([aed47e3](https://github.com/angelacorte/fieldVMC/commit/aed47e3c6184084b8c1cb0b8f6d512ff50e4c204))
+* add function to evaluate the mean on cleaned data ([f8fd08a](https://github.com/angelacorte/fieldVMC/commit/f8fd08a54ae04e71ea5b62c1e9d593960091382f))
+* add new extractors to simulation YAMLs ([40ef94a](https://github.com/angelacorte/fieldVMC/commit/40ef94ad09d040aef39af91c556032ee8fa7015f))
+* add objective function as variable ([81824a5](https://github.com/angelacorte/fieldVMC/commit/81824a5084a02b51d2126237b6960fc0c51a7e1f))
+* add requirement ([c9780cd](https://github.com/angelacorte/fieldVMC/commit/c9780cd79b126f1b929e8a4b9cc88d6036ba1ccd))
+* change launcher into NelderMeadLauncher ([981b9dc](https://github.com/angelacorte/fieldVMC/commit/981b9dceb320c4ab0409ddec9d7a6e60dbcc9762))
+* create launcher that uses the nelder mead algorithm for parameters optimization ([aef3e98](https://github.com/angelacorte/fieldVMC/commit/aef3e98115bcf42915f3f7275d4d556bb8bb7251))
+* create network density extractor ([2e693d5](https://github.com/angelacorte/fieldVMC/commit/2e693d5eb186b9dfbee74d9fe557a08158f50159))
+* create network hub extractor ([4150768](https://github.com/angelacorte/fieldVMC/commit/4150768cf1d59f8ad7b2e85050278ca2a8531140))
+* create objective class to evaluate environment's properties ([f590913](https://github.com/angelacorte/fieldVMC/commit/f59091391ae2d08dc351c9905bb44d36f59f5437))
+* final way to create the symplex ([f354637](https://github.com/angelacorte/fieldVMC/commit/f35463774e52729e579812501b94bad44d5c2c36))
+* implement network density by using abstract aggregating double exporter ([f690827](https://github.com/angelacorte/fieldVMC/commit/f69082758f5c79fab820fcd621ba0b2c9028aa83))
+* implement parallelism (maybe) ([f5db7ad](https://github.com/angelacorte/fieldVMC/commit/f5db7ad1814a3278b17f1df5bd6ba6fa3c146b11))
+* implementation of the nelder mead algorithm ([5d5cf65](https://github.com/angelacorte/fieldVMC/commit/5d5cf65a4ca9f6aa82c5f95ebf942c361f987742))
+* nelder mead method works on parallelism set as 1 ([bc1678c](https://github.com/angelacorte/fieldVMC/commit/bc1678ce237c9bcfa60b95fde84939f63d7702d7))
+* update launcher parameters ([249f06d](https://github.com/angelacorte/fieldVMC/commit/249f06d645af013a1a34231b699b13928b0fbfae))
+* use alchemist's network diameter function ([5e9e60d](https://github.com/angelacorte/fieldVMC/commit/5e9e60d27b01ab27dcafa875313a446ac4f4e654))
+* write result on csv ([12f3409](https://github.com/angelacorte/fieldVMC/commit/12f3409ea108c7e81a3b0c192586474367842932))
+
+### Dependency updates
+
+* **deps:** add rrmxmx-kt dependency ([f2ebcda](https://github.com/angelacorte/fieldVMC/commit/f2ebcdac7067bc9a7b878bdfa1412d59fe53273c))
+* **deps:** update alchemist to v37.1.8 ([#144](https://github.com/angelacorte/fieldVMC/issues/144)) ([66f1ba3](https://github.com/angelacorte/fieldVMC/commit/66f1ba3dc64cceb94f6ab5f4a7b9fb3cc311362c))
+* **deps:** update alchemist to v37.2.0 ([#146](https://github.com/angelacorte/fieldVMC/issues/146)) ([b6f18c7](https://github.com/angelacorte/fieldVMC/commit/b6f18c70ee2e46a2f5d439faa00ff98f762c162b))
+* **deps:** update alchemist to v37.2.1 ([#147](https://github.com/angelacorte/fieldVMC/issues/147)) ([ae67fa1](https://github.com/angelacorte/fieldVMC/commit/ae67fa1104d6ef1b10560682fd1f10da04a86453))
+* **deps:** update alchemist to v38 ([#152](https://github.com/angelacorte/fieldVMC/issues/152)) ([c4448cf](https://github.com/angelacorte/fieldVMC/commit/c4448cf0a8cc183ed469c4600a3a2a3dc61d8b92))
+* **deps:** update alchemist version ([4013ae7](https://github.com/angelacorte/fieldVMC/commit/4013ae748b6fad135c11441ee86057a5d3e0e833))
+* **deps:** update dependency it.unibo.alchemist:alchemist-ui-tooling to v37.3.0 ([#148](https://github.com/angelacorte/fieldVMC/issues/148)) ([065f427](https://github.com/angelacorte/fieldVMC/commit/065f427e4210cfc754ed008800b6025d3f45ea4e))
+
+### Bug Fixes
+
+* add missing parameters in extractor ([cf28f6b](https://github.com/angelacorte/fieldVMC/commit/cf28f6b2901da9bcb924d10dc850dde3a3edff8c))
+* change dependencies in order to execute field vmc after the classic version ([2c40e48](https://github.com/angelacorte/fieldVMC/commit/2c40e4808cd96aa485998c56860fbe4a6984a068))
+* column name ([70e6fb8](https://github.com/angelacorte/fieldVMC/commit/70e6fb85729b6553b50dad79b408b56214a0bf31))
+* comment launchers because they are overridden in the build gradle tasks ([f1b9ffd](https://github.com/angelacorte/fieldVMC/commit/f1b9ffd3f22bd2c7c7c6141e75a9a8af259406a8))
+* constructor vals order and name ([5d112df](https://github.com/angelacorte/fieldVMC/commit/5d112df00f49e8803ad0f7f763b0747327bde36b))
+* divide hub result into coordX and coordY ([3b98f06](https://github.com/angelacorte/fieldVMC/commit/3b98f0681897d9247ff16fb08d2289d71b7e116d))
+* immutable simplex ([18d7893](https://github.com/angelacorte/fieldVMC/commit/18d7893d7d2f94271ebb5bfc0522a26a4e8319f5))
+* implement by using Alchemist's new `AbstractAggregatingDoubleExporter` ([44d6d49](https://github.com/angelacorte/fieldVMC/commit/44d6d49cf53e26c374e264ddf2917b3c19247c2d))
+* max children not on batch ([b5f20f8](https://github.com/angelacorte/fieldVMC/commit/b5f20f8fb0e41ed04df5b77aad7f6aeaffcb13f6))
+* metrics to plot ([e38b54d](https://github.com/angelacorte/fieldVMC/commit/e38b54dd1d476a6e354268320a6e4322a21c2adb))
+* missing fix on separator ([fe7f56e](https://github.com/angelacorte/fieldVMC/commit/fe7f56e4653a274ef6f517be86e36455b661e618))
+* OS-related path separator ([c57b2a0](https://github.com/angelacorte/fieldVMC/commit/c57b2a06bac9ee58a8600c03b63885c3370701cb))
+* pass parameters to extractor ([c133b6c](https://github.com/angelacorte/fieldVMC/commit/c133b6c19f3237d02e26e40b945df0d53ecbb21e))
+* remove conflicting launcher ([270646a](https://github.com/angelacorte/fieldVMC/commit/270646ac37f43881f25196b0c82c75d1c436b9c5))
+* remove non-seed variables ([6a73244](https://github.com/angelacorte/fieldVMC/commit/6a732444ff6068f8c1a17314d5a79531f66b6ca7))
+* remove useless function override ([dbe0a8a](https://github.com/angelacorte/fieldVMC/commit/dbe0a8acd1b21611bd0f270b8b6f1fa49b63dea6))
+* translated node points into first quarter ([587bc63](https://github.com/angelacorte/fieldVMC/commit/587bc63a17f4fc4a09db8d426d22c9aadcd9937d))
+* translated point into first quarter ([8010e7c](https://github.com/angelacorte/fieldVMC/commit/8010e7c400178729b1e7bd1f1085c670a00ad9e1))
+* try retrieve data if not present before throwing an error ([4c31f2d](https://github.com/angelacorte/fieldVMC/commit/4c31f2de6b2d8c0c93fa08697cca6e395e5e4d67))
+* typo in val name ([f0f9050](https://github.com/angelacorte/fieldVMC/commit/f0f905063f2c1aacb6e0f33a7f3e49164e5454ca))
+* update data to show according to new extractors ([1f512f6](https://github.com/angelacorte/fieldVMC/commit/1f512f63dc65dfc41487ef10f9a28315a8a29654))
+* update values for network density evaluation ([f73ad7d](https://github.com/angelacorte/fieldVMC/commit/f73ad7d2ce0434e21cd63f0654a4b9e0504baee6))
+* use target as punctual value ([d5904cb](https://github.com/angelacorte/fieldVMC/commit/d5904cb45e79ea0fd219d24f21c5eb3146ec92cc))
+* window path backslash ([1707c49](https://github.com/angelacorte/fieldVMC/commit/1707c49759f74153801ac3ad7f45fb4a78f40460))
+* wrong variable name ([49293c4](https://github.com/angelacorte/fieldVMC/commit/49293c443c8674f645e05de9fd0665b041a85b09))
+* wrong variable name ([36fc206](https://github.com/angelacorte/fieldVMC/commit/36fc206da097bbd50d7e2b3f9e048de7b52a2c35))
+
+### Documentation
+
+* add missing documentation ([f8645ed](https://github.com/angelacorte/fieldVMC/commit/f8645ed5a20269a3b6aaa624bf980fd3724a4fe7))
+* add missing documentation ([16a320a](https://github.com/angelacorte/fieldVMC/commit/16a320abd89f712748d2a5aeab0e706e535ea118))
+
+### Build and continuous integration
+
+* add task to run the experiments with the nelder mead launcher ([709da64](https://github.com/angelacorte/fieldVMC/commit/709da648a80cd44d07a3bdf1c7066ef8499d494a))
+
+### General maintenance
+
+* add data ([8038b17](https://github.com/angelacorte/fieldVMC/commit/8038b179273e5468ede04458e36ddea671ffd7e6))
+* add data ([f57cf45](https://github.com/angelacorte/fieldVMC/commit/f57cf455eed2e975f4be915db6114991fad36df1))
+* add placeholder data for charts evaluation ([920c549](https://github.com/angelacorte/fieldVMC/commit/920c549260bffb09fc5e08d3782f0156d7c574b8))
+* add todo ([f74a02d](https://github.com/angelacorte/fieldVMC/commit/f74a02d134ffb0cffe7e59f155a6b94d4021a9f7))
+* change seed values ([b803c3b](https://github.com/angelacorte/fieldVMC/commit/b803c3b6710b66a5d0f6a1b09e515a131f98932f))
+* **release:** update gradle.properties .env versions to 1.8.7 [skip ci] ([a165837](https://github.com/angelacorte/fieldVMC/commit/a165837fc11dead10a7b0f600d7e5e7cd6934aa8))
+* remove comments ([4d2dba4](https://github.com/angelacorte/fieldVMC/commit/4d2dba424b2e557a670e3ccadb4a901d9d9bc0fa))
+* remove duplicate data ([76f1fad](https://github.com/angelacorte/fieldVMC/commit/76f1fad23f2e5c20a8065b0c9092f1adb3a81c77))
+* remove overriding batch command ([1b46d9e](https://github.com/angelacorte/fieldVMC/commit/1b46d9e244b65c833b7f30ba7eef40cabed79b93))
+* remove print ([bd24dbd](https://github.com/angelacorte/fieldVMC/commit/bd24dbd02ba996f6a6283b54380bfa6bf501738f))
+* remove useless comments ([7d6154d](https://github.com/angelacorte/fieldVMC/commit/7d6154d9acfc671da34e2a8854468883f5465395))
+* replace data ([755acea](https://github.com/angelacorte/fieldVMC/commit/755acea41e0c3dcf3b1c27ad96433e319a1ffaf2))
+* replace data ([d69c2c3](https://github.com/angelacorte/fieldVMC/commit/d69c2c390eb0372d8d0954068f080bf6f196f8fc))
+* replace data ([2d7a4e6](https://github.com/angelacorte/fieldVMC/commit/2d7a4e6dc1bcdf917dd8cd79f03a42bbf240b35a))
+* update cleaned data ([044820d](https://github.com/angelacorte/fieldVMC/commit/044820d47615aedad82689bd77dab6f752387f4b))
+
+### Style improvements
+
+* fix according to ktlint ([f07ce87](https://github.com/angelacorte/fieldVMC/commit/f07ce8754bafdcaa427c9c94b892e29d2315e5d7))
+* format according to ktlint ([12fb154](https://github.com/angelacorte/fieldVMC/commit/12fb1545bfaed37f9c7365a2e7e35cce550a2296))
+* run ktlint formatter ([147159f](https://github.com/angelacorte/fieldVMC/commit/147159f152fc900361843b7d8e756726eb175324))
+* run ktlint formatter ([c9fb909](https://github.com/angelacorte/fieldVMC/commit/c9fb90932b3e368eb8d6343ae1b9925446153de5))
+
+### Refactoring
+
+* changing logic (not completed) ([b9e0c93](https://github.com/angelacorte/fieldVMC/commit/b9e0c93ebe761d2edf7f270e408241de1bd70d3e))
+* rename target function and add docs ([fbeccdb](https://github.com/angelacorte/fieldVMC/commit/fbeccdb0eaafc93f4463a282e4e9748dab303ec5))
+* take simplex as class parameter ([fe8237d](https://github.com/angelacorte/fieldVMC/commit/fe8237debd028fd34cce18a7b0a47bff615321eb))
+
 ## [1.8.7](https://github.com/angelacorte/fieldVMC/compare/1.8.6...1.8.7) (2025-02-03)
 
 ### Dependency updates
