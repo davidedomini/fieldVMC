@@ -139,7 +139,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                 variables:
                   metrics: &metrics
                     formula: |
-                      it.unibo.MetricsToCheck()
+                      it.unibo.MetricsForTermination()
                     language: kotlin
                     
                 terminate:
