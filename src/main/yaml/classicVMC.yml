@@ -69,11 +69,19 @@ _pool: &program
       - type: Spawn
         parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ] #, *minSpawnWait
 
+#terminate:
+#  type: MetricsStableForSteps
+#  parameters: {
+#    stepInterval: 500,
+#    equalInterval: 3,
+#    metricsToCheck: *metrics,
+#  }
 terminate:
-  type: MetricsStableForSteps
+  type: MetricsStableForTime
   parameters: {
-    stepInterval: 500,
-    equalInterval: 3,
+    stableForTime: 30.0,
+    timeIntervalToCheck: 4.0,
+    equalTimes: 3,
     metricsToCheck: *metrics,
   }
 

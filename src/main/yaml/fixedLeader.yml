@@ -71,11 +71,19 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
         parameters: [ *cloningRange, *maxChildren ]
 
+#terminate:
+#  type: MetricsStableForSteps
+#  parameters: {
+#    stepInterval: 500,
+#    equalInterval: 3,
+#    metricsToCheck: *metrics,
+#  }
 terminate:
-  type: MetricsStableForSteps
+  type: MetricsStableForTime
   parameters: {
-    stepInterval: 500,
-    equalInterval: 3,
+    stableForTime: 30.0,
+    timeIntervalToCheck: 4.0,
+    equalTimes: 3,
     metricsToCheck: *metrics,
   }
 
