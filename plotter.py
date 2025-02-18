@@ -170,7 +170,7 @@ if __name__ == '__main__':
         'network-hub-xCoord',
         'network-hub-yCoord',
         'network-diameter[mean]',
-        'network-density[mean]',
+        'network-density[max]',
         'nodes-degree[mean]',
     ]
 
