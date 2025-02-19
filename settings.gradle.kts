@@ -11,4 +11,4 @@ gradleEnterprise {
     }
 }
 
-rootProject.name = "fieldVMC"
+rootProject.name = "field-vmc"
