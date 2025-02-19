@@ -27,10 +27,8 @@ services:
       context: .
       dockerfile: ./docker/fixedLeaderOptimizer/Dockerfile
     depends_on:
-      prepare:
-        condition: service_completed_successfully
-      classic-vmc-simulation:
-        condition: service_completed_successfully
+      - prepare
+      - classic-vmc-simulation
     volumes:
       - ./data:/experiment/data
 
@@ -63,10 +61,8 @@ services:
 
   finish:
     depends_on:
-      prepare:
-        condition: service_completed_successfully
-      fieldVMC-fixed-leader-optimizer:
-        condition: service_completed_successfully
+      - prepare
+      - fieldVMC-fixed-leader-optimizer
 #      charts:
 #        condition: service_completed_successfully
     image: alpine:3.21.3
