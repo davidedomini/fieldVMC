@@ -1,3 +1,20 @@
+## [1.11.1](https://github.com/angelacorte/fieldVMC/compare/1.11.0...1.11.1) (2025-02-19)
+
+### Dependency updates
+
+* **deps:** update alchemist to v38.0.3 ([f3de305](https://github.com/angelacorte/fieldVMC/commit/f3de305182dc33697d61c36a9e20c37203324403))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.124 ([f59d636](https://github.com/angelacorte/fieldVMC/commit/f59d63608ed7e79b941a1ead25764ac18dcb9cc7))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.125 ([c18d848](https://github.com/angelacorte/fieldVMC/commit/c18d8483ecac8fc94b6946780e9d73f30fa5a014))
+* **deps:** update plugin com.gradle.enterprise to v3.19.2 ([5ce8d90](https://github.com/angelacorte/fieldVMC/commit/5ce8d90afd8bdc3e5c2bfc45115f8013e524967a))
+
+### Bug Fixes
+
+* change project name in docker compose ([99361c5](https://github.com/angelacorte/fieldVMC/commit/99361c57af988358ccf797be9e7332ab9a54910d))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.11.0 [skip ci] ([5593bde](https://github.com/angelacorte/fieldVMC/commit/5593bde8ea6079576366b05c142583d078aeef5f))
+
 ## [1.11.0](https://github.com/angelacorte/fieldVMC/compare/1.10.0...1.11.0) (2025-02-19)
 
 ### Features
