@@ -1,3 +1,36 @@
+## [1.11.0](https://github.com/angelacorte/fieldVMC/compare/1.10.0...1.11.0) (2025-02-19)
+
+### Features
+
+* implement termination based on stability of metrics for a specific amount of time ([4f50001](https://github.com/angelacorte/fieldVMC/commit/4f50001044ebfa17c1325c6edd1cc441ada17643))
+* setup docker for parameters optimization ([2ce51c1](https://github.com/angelacorte/fieldVMC/commit/2ce51c11d0237fbd886558aa8ecf931b3db226c9))
+* use termination stable for time ([af5e14b](https://github.com/angelacorte/fieldVMC/commit/af5e14b82210fa95b769ebeba0a9fe1f4b260db0))
+
+### Dependency updates
+
+* **deps:** update alchemist to v38.0.2 ([#158](https://github.com/angelacorte/fieldVMC/issues/158)) ([7bfd775](https://github.com/angelacorte/fieldVMC/commit/7bfd77599b9e89648791849595610bee0fc07d5c))
+
+### Bug Fixes
+
+* error on portainer 'depends_on must be a list' ([8a4fa66](https://github.com/angelacorte/fieldVMC/commit/8a4fa6638ff8a58bf07651109f94d5a237315561))
+* missing class name refactor ([2d4302b](https://github.com/angelacorte/fieldVMC/commit/2d4302b6781e2b9470fc733f6e584630c2ce7896))
+* missing sum on counter ([c4d95e5](https://github.com/angelacorte/fieldVMC/commit/c4d95e528f19a267e1bdc41712580ceac299f42d))
+* reset counters ([ea6724a](https://github.com/angelacorte/fieldVMC/commit/ea6724a14efe6c4f29c189cb6c23784570302e7e))
+
+### Build and continuous integration
+
+* temporary disable check simulations docker ([4d9c18b](https://github.com/angelacorte/fieldVMC/commit/4d9c18b0d21a898e7bcb96ee61e417bde2491b30))
+* temporary disable download charts artifact ([1b8de7e](https://github.com/angelacorte/fieldVMC/commit/1b8de7e6a81ae1008503c292426518789ea862dc))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.10.0 [skip ci] ([b300131](https://github.com/angelacorte/fieldVMC/commit/b300131fe7492ae2fefdf83b9e12f51d27ab39f8))
+
+### Refactoring
+
+* increase max seed ([e365ef7](https://github.com/angelacorte/fieldVMC/commit/e365ef7d2c500dfed170263d79675a23f0aef40d))
+* increase tolerance ([90b8701](https://github.com/angelacorte/fieldVMC/commit/90b870168a5571aa73bb846afbec3111dd7ad8ec))
+
 ## [1.10.0](https://github.com/angelacorte/fieldVMC/compare/1.9.0...1.10.0) (2025-02-18)
 
 ### Features
