@@ -1,3 +1,16 @@
+## [1.11.2](https://github.com/angelacorte/fieldVMC/compare/1.11.1...1.11.2) (2025-02-19)
+
+### Bug Fixes
+
+* push on docker hub ([0982fac](https://github.com/angelacorte/fieldVMC/commit/0982facb505956b72e3483b41e45f1997caec404))
+* repository name must be in lower case for docker compose build ([5f31227](https://github.com/angelacorte/fieldVMC/commit/5f31227d4fec185d110b9dcda1b0c9a153402b95))
+* typo in project name in docker compose ([489e950](https://github.com/angelacorte/fieldVMC/commit/489e95057f9f2c6401276112f47065c8f1f71135))
+* typo in project name in docker compose ([cd2739e](https://github.com/angelacorte/fieldVMC/commit/cd2739e660caeb8fc2233485b80b7903dc5d4f2f))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.11.1 [skip ci] ([df95a91](https://github.com/angelacorte/fieldVMC/commit/df95a916708aff4d33f0329e727ecf2e1fabf6ca))
+
 ## [1.11.1](https://github.com/angelacorte/fieldVMC/compare/1.11.0...1.11.1) (2025-02-19)
 
 ### Dependency updates
