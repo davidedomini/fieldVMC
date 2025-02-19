@@ -12,7 +12,7 @@ services:
 #        chmod 777 /experiment/charts
 
   classic-vmc-simulation:
-    image: angelacortecchia/${R:-unknown}-simulation:${VERSION:-latest}
+    image: angelacortecchia/${fieldVMC:-unknown}-simulation:${VERSION:-latest}
     build:
       context: .
       dockerfile: ./docker/classicVMC/Dockerfile
