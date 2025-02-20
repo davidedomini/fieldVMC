@@ -146,7 +146,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                   type: MetricsStableForTime
                   parameters: {
                     stableForTime: 30.0,
-                    timeIntervalToCheck: 4.0,
+                    timeIntervalToCheck: 2.0,
                     equalTimes: 3,
                     metricsToCheck: *metrics,
                   }
