@@ -1,3 +1,21 @@
+## [1.11.3](https://github.com/angelacorte/fieldVMC/compare/1.11.2...1.11.3) (2025-02-20)
+
+### Dependency updates
+
+* **deps:** update alchemist to v39 ([935bfdc](https://github.com/angelacorte/fieldVMC/commit/935bfdc9a9e00b718ade1629d198f4254869c619))
+
+### Bug Fixes
+
+* dependency for docker service ([ffffbe5](https://github.com/angelacorte/fieldVMC/commit/ffffbe5d4f364b643e6369340af37633f0f7099c))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.7.10 ([ddacafc](https://github.com/angelacorte/fieldVMC/commit/ddacafcd8dcaf969b30e4009b3f381a4dfdb9fbb))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.11.2 [skip ci] ([a46fd0c](https://github.com/angelacorte/fieldVMC/commit/a46fd0c5eec7b92a03a376f6519638718e5d4624))
+
 ## [1.11.2](https://github.com/angelacorte/fieldVMC/compare/1.11.1...1.11.2) (2025-02-19)
 
 ### Bug Fixes
