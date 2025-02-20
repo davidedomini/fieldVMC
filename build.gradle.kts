@@ -201,8 +201,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                     objectiveFunction: *goal,
                     variables: ["maxResource", "resourceLowerBound", "maxSuccess"],
                     seedName: "seed",
-                    repetitions: 15,
-                    maxIterations: 15,
+                    repetitions: 500,
                   }
                 """.trimIndent(),
             )

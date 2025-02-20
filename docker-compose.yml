@@ -27,8 +27,8 @@ services:
       context: .
       dockerfile: ./docker/fixedLeaderOptimizer/Dockerfile
     depends_on:
-      - prepare
-      - classic-vmc-simulation
+      classic-vmc-simulation:
+        condition: service_completed_successfully
     volumes:
       - ./data:/experiment/data
 
