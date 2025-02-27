@@ -69,22 +69,6 @@ _pool: &program
       - type: Spawn
         parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ] #, *minSpawnWait
 
-#terminate:
-#  type: MetricsStableForSteps
-#  parameters: {
-#    stepInterval: 500,
-#    equalInterval: 3,
-#    metricsToCheck: *metrics,
-#  }
-terminate:
-  type: MetricsStableForTime
-  parameters: {
-    stableForTime: 30.0,
-    timeIntervalToCheck: 4.0,
-    equalTimes: 3,
-    metricsToCheck: *metrics,
-  }
-
 deployments:
   - type: Point
     parameters: [0, 0]
@@ -112,7 +96,7 @@ export:
     parameters:
       fileNameRoot: "classic-vmc"
       interval: 1.0
-      exportPath: "data"
+      exportPath: "data/classic-vmc"
     data:
       - time
       - type: NumberOfNodes

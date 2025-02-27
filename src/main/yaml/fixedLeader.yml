@@ -1,4 +1,6 @@
 variables:
+  path: &path
+    "data/fixed-leader"
   cloningRange: &cloningRange
     formula: 5
   gaussianShape: &gaussianShape
@@ -7,6 +9,12 @@ variables:
     100.0
   maxChildren: &maxChildren
     3.0
+#  maxResource: &maxResource
+#    274.1922387813386
+#  maxSuccess: &maxSuccess
+#    719.5069468576053
+#  resourceLowerBound: &resourceLowerBound
+#    3.061075343874532
   maxResource: &maxResource
     type: ArbitraryVariable
     parameters: [ 350.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
@@ -71,28 +79,12 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
         parameters: [ *cloningRange, *maxChildren ]
 
-#terminate:
-#  type: MetricsStableForSteps
-#  parameters: {
-#    stepInterval: 500,
-#    equalInterval: 3,
-#    metricsToCheck: *metrics,
-#  }
-terminate:
-  type: MetricsStableForTime
-  parameters: {
-    stableForTime: 30.0,
-    timeIntervalToCheck: 4.0,
-    equalTimes: 3,
-    metricsToCheck: *metrics,
-  }
-
 export:
   - type: CSVExporter
     parameters:
       fileNameRoot: "fixed-leader"
       interval: 1.0
-      exportPath: "data"
+      exportPath: *path
     data:
       - time
       - type: NumberOfNodes
