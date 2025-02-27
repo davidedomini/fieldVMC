@@ -1,3 +1,52 @@
+## [1.12.0](https://github.com/angelacorte/fieldVMC/compare/1.11.3...1.12.0) (2025-02-27)
+
+### Features
+
+* add cutting classic vmc simulation ([01b4ea8](https://github.com/angelacorte/fieldVMC/commit/01b4ea8bef6202021e1de1d9cbc753ac5582f667))
+* add cutting fixed leader simulation ([34bc467](https://github.com/angelacorte/fieldVMC/commit/34bc467949e953c825bbc33baab5880043718308))
+* create export means into csv ([d44e482](https://github.com/angelacorte/fieldVMC/commit/d44e4823b298059613d270dad380cdea24afe1d7))
+* update docker compose to run cutting simulations ([f81dd0c](https://github.com/angelacorte/fieldVMC/commit/f81dd0c4aee6610d47881998d88ff1b87af082a8))
+
+### Dependency updates
+
+* **deps:** update alchemist to v39.0.1 ([dee35a4](https://github.com/angelacorte/fieldVMC/commit/dee35a448167b5d38320cfc4f6498da5002699d4))
+* **deps:** update dependency gradle to v8.13 ([50f6bbb](https://github.com/angelacorte/fieldVMC/commit/50f6bbb5e3be42ed8b9c20c7fb3305590855502f))
+* **deps:** update plugin multijvmtesting to v3.2.3 ([11474ca](https://github.com/angelacorte/fieldVMC/commit/11474ca78f65a6321d18f12350775a5be85d924a))
+
+### Bug Fixes
+
+* check on null parent was a sorta of leader election, now check the real root ([bdbe2dc](https://github.com/angelacorte/fieldVMC/commit/bdbe2dc3c297ae12e8aa45c5c798b80a01c87bb0))
+* correct directory name ([42634a1](https://github.com/angelacorte/fieldVMC/commit/42634a1c2e925496f310121a173e582a64779698))
+* put files into proper directory ([375928c](https://github.com/angelacorte/fieldVMC/commit/375928c92f3e966474be1690dcf9cbd8d7169735))
+* remove duplicate termination condition ([4225b80](https://github.com/angelacorte/fieldVMC/commit/4225b8085ebb41bdb53908540d16a0ee7e966dc7))
+* remove duplicate variable definition ([23ea5b6](https://github.com/angelacorte/fieldVMC/commit/23ea5b6ce0d914f83b5385bafa773461786a4b95))
+* remove duplicate vars ([5625743](https://github.com/angelacorte/fieldVMC/commit/5625743d62b0309895a3fc473a0aad432c89f43d))
+* remove variables from batch ([7440da4](https://github.com/angelacorte/fieldVMC/commit/7440da4e8dd7313989152f43a53c12169c7a5368))
+* remove wrong dependency ([3fd789b](https://github.com/angelacorte/fieldVMC/commit/3fd789bca79b7225206b148cb2a13531d26360e1))
+* replace : with - in date time due to windows invalid character ([6e38ba6](https://github.com/angelacorte/fieldVMC/commit/6e38ba63c1c278a0107105b044f543d0f23a025f))
+* use system path separator ([444a923](https://github.com/angelacorte/fieldVMC/commit/444a92351f4a9bda53d9511268e275b4ff891d88))
+
+### Build and continuous integration
+
+* create optimizer task just for fixed leader experiment ([0d7716d](https://github.com/angelacorte/fieldVMC/commit/0d7716d702c39d0abc5971df7a133d14d45c2779))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.7.11 ([9ebed40](https://github.com/angelacorte/fieldVMC/commit/9ebed40201e6d171b642a52a99cbae9fa80c4e8b))
+* task to launch cutting* in batch on seed and origin position ([976b76c](https://github.com/angelacorte/fieldVMC/commit/976b76c4a7b584d17ec50e67de9cff4d3e1d3c86))
+* write arbitrary variables into optimizer task override ([dbead51](https://github.com/angelacorte/fieldVMC/commit/dbead51a6b5f3cbd37923b0cd56e54d0a60cdf2e))
+
+### General maintenance
+
+* add classic-vmc and field-vmc batch simulation results ([51910e5](https://github.com/angelacorte/fieldVMC/commit/51910e54d80ef6c6943dd2543a647c61ee3e69ce))
+* add nelder mead results ([af9c946](https://github.com/angelacorte/fieldVMC/commit/af9c946e682c143a99420b14bcfb8d870220e122))
+* ignore data produced while executing nelder mead method ([cb1f51c](https://github.com/angelacorte/fieldVMC/commit/cb1f51c0ee6b21bf380c9c738881f0e33b4922c1))
+* **release:** update gradle.properties .env versions to 1.11.3 [skip ci] ([aac85e1](https://github.com/angelacorte/fieldVMC/commit/aac85e16b569efe8b53d9a874f8865846bc32b4d))
+* remove data ([ab49347](https://github.com/angelacorte/fieldVMC/commit/ab493472337aa6cbe2720ad7292dfe0e8bd866ad))
+* rename directory ([8af8f58](https://github.com/angelacorte/fieldVMC/commit/8af8f58d244079b4958ccf78bff17392ef129c4f))
+* smaller time interval to check for termination ([7047821](https://github.com/angelacorte/fieldVMC/commit/7047821e4b610c40674df84faa02ba451a6a8cf7))
+
+### Refactoring
+
+* invalid character for windows ([3bc7b0d](https://github.com/angelacorte/fieldVMC/commit/3bc7b0dad44f5f69cf8c10c94f9d9b53a841adf9))
+
 ## [1.11.3](https://github.com/angelacorte/fieldVMC/compare/1.11.2...1.11.3) (2025-02-20)
 
 ### Dependency updates
