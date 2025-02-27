@@ -21,15 +21,11 @@ variables:
   maxSuccess: &maxSuccess
     type: ArbitraryVariable
     parameters: [ 500.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
-  range: &range
-    formula: cloningRange * 1.01
   resourceLowerBound: &resourceLowerBound
     type: LinearVariable
     parameters: [ 5.0, 1.0, 10.0, 1.0 ]
-  metrics: &metrics
-    formula: |
-      it.unibo.MetricsForTermination()
-    language: kotlin
+  range: &range
+    formula: cloningRange * 1.01
   seed: &seed
     min: 0
     max: 500
