@@ -10,7 +10,7 @@ services:
 #      - angela.cortecchia-volume:/data
 
   classic-vmc-cutting:
-    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
+    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
     build:
       context: .
       dockerfile: docker/cuttingClassicVMC/Dockerfile
@@ -18,7 +18,7 @@ services:
       - angela.cortecchia-volume:/data
 
   fixed-leader-cutting:
-    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
+    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
     build:
       context: .
       dockerfile: ./docker/cuttingFixedLeader/Dockerfile
