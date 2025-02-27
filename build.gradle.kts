@@ -159,11 +159,11 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                     launcher:
                       type: DefaultLauncher
                       parameters: {
-                        batch: ["seed", "maxResource", "maxSuccess", "resourceLowerBound"],
+                        batch: ["seed"],
                         autoStart: true
                       }
                     """.trimIndent(),
-                )
+                ) //, "maxResource", "maxSuccess", "resourceLowerBound"
             } else {
                 args(
                     "--override",
@@ -194,6 +194,8 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                     formula: |
                       it.unibo.Goal()
                     language: kotlin
+                  path: &path
+                    "data/field-vmc-optimizing"
                     
                 launcher:
                   type: it.unibo.alchemist.boundary.launchers.NelderMeadLauncher
