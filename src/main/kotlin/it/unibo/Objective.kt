@@ -3,6 +3,7 @@ package it.unibo
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.util.Environments.networkDiameterByHopDistance
 import it.unibo.common.DataRetriever.meanOnCleanedData
+import java.io.File
 import java.nio.file.Paths
 import kotlin.Double.Companion.NaN
 import kotlin.math.pow
@@ -49,9 +50,11 @@ fun target(): Double {
             "classic-vmc@nodes-degree[mean]",
         )
     return geometricMean(
-        meanOnCleanedData(listOf("classic-vmc"), Paths.get("").toAbsolutePath().toString() + "/data")
-            .filterKeys { it in metrics }
-            .values,
+        meanOnCleanedData(
+            listOf("classic-vmc"),
+            Paths.get("").toAbsolutePath().toString() + "${File.separator}data${File.separator}classic",
+        ).filterKeys { it in metrics }
+        .values,
     )
 }
 
