@@ -96,8 +96,7 @@ object DataRetriever {
         columnNames: List<String>,
         collectedRows: List<List<String>>,
     ) {
-
-        val outputFile = File("$path${File.separator}cleaned_$experiment.csv")
+        val outputFile = File("$path${File.separator}cleaned${File.separator}cleaned_$experiment.csv")
         val outputContent =
             buildString {
                 append(columnNames.joinToString(" ")) // Header row
