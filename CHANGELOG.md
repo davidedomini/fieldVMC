@@ -1,3 +1,14 @@
+## [1.12.1](https://github.com/angelacorte/fieldVMC/compare/1.12.0...1.12.1) (2025-02-27)
+
+### Bug Fixes
+
+* image name ([1609c2a](https://github.com/angelacorte/fieldVMC/commit/1609c2a195b9060f4a73a898e06eefd8d1cd56dc))
+* remove wrong command ([b7c6d12](https://github.com/angelacorte/fieldVMC/commit/b7c6d1271cbd41a92ad084fcf5da82a69d5ae872))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.12.0 [skip ci] ([171de26](https://github.com/angelacorte/fieldVMC/commit/171de2619b0528763b482b592a9a1e50c1af9d8f))
+
 ## [1.12.0](https://github.com/angelacorte/fieldVMC/compare/1.11.3...1.12.0) (2025-02-27)
 
 ### Features
