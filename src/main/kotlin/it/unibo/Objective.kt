@@ -52,7 +52,7 @@ fun target(): Double {
     return geometricMean(
         meanOnCleanedData(
             listOf("classic-vmc"),
-            Paths.get("").toAbsolutePath().toString() + "${File.separator}data${File.separator}classic",
+            Paths.get("").toAbsolutePath().toString() + "${File.separator}data${File.separator}classic-vmc",
         ).filterKeys { it in metrics }
         .values,
     )
