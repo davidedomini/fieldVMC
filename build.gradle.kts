@@ -163,7 +163,23 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                         autoStart: true
                       }
                     """.trimIndent(),
+                    "--verbosity",
+                    "error",
                 ) //, "maxResource", "maxSuccess", "resourceLowerBound"
+            } else if(capitalizedName == "CuttingClassicVMC" || capitalizedName == "CuttingFixedLeader") {
+                args(
+                    "--override",
+                    """
+                    launcher:
+                      type: DefaultLauncher
+                      parameters: {
+                        batch: ["seed", "origin"],
+                        autoStart: true,
+                      }
+                    """.trimIndent(),
+                    "--verbosity",
+                    "error",
+                )
             } else {
                 args(
                     "--override",
