@@ -29,10 +29,6 @@ variables:
     0.5
   vesselsAdaptationRate: &vesselsAdaptationRate
     0.9
-  metrics: &metrics
-    formula: |
-      it.unibo.MetricsForTermination()
-    language: kotlin
   seed: &seed
     min: 0
     max: 500

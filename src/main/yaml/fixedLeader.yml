@@ -9,28 +9,30 @@ variables:
     100.0
   maxChildren: &maxChildren
     3.0
-#  maxResource: &maxResource
-#    274.1922387813386
-#  maxSuccess: &maxSuccess
-#    719.5069468576053
-#  resourceLowerBound: &resourceLowerBound
-#    3.061075343874532
+  #OPTIMIZED PARAMETERS
   maxResource: &maxResource
-    type: ArbitraryVariable
-    parameters: [ 350.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+    274.1922387813386
   maxSuccess: &maxSuccess
-    type: ArbitraryVariable
-    parameters: [ 500.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+    719.5069468576053
   resourceLowerBound: &resourceLowerBound
-    type: LinearVariable
-    parameters: [ 5.0, 1.0, 10.0, 1.0 ]
+    3.061075343874532
+  # GENERIC PARAMETERS
+#  maxResource: &maxResource
+#    type: ArbitraryVariable
+#    parameters: [ 350.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+#  maxSuccess: &maxSuccess
+#    type: ArbitraryVariable
+#    parameters: [ 500.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+#  resourceLowerBound: &resourceLowerBound
+#    type: LinearVariable
+#    parameters: [ 5.0, 1.0, 10.0, 1.0 ]
   range: &range
     formula: cloningRange * 1.01
   seed: &seed
     min: 0
     max: 500
     step: 1
-    default: 2
+    default: 0
 
 network-model:
   type: ConnectWithinDistance
