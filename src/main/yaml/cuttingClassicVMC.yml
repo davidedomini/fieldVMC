@@ -1,0 +1,146 @@
+variables:
+  cloningRange: &cloningRange
+    formula: 5
+  constCompetitionRate: &constCompetitionRate
+    1
+  constConsumptionRate: &constConsumptionRate
+    0.1
+  constProductionRate: &constProductionRate
+    0.1
+  constTransferRate: &constTransferRate
+    0.5
+  gaussianShape: &gaussianShape
+    5
+  maxChildren: &maxChildren
+    3.0
+  maxResource: &maxResource
+    3.0
+  maxSuccess: &maxSuccess
+    500.0
+  range: &range
+    formula: cloningRange * 1.01
+  resourceLowerBound: &resourceLowerBound
+    5.0
+  sensorCompetitionRate: &sensorCompetitionRate
+    0.1
+  sensorProductionRate: &sensorProductionRate
+    1.0
+  sensorTransferRate: &sensorTransferRate
+    0.5
+  vesselsAdaptationRate: &vesselsAdaptationRate
+    0.9
+  origin : &origin
+    type: LinearVariable
+    parameters: [ 10.0, 0.1, 50.0, 3.0 ]
+#    0.1
+  killingRange: &killingRange
+    60
+  width: &width
+    0
+  height: &height
+    60
+  #    type: LinearVariable
+  #    parameters: [ 10.0, 1.0, 50.0, 3.0 ]
+  seed: &seed
+    min: 0
+    max: 500
+    step: 1
+    default: 0
+
+network-model:
+  type: ConnectWithinDistance
+  parameters: *range
+
+seeds:
+  scenario: *seed
+  simulation: *seed
+
+layers:
+  - type: BidimensionalGaussianLayer
+    parameters: [0, 25, *maxSuccess, *gaussianShape ]
+    molecule: successSource
+
+incarnation: collektive
+
+_pool: &program
+  - time-distribution:
+      type: DiracComb
+      parameters: [ 0, 1 ]
+    type: Event
+    actions:
+      - type: EvaluateSuccess
+        parameters: [ *constProductionRate, *constTransferRate, *sensorProductionRate, *sensorTransferRate ]
+      - type: ResourceDistribution
+        parameters: [ *constConsumptionRate, *constCompetitionRate, *sensorCompetitionRate, *vesselsAdaptationRate  ]
+      - type: FindMax
+        parameters: []
+      - type: Spawn
+        parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ] #, *minSpawnWait
+  - time-distribution:
+      type: Trigger
+      parameters: [ 200 ]
+    type: Event
+    actions:
+      - type: RemoveNodes
+        parameters: [ *killingRange, *origin, *width, *height ]
+
+deployments:
+  - type: Point
+    parameters: [0, 0]
+    programs:
+      - *program
+    contents:
+      - molecule: parent
+        concentration: 0
+      - molecule: resource
+        concentration: *maxResource
+      - molecule: children-count
+        concentration: 0
+    properties:
+      - type: it.unibo.collektive.alchemist.device.properties.impl.ExecutionClockProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
+        parameters: [ *maxSuccess ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
+        parameters: [*resourceLowerBound, *maxResource]
+
+export:
+  - type: CSVExporter
+    parameters:
+      fileNameRoot: "cutting-classic-vmc"
+      interval: 1.0
+      exportPath: "data/cutting-classic-vmc"
+    data:
+      - time
+      - type: NumberOfNodes
+      - type: NetworkHub
+      - type: NetworkDiameter
+        parameters:
+          filter: onlyfinite
+          aggregators: [ max, mean, median ]
+      - type: NetworkDensity
+        parameters:
+          filter: onlyfinite
+          aggregators: [ max, mean, variance, median, StandardDeviation ]
+      - type: NodeDegree
+        parameters:
+          filter: onlyfinite
+          aggregators: [ max, mean, variance, median, StandardDeviation ]
+      - molecule: children-count
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: local-success
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: resource
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: success
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
+        value-filter: onlyfinite
+        precision: 3
