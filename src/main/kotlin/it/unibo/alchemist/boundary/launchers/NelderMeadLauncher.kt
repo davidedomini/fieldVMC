@@ -80,7 +80,7 @@ class NelderMeadLauncher
                     Paths.get("").toAbsolutePath().toString() + "${File.separator}data${File.separator}NelderMeadMethod"
                 //if not exists create the directory
                 File(outputPath).mkdirs()
-                val outputFile = File("$outputPath${File.separator}${variables.joinToString("_")}_maxIter${maxIterations}_${seedName}s${seeds.max()}_${LocalDateTime.now()}.csv")
+                val outputFile = File("$outputPath${File.separator}${variables.joinToString("_")}_maxIter${maxIterations}_${seedName}s${seeds.max()}_${LocalDateTime.now().toString().replace(":", "-")}.csv")
                 val outputContent = buildString {
                     append(variables.joinToString(" "))
                     append("\n")
