@@ -1,36 +1,42 @@
 services:
-  prepare:
-    image: alpine:3.21.3
-    volumes:
-      - .:/experiment:rw
-    entrypoint: /bin/sh -c
-    command:
-      - |
-        mkdir -p /experiment/data
-        chmod 777 /experiment/data
-#        mkdir -p /experiment/charts
-#        chmod 777 /experiment/charts
+#  classic-vmc-simulation:
+#    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
+#    build:
+#      context: .
+#      dockerfile: ./docker/classicVMC/Dockerfile
+#    depends_on:
+#      - prepare
+#    volumes:
+#      - angela.cortecchia-volume:/data
 
-  classic-vmc-simulation:
+  classic-vmc-cutting:
     image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
     build:
       context: .
-      dockerfile: ./docker/classicVMC/Dockerfile
+      dockerfile: docker/cuttingClassicVMC/Dockerfile
+    volumes:
+      - angela.cortecchia-volume:/data
+
+  fixed-leader-cutting:
+    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
+    build:
+      context: .
+      dockerfile: ./docker/cuttingFixedLeader/Dockerfile
     depends_on:
       - prepare
     volumes:
-      - ./data:/experiment/data
+      - angela.cortecchia-volume:/data
 
-  fieldVMC-fixed-leader-optimizer:
-    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
-    build:
-      context: .
-      dockerfile: ./docker/fixedLeaderOptimizer/Dockerfile
-    depends_on:
-      classic-vmc-simulation:
-        condition: service_completed_successfully
-    volumes:
-      - ./data:/experiment/data
+#  fieldVMC-fixed-leader-optimizer:
+#    image: angelacortecchia/${PROJECT_NAME:-unknown}-simulation:${VERSION:-latest}
+#    build:
+#      context: .
+#      dockerfile: ./docker/fixedLeaderOptimizer/Dockerfile
+#    depends_on:
+#      classic-vmc-simulation:
+#        condition: service_completed_successfully
+#    volumes:
+#      - angela.cortecchia-volume:/data
 
 #  fieldVMC-fixed-leader-simulation:
 #    image: angelacortecchia/${fieldVMC:-unknown}-simulation:${VERSION:-latest}
@@ -43,7 +49,7 @@ services:
 #      classic-vmc-simulation:
 #        condition: service_completed_successfully
 #    volumes:
-#      - ./data:/experiment/data
+#      - angela.cortecchia-volume:/data
 
 #  charts:
 #    depends_on:
@@ -56,22 +62,26 @@ services:
 #      dockerfile: ./docker/charts/Dockerfile
 #      context: .
 #    volumes:
-#      - ./data:/experiment/data
+#      - angela.cortecchia-volume:/data
 #      - ./charts:/experiment/charts
 
-  finish:
-    depends_on:
-      - prepare
-      - fieldVMC-fixed-leader-optimizer
+#  finish:
+#    depends_on:
+#      - prepare
+#      - fieldVMC-fixed-leader-optimizer
 #      charts:
 #        condition: service_completed_successfully
-    image: alpine:3.21.3
-    volumes:
-      - .:/experiment:rw
-    entrypoint: /bin/sh -c
-    command:
-      - |
-        find /experiment/data -type d -exec chmod 777 {} \;
-        find /experiment/data -type f -exec chmod 666 {} \;
+#    image: alpine:3.21.3
+#    volumes:
+#      - .:/experiment:rw
+#    entrypoint: /bin/sh -c
+#    command:
+#      - |
+#        find /experiment/data -type d -exec chmod 777 {} \;
+#        find /experiment/data -type f -exec chmod 666 {} \;
 #        find /experiment/charts -type d -exec chmod 777 {} \;
 #        find /experiment/charts -type f -exec chmod 666 {} \;
+
+volumes:
+  angela.cortecchia-volume:
+    external: true
