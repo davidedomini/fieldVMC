@@ -181,14 +181,15 @@ File(rootProject.rootDir.path + "/src/main/yaml")
             }
         }
         runAllBatch.dependsOn(batch)
-        val optimizer by basetask("run${capitalizedName}Optimizer") {
-            group = alchemistGroupOptimizer
-            description = "Launches Nelder Mead parameters optimizer for $capitalizedName"
-            maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
-            File("data").mkdirs()
-            args(
-                "--override",
-                """
+        if (capitalizedName == "FixedLeader"){
+            val optimizer by basetask("run${capitalizedName}Optimizer") {
+                group = alchemistGroupOptimizer
+                description = "Launches Nelder Mead parameters optimizer for $capitalizedName"
+                maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
+                File("data").mkdirs()
+                args(
+                    "--override",
+                    """
                 variables:
                   goal: &goal
                     formula: |
@@ -206,9 +207,10 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                     repetitions: 500,
                   }
                 """.trimIndent(),
-            )
+                )
+            }
+            runAllOptimizer.dependsOn(optimizer)
         }
-        runAllOptimizer.dependsOn(optimizer)
     }
 
 tasks.withType(KotlinCompile::class).all {
