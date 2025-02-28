@@ -1,3 +1,22 @@
+## [1.12.2](https://github.com/angelacorte/fieldVMC/compare/1.12.1...1.12.2) (2025-02-28)
+
+### Bug Fixes
+
+* docker compose with different gradle task into env ([c57ddda](https://github.com/angelacorte/fieldVMC/commit/c57ddda4ce2b6ac458a2334b08f51ea7ce908c10))
+* objective function ([cca55db](https://github.com/angelacorte/fieldVMC/commit/cca55db4636645d8a28be85291a0ec6601300c3f))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.7.12 ([9af7417](https://github.com/angelacorte/fieldVMC/commit/9af74170d33e7956571c61f1ae37c0f30ec8d458))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.12.1 [skip ci] ([75294d1](https://github.com/angelacorte/fieldVMC/commit/75294d1951aed71434bf7a5fa3029116de52deb1))
+
+### Refactoring
+
+* export means also returns it ([455df5f](https://github.com/angelacorte/fieldVMC/commit/455df5f39b70207d9455dd88f36b668f6c479364))
+
 ## [1.12.1](https://github.com/angelacorte/fieldVMC/compare/1.12.0...1.12.1) (2025-02-27)
 
 ### Bug Fixes
