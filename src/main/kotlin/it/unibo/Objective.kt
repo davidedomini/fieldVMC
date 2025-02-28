@@ -40,21 +40,21 @@ fun geometricMean(metrics: Collection<Double>): Double =
  * - network diameter;
  * - network degree.
  */
-fun target(): Double {
+fun target(experimentName: String): Double {
     val metrics =
         listOf(
-            "classic-vmc@nodes",
-            "classic-vmc@network-hub-xCoord",
-            "classic-vmc@network-hub-yCoord",
-            "classic-vmc@network-density[max]",
-            "classic-vmc@network-diameter[mean]",
-            "classic-vmc@nodes-degree[mean]",
+            "nodes",
+            "network-hub-xCoord",
+            "network-hub-yCoord",
+            "network-density[max]",
+            "network-diameter[mean]",
+            "nodes-degree[mean]",
         )
     return geometricMean(
         meanOnCleanedData(
-            listOf("classic-vmc"),
-            Paths.get("").toAbsolutePath().toString() + "${File.separator}data${File.separator}classic-vmc",
-        ).filterKeys { it in metrics }
+            listOf(experimentName),
+            "data",
+        ).filterKeys { it.removePrefix("$experimentName@") in metrics }
         .values,
     )
 }
@@ -63,7 +63,7 @@ fun target(): Double {
  * The goal for the optimization.
  */
 class Goal : (Environment<*, *>) -> Double {
-    val target = target()
+    val target = target("classic-vmc")
 
     override fun invoke(env: Environment<*, *>): Double = env.minimize(target)
 }
