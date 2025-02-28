@@ -19,7 +19,7 @@ services:
     depends_on:
       - classic-vmc-batch
     environment:
-      - GRADLE_TASK=runClassicVMCBatch runFixedLeaderOptimizer
+      - GRADLE_TASK=runFixedLeaderOptimizer
 
 volumes:
   angela.cortecchia-volume:
