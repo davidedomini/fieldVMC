@@ -45,7 +45,20 @@ variables:
     min: 0
     max: 500
     step: 1
-    default: 0
+    default: 3
+  metrics: &metrics
+    formula: |
+      it.unibo.MetricsForTermination()
+    language: kotlin
+
+terminate:
+  type: MetricsStableForTime
+  parameters: {
+    stableForTime: 30.0,
+    timeIntervalToCheck: 2.0,
+    equalTimes: 3,
+    metricsToCheck: *metrics,
+  }
 
 network-model:
   type: ConnectWithinDistance
@@ -78,7 +91,7 @@ _pool: &program
         parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ] #, *minSpawnWait
   - time-distribution:
       type: Trigger
-      parameters: [ 200 ]
+      parameters: [ 100 ]
     type: Event
     actions:
       - type: RemoveNodes

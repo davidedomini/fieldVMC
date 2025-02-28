@@ -57,7 +57,7 @@ _pool: &program
         parameters: [it.unibo.collektive.vmc.FieldVMCFixedLeaderKt.fixedRootStability]
   - time-distribution:
       type: Trigger
-      parameters: [ 200 ]
+      parameters: [ 100 ]
     type: Event
     actions:
       - type: RemoveNodes
