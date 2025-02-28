@@ -1,6 +1,6 @@
 services:
   optimizing-simulations:
-    image: angelacortecchia/field-vmc-simulation
+    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
     build:
       context: .
       dockerfile: ./docker/fixedLeaderOptimizer/Dockerfile
