@@ -1,3 +1,13 @@
+## [1.12.5](https://github.com/angelacorte/fieldVMC/compare/1.12.4...1.12.5) (2025-02-28)
+
+### Bug Fixes
+
+* docker image version ([1aa7b32](https://github.com/angelacorte/fieldVMC/commit/1aa7b3242895b63bcc03d8717f4b29969e20c5e1))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.12.4 [skip ci] ([750a4f1](https://github.com/angelacorte/fieldVMC/commit/750a4f1e954756ae5fffefb7401b1c6c646c9057))
+
 ## [1.12.4](https://github.com/angelacorte/fieldVMC/compare/1.12.3...1.12.4) (2025-02-28)
 
 ### Bug Fixes
