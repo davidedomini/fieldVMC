@@ -1,3 +1,18 @@
+## [1.12.3](https://github.com/angelacorte/fieldVMC/compare/1.12.2...1.12.3) (2025-02-28)
+
+### Bug Fixes
+
+* correct path for target data ([607808c](https://github.com/angelacorte/fieldVMC/commit/607808ce379cc0dc59627b93e2b876a78f6789b2))
+* restore yamls ([5b45b6e](https://github.com/angelacorte/fieldVMC/commit/5b45b6e0fbaed35f398dbebc071e260aaf969598))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.12.2 [skip ci] ([2a8b890](https://github.com/angelacorte/fieldVMC/commit/2a8b89088548142f739acdad558c45b07b3b7f62))
+
+### Style improvements
+
+* missing tab ([b155b02](https://github.com/angelacorte/fieldVMC/commit/b155b02c1ab2beafade2dc4fdf4b242c7ee54e68))
+
 ## [1.12.2](https://github.com/angelacorte/fieldVMC/compare/1.12.1...1.12.2) (2025-02-28)
 
 ### Bug Fixes
