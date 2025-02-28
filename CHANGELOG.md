@@ -1,3 +1,13 @@
+## [1.12.7](https://github.com/angelacorte/fieldVMC/compare/1.12.6...1.12.7) (2025-02-28)
+
+### Bug Fixes
+
+* remove wrong command ([678e581](https://github.com/angelacorte/fieldVMC/commit/678e581df8594727207e6cf865ebbfafa8b7fc15))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.12.6 [skip ci] ([1e074a4](https://github.com/angelacorte/fieldVMC/commit/1e074a4a421023e726ba3655db08215a27e5a09f))
+
 ## [1.12.6](https://github.com/angelacorte/fieldVMC/compare/1.12.5...1.12.6) (2025-02-28)
 
 ### Bug Fixes
