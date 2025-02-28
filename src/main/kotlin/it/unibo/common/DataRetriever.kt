@@ -167,19 +167,23 @@ object DataRetriever {
         return data
     }
 
-    fun exportMeans(experiments: List<String>, path: String) =
+    fun exportMeans(experiments: List<String>, path: String): Map<String, Double> {
+        val result = mutableMapOf<String, Double>()
         experiments.forEach { experiment ->
             val data = meanOnCleanedData(listOf(experiment), path)
-            val outputFile = File("$path${File.separator}means${File.separator}means_$experiment.csv")
+            val outputFile = File("$path${File.separator}mean${File.separator}means_$experiment.csv")
             // Create the output directory if it does not exist
             outputFile.parentFile.mkdirs()
             val outputContent =
                 buildString {
                     data.forEach { (key, value) ->
                         val columnName = key.substringAfter("@")
+                        result.put(key, value)
                         append("$columnName,$value\n")
                     }
                 }
             outputFile.writeText(outputContent)
         }
+        return result
+    }
 }
