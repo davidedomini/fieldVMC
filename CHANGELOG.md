@@ -1,3 +1,13 @@
+## [1.12.6](https://github.com/angelacorte/fieldVMC/compare/1.12.5...1.12.6) (2025-02-28)
+
+### Bug Fixes
+
+* create two different services ([dbafb8c](https://github.com/angelacorte/fieldVMC/commit/dbafb8cba7eed623b33e26d9cd816bc0b385cb21))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.12.5 [skip ci] ([6e76aff](https://github.com/angelacorte/fieldVMC/commit/6e76affee52bb21d7a62a54b57363ae03e9e753a))
+
 ## [1.12.5](https://github.com/angelacorte/fieldVMC/compare/1.12.4...1.12.5) (2025-02-28)
 
 ### Bug Fixes
