@@ -206,32 +206,32 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                 args(
                     "--override",
                     """
-                variables:
-                  goal: &goal
-                    formula: |
-                      it.unibo.Goal()
-                    language: kotlin
-                  maxResource: &maxResource
-                    type: ArbitraryVariable
-                    parameters: [ 350.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
-                  maxSuccess: &maxSuccess
-                    type: ArbitraryVariable
-                    parameters: [ 500.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
-                  resourceLowerBound: &resourceLowerBound
-                    type: LinearVariable
-                    parameters: [ 5.0, 1.0, 10.0, 1.0 ]
-                  path: &path
-                    "data/field-vmc-optimizing"
-                    
-                launcher:
-                  type: it.unibo.alchemist.boundary.launchers.NelderMeadLauncher
-                  parameters: {
-                    objectiveFunction: *goal,
-                    variables: ["maxResource", "resourceLowerBound", "maxSuccess"],
-                    seedName: "seed",
-                    repetitions: 500,
-                  }
-                """.trimIndent(),
+                    variables:
+                      goal: &goal
+                        formula: |
+                          it.unibo.Goal()
+                        language: kotlin
+                      maxResource: &maxResource
+                        type: ArbitraryVariable
+                        parameters: [ 350.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+                      maxSuccess: &maxSuccess
+                        type: ArbitraryVariable
+                        parameters: [ 500.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+                      resourceLowerBound: &resourceLowerBound
+                        type: LinearVariable
+                        parameters: [ 5.0, 1.0, 10.0, 1.0 ]
+                      path: &path
+                        "data/field-vmc-optimizing"
+                        
+                    launcher:
+                      type: it.unibo.alchemist.boundary.launchers.NelderMeadLauncher
+                      parameters: {
+                        objectiveFunction: *goal,
+                        variables: ["maxResource", "resourceLowerBound", "maxSuccess"],
+                        seedName: "seed",
+                        repetitions: 500,
+                      }
+                    """.trimIndent(),
                 )
             }
             runAllOptimizer.dependsOn(optimizer)
