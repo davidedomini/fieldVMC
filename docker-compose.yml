@@ -8,7 +8,6 @@ services:
       - angela.cortecchia-volume:/data
     environment:
       - GRADLE_TASK=runClassicVMCBatch
-      - GRADLE_TASK=runFixedLeaderOptimizer
 
   fixed-leader-optimizer:
     image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
