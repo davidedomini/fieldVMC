@@ -1,9 +1,9 @@
 services:
   optimizing-simulations:
-    image: angelacortecchia/field-vmc-simulation:1.12.1
+    image: angelacortecchia/field-vmc-simulation
     build:
       context: .
-      dockerfile: ./docker/cuttingSimulations/Dockerfile
+      dockerfile: ./docker/fixedLeaderOptimizer/Dockerfile
     volumes:
       - angela.cortecchia-volume:/data
     environment:
