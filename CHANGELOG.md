@@ -1,3 +1,13 @@
+## [1.12.8](https://github.com/angelacorte/fieldVMC/compare/1.12.7...1.12.8) (2025-02-28)
+
+### Bug Fixes
+
+* service dependency ([1210f08](https://github.com/angelacorte/fieldVMC/commit/1210f0895266034a5101018f08c31ca5addc0d58))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.12.7 [skip ci] ([f6ab7f5](https://github.com/angelacorte/fieldVMC/commit/f6ab7f52db4a01410d3daf697df436d2ad743396))
+
 ## [1.12.7](https://github.com/angelacorte/fieldVMC/compare/1.12.6...1.12.7) (2025-02-28)
 
 ### Bug Fixes
