@@ -199,6 +199,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
         runAllBatch.dependsOn(batch)
         if (capitalizedName == "FixedLeader"){
             val optimizer by basetask("run${capitalizedName}Optimizer") {
+                setDependsOn(listOf("runClassicVMCBatch"))
                 group = alchemistGroupOptimizer
                 description = "Launches Nelder Mead parameters optimizer for $capitalizedName"
                 maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
