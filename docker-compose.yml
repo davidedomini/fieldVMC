@@ -1,14 +1,4 @@
 services:
-  classic-vmc-batch:
-    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
-    build:
-      context: .
-      dockerfile: ./docker/fixedLeaderOptimizer/Dockerfile
-    volumes:
-      - angela.cortecchia-volume:/data
-    environment:
-      - GRADLE_TASK=runClassicVMCBatch
-
   fixed-leader-optimizer:
     image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
     build:
@@ -16,8 +6,6 @@ services:
       dockerfile: ./docker/fixedLeaderOptimizer/Dockerfile
     volumes:
       - angela.cortecchia-volume:/data
-    depends_on:
-      - classic-vmc-batch
     environment:
       - GRADLE_TASK=runFixedLeaderOptimizer
 
