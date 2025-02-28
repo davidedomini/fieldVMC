@@ -1,3 +1,13 @@
+## [1.12.9](https://github.com/angelacorte/fieldVMC/compare/1.12.8...1.12.9) (2025-02-28)
+
+### Bug Fixes
+
+* add output directory ([0e4d287](https://github.com/angelacorte/fieldVMC/commit/0e4d287dff344467debefffabb46e07d6cd907a3))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.12.8 [skip ci] ([13590c5](https://github.com/angelacorte/fieldVMC/commit/13590c5252fe4041bf4a15a91a9434db118e7341))
+
 ## [1.12.8](https://github.com/angelacorte/fieldVMC/compare/1.12.7...1.12.8) (2025-02-28)
 
 ### Bug Fixes
