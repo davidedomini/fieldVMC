@@ -6,6 +6,7 @@ import it.unibo.common.DataRetriever.meanOnCleanedData
 import java.io.File
 import java.nio.file.Paths
 import kotlin.Double.Companion.NaN
+import kotlin.math.absoluteValue
 import kotlin.math.pow
 
 class MetricsForTermination : (Environment<*, *>) -> Map<String, Double> {
@@ -91,7 +92,7 @@ fun Environment<*, *>.minimize(target: Double): Double =
                     nodesDegree(),
                 ),
             )
-        (target - current).mod(2.0)
+        (target - current).absoluteValue
     }
 
 /**
@@ -144,6 +145,7 @@ fun <T> Environment<T, *>.networkDensity(): List<Double> {
                 } as MutableMap<String, Double>
             // Calculate the area of the rectangle given by the outermost nodes
             val area = (outers["right"]!! - outers["left"]!!) * (outers["top"]!! - outers["bottom"]!!)
+            if (area <= 0) return@map 0.0
             nodeCount / area
         }.filterNot { it.isNaN() || it.isInfinite()}
 }
