@@ -129,6 +129,7 @@ export:
       - time
       - type: NumberOfNodes
       - type: NetworkHub
+      - type: NumberOfLeaves
       - type: NetworkDiameter
         parameters:
           filter: onlyfinite

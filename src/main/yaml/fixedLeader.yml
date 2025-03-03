@@ -1,6 +1,6 @@
 variables:
   path: &path
-    "data/fixed-leader-optimizer"
+    "data/fixed-leader"
   cloningRange: &cloningRange
     formula: 5
   gaussianShape: &gaussianShape
@@ -10,22 +10,22 @@ variables:
   maxChildren: &maxChildren
     3.0
   #OPTIMIZED PARAMETERS
-#  maxResource: &maxResource
-#    274.1922387813386
-#  maxSuccess: &maxSuccess
-#    719.5069468576053
-#  resourceLowerBound: &resourceLowerBound
-#    3.061075343874532
-#   GENERIC PARAMETERS
   maxResource: &maxResource
-    type: ArbitraryVariable
-    parameters: [ 350.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+    298.1620987990442
   maxSuccess: &maxSuccess
-    type: ArbitraryVariable
-    parameters: [ 500.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+    139.02995656434112
   resourceLowerBound: &resourceLowerBound
-    type: LinearVariable
-    parameters: [ 5.0, 1.0, 10.0, 1.0 ]
+    5.28037476806767
+#   GENERIC PARAMETERS
+#  maxResource: &maxResource
+#    type: ArbitraryVariable
+#    parameters: [ 350.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+#  maxSuccess: &maxSuccess
+#    type: ArbitraryVariable
+#    parameters: [ 500.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
+#  resourceLowerBound: &resourceLowerBound
+#    type: LinearVariable
+#    parameters: [ 5.0, 1.0, 10.0, 1.0 ]
   range: &range
     formula: cloningRange * 1.01
   seed: &seed
@@ -93,13 +93,14 @@ terminate:
 export:
   - type: CSVExporter
     parameters:
-      fileNameRoot: "fixed-leader-optimizer"
+      fileNameRoot: "fixed-leader"
       interval: 1.0
       exportPath: *path
     data:
       - time
       - type: NumberOfNodes
       - type: NetworkHub
+      - type: NumberOfLeaves
       - type: NetworkDiameter
         parameters:
           filter: onlyfinite
