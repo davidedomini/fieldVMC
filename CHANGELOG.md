@@ -1,3 +1,17 @@
+## [1.12.10](https://github.com/angelacorte/fieldVMC/compare/1.12.9...1.12.10) (2025-03-03)
+
+### Dependency updates
+
+* **deps:** update dependency matplotlib to v3.10.1 ([42c34cd](https://github.com/angelacorte/fieldVMC/commit/42c34cd79eef3c933b823b7f6aa5d32bcb553698))
+
+### Bug Fixes
+
+* add termination condition ([11bd42d](https://github.com/angelacorte/fieldVMC/commit/11bd42dd715301c3fb6f856e3b0acdae9e217c37))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.12.9 [skip ci] ([c8fc843](https://github.com/angelacorte/fieldVMC/commit/c8fc8434d5d9557ab56f47a382f013964775ebe6))
+
 ## [1.12.9](https://github.com/angelacorte/fieldVMC/compare/1.12.8...1.12.9) (2025-02-28)
 
 ### Bug Fixes
