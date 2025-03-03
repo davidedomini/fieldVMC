@@ -3,6 +3,7 @@ import seaborn as sns
 import pandas as pd
 import matplotlib
 import glob
+import os
 
 from itertools import product
 
@@ -13,18 +14,28 @@ def is_header(line):
     return 'time' in line
 
 def clean_alchemist_csv(path, output_dir):
+    if not os.path.exists(output_dir):  # Verifica che la cartella di destinazione esista
+        os.makedirs(output_dir)
+
     files = glob.glob(f'{path}/*.csv')
+
     for f in files:
         cleaned = []
         with open(f, 'r+') as file:
-            for line in file:
+            lines = file.readlines()
+            for line in lines:
                 if is_header(line):
                     cleaned.append(line[2:])
                 elif filter_line(line):
                     cleaned.append(line)
 
-        with open(f'{output_dir}{f.split('/')[-1]}', 'w') as file:
-            file.writelines(cleaned)
+        if cleaned:
+            output_file = os.path.join(output_dir, f.split("/")[-1])
+            with open(output_file, 'w') as file:
+                file.writelines(cleaned)
+        else:
+            print(f"No valid row found for {f}")
+
 
 def plot_metric(data, metric, round, experiment, yname):
     plt.figure(figsize=(12, 8))
@@ -38,7 +49,6 @@ def plot_metric(data, metric, round, experiment, yname):
     name = yname.replace(' ', '-').lower()
     plt.savefig(f'charts/{experiment}-{name}-{round}.pdf', dpi=500)
     plt.close()
-
 
 def to_label(experiment):
     if 'classic' in experiment:
@@ -102,64 +112,37 @@ if __name__ == '__main__':
     plt.rcParams.update({"text.usetex": True})
     plt.rc('text.latex', preamble=r'\usepackage{amsmath,amssymb,amsfonts}')
 
-    compRate = ['1.0', '1.2', '1.4', '1.6','1.8', '2.0']
-    competitionRate = [f'constCompetitionRate-{c}' for c in compRate]
-
-    maxChild = [1, 2, 3, 5]
-    maxChildren = [f'maxChildren-{m}' for m in maxChild]
-
-    maxRes = [ 1, 2, 3, 5, 10 ]
-    maxResource = [f'maxResource-{m}' for m in maxRes]
-
-    maxResFieldVMC = [100.0, 200.0, 300.0, 500.0, 1000.0]
-    maxResourceFieldVMC = [f'maxResourceFieldVMC-{m}' for m in maxResFieldVMC]
-
-    maxSuc = [ 100, 300, 500, 1000 ]
-    maxSuccess = [f'maxSuccess-{m}' for m in maxSuc]
-    maxSuccessFieldVMC = [f'maxSuccessFieldVMC-{m}' for m in maxResFieldVMC]
-
-    minSpawn = [ 1, 11, 21, 31, 41, 51, 61, 71 ]
-    minSpawnWait = [f'minSpawnWait-{m}' for m in minSpawn]
-
-    resBound = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
-    resourceLowerBound = [f'resourceLowerBound-{r}' for r in resBound]
-
-    productClassicVMC = product(competitionRate, maxChildren, maxResource, maxSuccess, minSpawnWait, resourceLowerBound)
-
-    productFieldVMC = product(maxChildren, maxResourceFieldVMC, maxSuccessFieldVMC, minSpawnWait, resourceLowerBound)
-
-    for competitionRate, maxChildren, maxResource, maxSuccess, minSpawnWait, resourceLowerBound in productClassicVMC:
-        ...
-
-    for maxChildren, maxResourceFieldVMC, maxSuccessFieldVMC, minSpawnWait, resourceLowerBound in productFieldVMC:
-        ...
-
     input_dir = 'data/'
-    clean_data_dir = 'data-cleaned/'
+    clean_data_dir = 'data/data-cleaned/'
     charts_dir = 'charts/'
     experiments = ['fixed-leader', 'classic-vmc']
-    clean = False
-    parametersClassicVMC = ['constCompetitionRate', 'maxChildren', 'maxResource', 'maxSuccess', 'minSpawnWait', 'resourceLowerBound', 'seed']
-    parametersFieldVMC = ['maxChildren', 'maxResource', 'maxSuccess', 'minSpawnWait', 'resourceLowerBound', 'seed']
-    global_rounds = 9
+    clean = True
+    global_rounds = 500
 
     if clean:
-        clean_alchemist_csv(input_dir, clean_data_dir)
-
+        for experiment in experiments:
+            clean_alchemist_csv(f'{input_dir}{experiment}', f'{clean_data_dir}{experiment}')
 
     for experiment in experiments:
-        for round in range(1, global_rounds+1):
-            files = glob.glob(f'{clean_data_dir}{experiment}*globalRound-{round}.csv')
+        for round in range(1, global_rounds + 1):
+            # Build pattern dynamically using os.path.join
+            pattern = os.path.join(clean_data_dir, experiment, f'{experiment}_seed-{round}.0.csv')
+            files = glob.glob(pattern)
+
             dataframes = []
             for f in files:
-                df = pd.read_csv(f, sep = ' ')
+                print(f"Reading file: {f}")  # Debugging line to show the file being read
+                df = pd.read_csv(f, sep=' ')
                 dataframes.append(df)
 
-            mean_df = sum(dataframes)/len(dataframes)
-            mean_and_std = avg_std_dataframes(dataframes)
-            plot_metric(mean_and_std, 'Reward[mean]', round, experiment, 'Reward')
-            plot_metric(mean_and_std, 'MeanDistance[mean]', round, experiment, 'Distance from neighboors')
-
+            if len(dataframes) > 0:
+                mean_df = sum(dataframes) / len(dataframes)
+                mean_and_std = avg_std_dataframes(dataframes)
+                # plot_metric(mean_and_std, 'Reward[mean]', round, experiment, 'Reward')
+                # plot_metric(mean_and_std, 'MeanDistance[mean]', round, experiment, 'Distance from neighbors')
+            else:
+                print(f"No data found for round {round} of the experiment {experiment} in files {files}")
+                continue
 
     metrics = [
         'nodes',

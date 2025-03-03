@@ -203,12 +203,11 @@ if __name__ == '__main__':
     timeSamples = 10
     # time management
     minTime = 0
-    maxTime = 1000
+    maxTime = 500
     timeColumnName = 'time'
     logarithmicTime = False
     # One or more variables are considered random and "flattened"
-    seedVars = ['seed', 'maxResource', 'maxSuccess', 'resourceLowerBound']
-    # 'time best-value[min]', 'best-value[max]', 'best-value[mean]', 'local-value[min]', 'local-value[max]', 'local-value[mean]', 'path-length[min]', 'path-length[max]', 'path-length[mean]', 'neighbors-size[min]', 'neighbors-size[max]', 'neighbors-size[mean]']  # 'seed', 'longseed'
+    seedVars = ['seed'] #, 'maxResource', 'maxSuccess', 'resourceLowerBound'
     # Label mapping
     class Measure:
         def __init__(self, description, unit=None):
@@ -316,10 +315,8 @@ if __name__ == '__main__':
                 # Collect all files for the experiment of interest
                 import fnmatch
 
-                if "classic-vmc" in experiment:
-                    maxTime = 4000
-                allfiles = filter(lambda file: fnmatch.fnmatch(file, experiment + '_*.csv'), os.listdir(directory))
-                allfiles = [directory + '/' + name for name in allfiles]
+                allfiles = filter(lambda file: fnmatch.fnmatch(file, experiment + '_*.csv'), os.listdir(f'{directory}/{experiment}'))
+                allfiles = [directory + f'/{experiment}/' + name for name in allfiles]
                 allfiles.sort()
                 # From the file name, extract the independent variables
                 dimensions = {}
@@ -475,6 +472,7 @@ if __name__ == '__main__':
         to_show = [
             "nodes",
             "network-hub-xCoord",
+            "number-of-leaves",
             "network-hub-yCoord",
             "network-diameter[mean]",
             "network-density[max]",
