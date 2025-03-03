@@ -15,7 +15,4 @@ COPY gradlew* ./
 RUN sed -i '/alias(libs.plugins.gitSemVer)/d' build.gradle.kts
 RUN sed -i '/alias(libs.plugins.multiJvmTesting)/d' build.gradle.kts
 RUN sed -i '/multiJvm {/,/}/d' build.gradle.kts
-CMD export OUTPUT_DIR=$DATA_DIR/$(date +%Y-%m-%d-%H-%M) && \
-    mkdir -p $OUTPUT_DIR && \
-    ./gradlew $GRADLE_TASK \
-    chown -R $OWNER $DATA_DIR
+CMD ./gradlew $GRADLE_TASK
