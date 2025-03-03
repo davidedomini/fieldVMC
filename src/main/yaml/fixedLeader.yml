@@ -33,6 +33,10 @@ variables:
     max: 500
     step: 1
     default: 0
+  metrics: &metrics
+    formula: |
+      it.unibo.MetricsForTermination()
+    language: kotlin
 
 network-model:
   type: ConnectWithinDistance
@@ -76,6 +80,15 @@ deployments:
         parameters: [*resourceLowerBound, *maxResource]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
         parameters: [ *cloningRange, *maxChildren ]
+
+terminate:
+  type: MetricsStableForTime
+  parameters: {
+    stableForTime: 30.0,
+    timeIntervalToCheck: 2.0,
+    equalTimes: 3,
+    metricsToCheck: *metrics,
+  }
 
 export:
   - type: CSVExporter
