@@ -91,7 +91,7 @@ _pool: &program
         parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ] #, *minSpawnWait
   - time-distribution:
       type: Trigger
-      parameters: [ 100 ]
+      parameters: [ 200 ]
     type: Event
     actions:
       - type: RemoveNodes
