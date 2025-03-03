@@ -1,3 +1,17 @@
+## [1.12.11](https://github.com/angelacorte/fieldVMC/compare/1.12.10...1.12.11) (2025-03-03)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v16 ([#154](https://github.com/angelacorte/fieldVMC/issues/154)) ([42bfe50](https://github.com/angelacorte/fieldVMC/commit/42bfe50a52b1a5601a61f4bb9984a76f9f2be980))
+
+### Bug Fixes
+
+* rollback to working collektive version ([0d7d197](https://github.com/angelacorte/fieldVMC/commit/0d7d197db5dad21bbc0f19caf8803a5e5eb7962a))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.12.10 [skip ci] ([5b2bf81](https://github.com/angelacorte/fieldVMC/commit/5b2bf810b163a30d39dd5864373de83f28a231a8))
+
 ## [1.12.10](https://github.com/angelacorte/fieldVMC/compare/1.12.9...1.12.10) (2025-03-03)
 
 ### Dependency updates
