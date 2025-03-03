@@ -64,7 +64,7 @@ fun Aggregate<Int>.spawnAndDestroyAfterStability(
         ) { devSpawn, locationSensor, potential: Double, localSuccess: Double, success: Double, localResource: Double ->
             val children = neighboring(findParent(potential))
             env["children-around"] = children
-            env["myParent"] = children.localValue
+            env["parent"] = children.localValue
             val childrenCount =
                 children
                     .fold(0) { acc, parent -> acc + if (parent == localId) 1 else 0 }

@@ -127,7 +127,7 @@ class DrawTreeNodes : Effect {
     }
 
     companion object {
-        val myParent = SimpleMolecule("myParent")
+        val myParent = SimpleMolecule("parent")
         val localSuccess = SimpleMolecule("success")
         val resource = SimpleMolecule("resource")
         val leader = SimpleMolecule("leader")

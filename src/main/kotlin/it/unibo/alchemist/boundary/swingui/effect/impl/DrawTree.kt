@@ -103,7 +103,7 @@ class DrawTree : Effect {
     }
 
     companion object {
-        val myParent = SimpleMolecule("myParent")
+        val myParent = SimpleMolecule("parent")
         val dashPattern = floatArrayOf(1f, 5f)
         val minArcDistance = 10
 

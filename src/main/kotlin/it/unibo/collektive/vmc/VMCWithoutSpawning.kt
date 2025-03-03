@@ -29,7 +29,7 @@ fun Aggregate<Int>.withoutSpawning(
     val isLeader = isLeader(distanceS, leaderS, resourceS)
     val potential = findPotential(distanceS, isLeader)
     env["potential"] = potential
-    env["myParent"] = findParent(potential)
+    env["parent"] = findParent(potential)
     val localSuccess = obtainLocalSuccess(successS)
     val success = convergeSuccess(successS, potential, localSuccess)
     val localResource = spreadResource(env, resourceS, potential, success)
