@@ -150,49 +150,43 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                     equalTimes: 3,
                     metricsToCheck: *metrics,
                   }
-                """.trimIndent()
+                
+                launcher:
+                  type: DefaultLauncher
+                  parameters: {
+                    batch: ["seed"],
+                    autoStart: true,
+                  }
+                """.trimIndent(),
+                "--verbosity",
+                "error",
             )
-            if (capitalizedName == "FixedLeader") {
+            if(capitalizedName == "CuttingClassicVMC" || capitalizedName == "CuttingFixedLeader") {
                 args(
                     "--override",
                     """
-                    launcher:
-                      type: DefaultLauncher
-                      parameters: {
-                        batch: ["seed"],
-                        autoStart: true
-                      }
-                    """.trimIndent(),
-                    "--verbosity",
-                    "error",
-                ) //, "maxResource", "maxSuccess", "resourceLowerBound"
-            } else if(capitalizedName == "CuttingClassicVMC" || capitalizedName == "CuttingFixedLeader") {
-                args(
-                    "--override",
-                    """
+                    variables:
+                      metrics: &metrics
+                        formula: |
+                          it.unibo.MetricsForTermination()
+                        language: kotlin
+                    
                     launcher:
                       type: DefaultLauncher
                       parameters: {
                         batch: ["seed", "origin"],
                         autoStart: true,
                       }
-                    """.trimIndent(),
-                    "--verbosity",
-                    "error",
-                )
-            } else {
-                args(
-                    "--override",
-                    """
-                    launcher:
-                      type: DefaultLauncher
+                      
+                    terminate:
+                      type: MetricsStableForTime
                       parameters: {
-                        batch: ["seed"],
-                        autoStart: true,
+                        stableForTime: 80.0,
+                        timeIntervalToCheck: 2.0,
+                        equalTimes: 3,
+                        metricsToCheck: *metrics,
                       }
                     """.trimIndent(),
-                    "--verbosity",
-                    "error",
                 )
             }
         }
