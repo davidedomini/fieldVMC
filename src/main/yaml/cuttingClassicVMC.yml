@@ -32,33 +32,17 @@ variables:
   origin : &origin
     type: LinearVariable
     parameters: [ 10.0, 0.1, 50.0, 3.0 ]
-#    0.1
   killingRange: &killingRange
     60
   width: &width
     0
   height: &height
     60
-  #    type: LinearVariable
-  #    parameters: [ 10.0, 1.0, 50.0, 3.0 ]
   seed: &seed
     min: 0
     max: 500
     step: 1
     default: 3
-  metrics: &metrics
-    formula: |
-      it.unibo.MetricsForTermination()
-    language: kotlin
-
-terminate:
-  type: MetricsStableForTime
-  parameters: {
-    stableForTime: 30.0,
-    timeIntervalToCheck: 2.0,
-    equalTimes: 3,
-    metricsToCheck: *metrics,
-  }
 
 network-model:
   type: ConnectWithinDistance
