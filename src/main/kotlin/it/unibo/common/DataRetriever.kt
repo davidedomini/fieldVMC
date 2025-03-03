@@ -24,7 +24,7 @@ object DataRetriever {
     ): Map<String, Double> {
         val data = mutableMapOf<String, Double>()
         experiments.forEach { experiment ->
-            val experimentFiles = getExperimentFiles(path, experiment)
+            val experimentFiles = getExperimentFiles("$path${File.separator}$experiment", experiment)
             if (experimentFiles.isEmpty()) {
                 throw IllegalArgumentException("No files found for experiment: $experiment")
             }
@@ -96,7 +96,7 @@ object DataRetriever {
         columnNames: List<String>,
         collectedRows: List<List<String>>,
     ) {
-        val outputFile = File("$path${File.separator}..${File.separator}cleaned${File.separator}cleaned_$experiment.csv")
+        val outputFile = File("$path${File.separator}cleaned${File.separator}cleaned_$experiment.csv")
         // Create the output directory if it does not exist
         outputFile.parentFile.mkdirs()
         val outputContent =
@@ -141,7 +141,7 @@ object DataRetriever {
             var cleanedFile = File("$path${File.separator}cleaned${File.separator}cleaned_$experiment.csv")
             if (!cleanedFile.exists()) {
                 try {
-                    retrieveData(listOf(experiment), path + File.separator + experiment)
+                    retrieveData(listOf(experiment), path)
                     cleanedFile = File("$path${File.separator}cleaned${File.separator}cleaned_$experiment.csv")
                 } catch (e: IllegalArgumentException) {
                     if (e.message?.contains("No files found for experiment") == true) {
@@ -171,14 +171,15 @@ object DataRetriever {
         val result = mutableMapOf<String, Double>()
         experiments.forEach { experiment ->
             val data = meanOnCleanedData(listOf(experiment), path)
-            val outputFile = File("$path${File.separator}mean${File.separator}means_$experiment.csv")
-            // Create the output directory if it does not exist
-            outputFile.parentFile.mkdirs()
+            val outputFile = File("$path${File.separator}means${File.separator}means_$experiment.csv")
+            if (!outputFile.parentFile.exists()) { // Ensure the "means" directory exists
+                outputFile.parentFile.mkdirs()
+            }
             val outputContent =
                 buildString {
                     data.forEach { (key, value) ->
                         val columnName = key.substringAfter("@")
-                        result.put(key, value)
+                        result[key] = value
                         append("$columnName,$value\n")
                     }
                 }
