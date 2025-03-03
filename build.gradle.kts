@@ -223,7 +223,20 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                         parameters: [ 5.0, 1.0, 10.0, 1.0 ]
                       path: &path
                         "data/field-vmc-optimizing"
+                      metrics: &metrics
+                        formula: |
+                          it.unibo.MetricsForTermination()
+                        language: kotlin
                         
+                    terminate:
+                      type: MetricsStableForTime
+                      parameters: {
+                        stableForTime: 30.0,
+                        timeIntervalToCheck: 2.0,
+                        equalTimes: 3,
+                        metricsToCheck: *metrics,
+                      }
+                  
                     launcher:
                       type: it.unibo.alchemist.boundary.launchers.NelderMeadLauncher
                       parameters: {
