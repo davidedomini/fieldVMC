@@ -9,11 +9,11 @@ variables:
     3.0
   #OPTIMIZED PARAMETERS
   maxResource: &maxResource
-    274.1922387813386
+    298.1620987990442
   maxSuccess: &maxSuccess
-    719.5069468576053
+    139.02995656434112
   resourceLowerBound: &resourceLowerBound
-    3.061075343874532
+    5.28037476806767
   origin: &origin
     type: LinearVariable
     parameters: [ 10.0, 0.1, 50.0, 3.0 ]
@@ -24,8 +24,6 @@ variables:
     0
   height: &height
     60
-  #    type: LinearVariable
-  #    parameters: [ 10.0, 1.0, 50.0, 3.0 ]
   range: &range
     formula: cloningRange * 1.01
   seed: &seed
