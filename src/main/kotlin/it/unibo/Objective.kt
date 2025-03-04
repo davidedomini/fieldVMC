@@ -3,8 +3,6 @@ package it.unibo
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.util.Environments.networkDiameterByHopDistance
 import it.unibo.common.DataRetriever.meanOnCleanedData
-import java.io.File
-import java.nio.file.Paths
 import kotlin.Double.Companion.NaN
 import kotlin.math.absoluteValue
 import kotlin.math.pow
@@ -20,7 +18,7 @@ class MetricsForTermination : (Environment<*, *>) -> Map<String, Double> {
                 "network-diameter[mean]" to env.networkDiameterByHopDistance(),
                 "nodes-degree[mean]" to env.nodesDegree().average(),
             )
-    }
+        }
 }
 
 /**
@@ -28,8 +26,7 @@ class MetricsForTermination : (Environment<*, *>) -> Map<String, Double> {
  * The geometric mean is the n-th root of the product of the metrics.
  * The n-th root is computed by raising the product to the power of 1/n.
  */
-fun geometricMean(metrics: Collection<Double>): Double =
-    metrics.fold(1.0) { acc, next -> acc * next }.pow(1.0 / metrics.size)
+fun geometricMean(metrics: Collection<Double>): Double = metrics.fold(1.0) { acc, next -> acc * next }.pow(1.0 / metrics.size)
 
 /**
  * The target value for the optimization.
@@ -40,23 +37,29 @@ fun geometricMean(metrics: Collection<Double>): Double =
  * - network diameter;
  * - network degree.
  */
-fun target(experimentName: String, metrics: List<String> = Goal().metrics): Map<String, Double> = meanOnCleanedData(
+fun target(
+    experimentName: String,
+    metrics: List<String> = Goal().metrics,
+): Map<String, Double> =
+    meanOnCleanedData(
         listOf(experimentName),
         "data",
-    ).filterKeys { it.removePrefix("$experimentName@") in metrics }
+    ).mapKeys { (key, _) -> key.removePrefix("$experimentName@") }
+        .filterKeys { it in metrics }
 
 /**
  * The goal for the optimization.
  */
 class Goal : (Environment<*, *>) -> Double {
-    val metrics: List<String> = listOf(
-        "nodes",
-        "network-hub-xCoord",
-        "network-hub-yCoord",
-        "network-density[max]",
-        "network-diameter[mean]",
-        "nodes-degree[mean]",
-    )
+    val metrics: List<String> =
+        listOf(
+            "nodes",
+            "network-hub-xCoord",
+            "network-hub-yCoord",
+            "network-density[max]",
+            "network-diameter[mean]",
+            "nodes-degree[mean]",
+        )
 
     val target = target("classic-vmc", metrics)
 
@@ -76,21 +79,23 @@ class Goal : (Environment<*, *>) -> Double {
  */
 fun Environment<*, *>.minimize(target: Map<String, Double>): Double =
     networkHub().let { (xCoord, yCoord) ->
-        val current =  mapOf(
-            "nodes" to nodeCount.toDouble(),
-            "network-hub-xCoord" to xCoord,
-            "network-hub-yCoord" to yCoord,
-            "network-density[max]" to networkDensity().max(),
-            "network-diameter[mean]" to networkDiameterByHopDistance(),
-            "nodes-degree[mean]" to nodesDegree().average(),
-        )
-        val absoluteDifference = target.map { (metric, target) ->
-            val relative = current[metric.removePrefix("classic-vmc@")] ?: error("Metric $metric not found")
-            // Add 1 to avoid values as 0
-            ((target - relative).absoluteValue + 1).also {
-                require(it >= 1){ "The difference between target and current value should not be less than 1" }
+        val current =
+            mapOf(
+                "nodes" to nodeCount.toDouble(),
+                "network-hub-xCoord" to xCoord,
+                "network-hub-yCoord" to yCoord,
+                "network-density[max]" to networkDensity().max(),
+                "network-diameter[mean]" to networkDiameterByHopDistance(),
+                "nodes-degree[mean]" to nodesDegree().average(),
+            )
+        val absoluteDifference =
+            target.map { (metric, target) ->
+                val relative = current[metric] ?: error("Metric $metric not found")
+                // Add 1 to avoid values as 0
+                ((target - relative).absoluteValue + 1).also {
+                    require(it >= 1) { "The difference between target and current value should not be less than 1" }
+                }
             }
-        }
         geometricMean(absoluteDifference)
     }
 
@@ -146,5 +151,5 @@ fun <T> Environment<T, *>.networkDensity(): List<Double> {
             val area = (outers["right"]!! - outers["left"]!!) * (outers["top"]!! - outers["bottom"]!!)
             if (area <= 0) return@map 0.0
             nodeCount / area
-        }.filterNot { it.isNaN() || it.isInfinite()}
+        }.filterNot { it.isNaN() || it.isInfinite() }
 }
