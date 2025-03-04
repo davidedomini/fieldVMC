@@ -59,7 +59,6 @@ val heap: Long =
     }
 val taskSizeFromProject: Int? by project
 val taskSize = taskSizeFromProject ?: 512
-val threadCount = maxOf(1, minOf(Runtime.getRuntime().availableProcessors(), heap.toInt() / taskSize))
 val alchemistGroupBatch = "Run batch simulations"
 val alchemistGroupGraphic = "Run graphic simulations with Alchemist"
 val alchemistGroupOptimizer = "Run optimizer simulations with Alchemist"
@@ -124,6 +123,15 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                 "monitors: { type: SwingGUI, parameters: { graphics: effects/${it.nameWithoutExtension}.json } }",
                 "--override",
                 "launcher: { parameters: { batch: [], autoStart: false } }",
+                "--override",
+                """
+                variables:
+                  seed: &seed
+                    min: 0
+                    max: 10
+                    step: 1
+                    default: 0
+                """.trimIndent(),
                 "--verbosity",
                 "error",
             )
@@ -161,7 +169,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                 "--verbosity",
                 "error",
             )
-            if(capitalizedName == "CuttingClassicVMC" || capitalizedName == "CuttingFixedLeader") {
+            if(capitalizedName.startsWith("Cutting")) {
                 args(
                     "--override",
                     """
@@ -178,14 +186,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                         autoStart: true,
                       }
                       
-                    terminate:
-                      type: MetricsStableForTime
-                      parameters: {
-                        stableForTime: 80.0,
-                        timeIntervalToCheck: 2.0,
-                        equalTimes: 3,
-                        metricsToCheck: *metrics,
-                      }
+                    terminate: { type: AfterTime, parameters: [1000] }
                     """.trimIndent(),
                 )
             }
@@ -202,6 +203,10 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                     "--override",
                     """
                     variables:
+                      fileName: &fileName
+                        "optimizing-field-vmc-fixed-leader"
+                      path: &path
+                        "data/optimizing-field-vmc-fixed-leader"
                       goal: &goal
                         formula: |
                           it.unibo.Goal()
@@ -215,8 +220,6 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                       resourceLowerBound: &resourceLowerBound
                         type: LinearVariable
                         parameters: [ 5.0, 1.0, 10.0, 1.0 ]
-                      path: &path
-                        "data/field-vmc-optimizing"
                       metrics: &metrics
                         formula: |
                           it.unibo.MetricsForTermination()
