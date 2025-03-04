@@ -1,3 +1,17 @@
+## [1.14.1](https://github.com/angelacorte/fieldVMC/compare/1.14.0...1.14.1) (2025-03-04)
+
+### Bug Fixes
+
+* workdir path in dockerfile ([a71c1c2](https://github.com/angelacorte/fieldVMC/commit/a71c1c2d1348dbb8e3e9d9657290cfe258dd1949))
+
+### Build and continuous integration
+
+* **deps:** update actions/download-artifact action to v4.1.9 ([eac2a11](https://github.com/angelacorte/fieldVMC/commit/eac2a11fd93110dc11148509420f097b46122fe9))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.14.0 [skip ci] ([4d32c15](https://github.com/angelacorte/fieldVMC/commit/4d32c15d41f180bed53f6a78792d28bbcab29d96))
+
 ## [1.14.0](https://github.com/angelacorte/fieldVMC/compare/1.13.0...1.14.0) (2025-03-04)
 
 ### Features
