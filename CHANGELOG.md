@@ -1,3 +1,22 @@
+## [1.15.0](https://github.com/angelacorte/fieldVMC/compare/1.14.1...1.15.0) (2025-03-04)
+
+### Features
+
+* add external volume constraints ([e46618a](https://github.com/angelacorte/fieldVMC/commit/e46618aff547f045f4cac93024d765b6ba2ec01d))
+
+### Dependency updates
+
+* **deps:** update alchemist to v40 ([6486988](https://github.com/angelacorte/fieldVMC/commit/6486988e923486ae514e178639b2a4d953b2c448))
+
+### Bug Fixes
+
+* calling coordinates on objective function instead of cache ([c80ecd7](https://github.com/angelacorte/fieldVMC/commit/c80ecd70745b2e9e1b08648744e2573b59d82af8))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.14.1 [skip ci] ([f1f9ad9](https://github.com/angelacorte/fieldVMC/commit/f1f9ad96f3961741a55a8e446c0dec28c2af2e57))
+* upate classic vmc data ([5b7d629](https://github.com/angelacorte/fieldVMC/commit/5b7d62993966468c4cf4d8a8e48de3401b5a54a9))
+
 ## [1.14.1](https://github.com/angelacorte/fieldVMC/compare/1.14.0...1.14.1) (2025-03-04)
 
 ### Bug Fixes
