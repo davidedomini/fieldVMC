@@ -28,7 +28,7 @@ value class Vertex(private val vertex: Map<String, Double>) {
 
     operator fun get(index: Int) = valuesToList()[index]
 
-    fun keyAt(index: Int) = vertex.keys.filterIndexed { i, _ -> i == index}.first()
+    fun keyAt(index: Int) = vertex.keys.elementAt(index)
 }
 
 class NelderMeadMethod(
@@ -62,7 +62,7 @@ class NelderMeadMethod(
             "All vertices of the initial simplex must have the same number of dimensions"
         }
         var symplexUpdated = simplex
-        repeat(maxIterations) { iteration ->
+        repeat(maxIterations) { //iteration ->
             // Sort simplex by function values
             val sortedSimplex = symplexUpdated
                 .map { it to cache[it.valuesToList()] }
@@ -76,7 +76,7 @@ class NelderMeadMethod(
             // Compute centroid (excluding worst point)
             val centroid =
                 DoubleArray(dimensions) { index ->
-                    sortedSimplex.take(simplex.size - 1).sumOf { it.valuesToList()[index] } / (simplex.size - 1)
+                    sortedSimplex.dropLast(1).sumOf { it[index] } / (sortedSimplex.size - 1)
                 }.toList()
             // Reflections
             val reflected: List<Double> = centroid.mapCentroid(alpha, worstValues)
@@ -84,6 +84,9 @@ class NelderMeadMethod(
             require(reflectedValue.get().isFinite() && !reflectedValue.get().isNaN()) {
                 "Invalid objective function return value for reflection with $reflected = $reflectedValue.\n" +
                     "Check the objective function implementation, the result should be a finite number."
+            }
+            if (!reflectedValue.get().isFinite()) {
+                throw IllegalStateException("Invalid objective function return value for reflection")
             }
             val newSimplex = when {
                 reflectedValue < bestValue -> { // expansion
@@ -102,15 +105,16 @@ class NelderMeadMethod(
                         else -> centroid.mapCentroid(rho, worstValues)
                     }
                     when {
-                        objective(contracted) < cache[worstValues] -> sortedSimplex.updateLastVertex(contracted)
+                        cache[contracted] < cache[worstValues] -> sortedSimplex.updateLastVertex(contracted)
+//                        objective(contracted) < cache[worstValues] -> sortedSimplex.updateLastVertex(contracted)
                         else -> { // shrink simplex
-                            sortedSimplex.mapIndexed { index, vertex ->
+                            sortedSimplex.map { vertex ->
                                 Vertex(
-                                    vertex.valuesToList()
-                                        .mapIndexed { at, value ->
-                                            val oldValue = bestVertex[at]
-                                            vertex.keyAt(at) to oldValue + sigma * (value - oldValue)
-                                        }.toMap()
+                                    vertex.keys().associateWith { key ->
+                                        val index = bestVertex.keys().indexOf(key) // Find the index corresponding to the key
+                                        val oldValue = bestVertex[index]
+                                        oldValue + sigma * (vertex[index] - oldValue) // Apply shrink transformation
+                                    }
                                 )
                             }
                         }
@@ -131,10 +135,8 @@ class NelderMeadMethod(
 
     private fun List<Vertex>.updateLastVertex(newVertex: List<Double>): List<Vertex> =
         mapIndexed { index, vertex ->
-            if (index == simplex.size -1) {
-                Vertex(vertex.keys().mapIndexed { i, key ->
-                    key to newVertex[i]
-                }.toMap())
+            if (index == size - 1) {
+                Vertex(vertex.keys().associateWith { newVertex[vertex.keys().indexOf(it)] })
             } else vertex
         }
 
