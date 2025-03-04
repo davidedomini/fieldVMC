@@ -1,4 +1,8 @@
 variables:
+  fileName: &fileName
+    "cutting-field-vmc-fixed-leader"
+  path: &path
+    "data/cutting-field-vmc-fixed-leader"
   cloningRange: &cloningRange
     formula: 5
   gaussianShape: &gaussianShape
@@ -17,7 +21,6 @@ variables:
   origin: &origin
     type: LinearVariable
     parameters: [ 10.0, 0.1, 50.0, 3.0 ]
-    #    0.1
   killingRange: &killingRange
     60
   width: &width
@@ -28,7 +31,9 @@ variables:
     formula: cloningRange * 1.01
   seed: &seed
     min: 0
-    max: 500
+    max:
+      formula: System.getenv("MAX_SEED").toDouble()
+      language: kotlin
     step: 1
     default: 0
 
@@ -85,9 +90,9 @@ deployments:
 export:
   - type: CSVExporter
     parameters:
-      fileNameRoot: "cutting-fixed-leader"
+      fileNameRoot: *fileName
       interval: 1.0
-      exportPath: "data/cutting-fixed-leader"
+      exportPath: *path
     data:
       - time
       - type: NumberOfNodes

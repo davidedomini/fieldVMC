@@ -1,6 +1,8 @@
 variables:
+  fileName: &fileName
+    "field-vmc-fixed-leader"
   path: &path
-    "data/fixed-leader"
+    "data/field-vmc-fixed-leader"
   cloningRange: &cloningRange
     formula: 5
   gaussianShape: &gaussianShape
@@ -16,21 +18,13 @@ variables:
     139.02995656434112
   resourceLowerBound: &resourceLowerBound
     5.28037476806767
-#   GENERIC PARAMETERS
-#  maxResource: &maxResource
-#    type: ArbitraryVariable
-#    parameters: [ 350.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
-#  maxSuccess: &maxSuccess
-#    type: ArbitraryVariable
-#    parameters: [ 500.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
-#  resourceLowerBound: &resourceLowerBound
-#    type: LinearVariable
-#    parameters: [ 5.0, 1.0, 10.0, 1.0 ]
   range: &range
     formula: cloningRange * 1.01
   seed: &seed
     min: 0
-    max: 500
+    max:
+      formula: System.getenv("MAX_SEED").toDouble()
+      language: kotlin
     step: 1
     default: 0
   metrics: &metrics
@@ -93,7 +87,7 @@ terminate:
 export:
   - type: CSVExporter
     parameters:
-      fileNameRoot: "fixed-leader"
+      fileNameRoot: *fileName
       interval: 1.0
       exportPath: *path
     data:
