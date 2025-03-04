@@ -1,3 +1,29 @@
+## [1.14.0](https://github.com/angelacorte/fieldVMC/compare/1.13.0...1.14.0) (2025-03-04)
+
+### Features
+
+* change docker compose to launch the optimizer ([48afa93](https://github.com/angelacorte/fieldVMC/commit/48afa93b897dae3542e0c9fd09019e2031f84f16))
+
+### Dependency updates
+
+* **deps:** update alpine docker tag to v3.21.3 ([785c201](https://github.com/angelacorte/fieldVMC/commit/785c20105d49ce2dae020c688bf710ee46d3d0c5))
+
+### Bug Fixes
+
+* remove experiment prefix in metric key ([b546c7b](https://github.com/angelacorte/fieldVMC/commit/b546c7b0a51cd0cd9c9a22a5374cdd33599350bb))
+
+### Build and continuous integration
+
+* **deps:** update actions/upload-artifact action to v4.6.1 ([ea12f35](https://github.com/angelacorte/fieldVMC/commit/ea12f356f2b2ef8c6d0012faedae2a199a93ea23))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.13.0 [skip ci] ([e73b5e9](https://github.com/angelacorte/fieldVMC/commit/e73b5e91f744fa9a387ee4d2c74c3278fae8bfe0))
+
+### Style improvements
+
+* missing tab ([9587c52](https://github.com/angelacorte/fieldVMC/commit/9587c523d311065a509214c54b56f2d73b1df511))
+
 ## [1.13.0](https://github.com/angelacorte/fieldVMC/compare/1.12.11...1.13.0) (2025-03-04)
 
 ### Features
