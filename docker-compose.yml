@@ -1,43 +1,15 @@
 services:
-  prepare:
-    image: alpine:3.21.3
-    volumes:
-      - .:/experiment:rw
-    entrypoint: /bin/sh -c
-    command:
-      - |
-        mkdir -p /experiment/data
-        chmod 777 /experiment/data
-        mkdir -p /experiment/charts
-        chmod 777 /experiment/charts
-
-  charts:
-    depends_on:
-      prepare:
-        condition: service_completed_successfully
-#      classic-vmc-simulation:
-#        condition: service_completed_successfully
-    image: angelacortecchia/${PROJECT_NAME:-unknown}-charts:${VERSION:-latest}
+  fixed-leader-optimizer:
+    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
     build:
-      dockerfile: ./docker/charts/Dockerfile
       context: .
+      dockerfile: ./docker/fixedLeaderOptimizer/Dockerfile
     volumes:
-      - ./data:/experiment/data
-      - ./charts:/experiment/charts
+      - angela.cortecchia-volume:/data
+    environment:
+      - MAX_SEED=500
+      - GRADLE_TASK=runFixedLeaderOptimizer
 
-  finish:
-    depends_on:
-      charts:
-        condition: service_completed_successfully
-      prepare:
-        condition: service_completed_successfully
-    image: alpine:3.21.3
-    volumes:
-      - .:/experiment:rw
-    entrypoint: /bin/sh -c
-    command:
-      - |
-        find /experiment/data -type d -exec chmod 777 {} \;
-        find /experiment/charts -type d -exec chmod 777 {} \;
-        find /experiment/data -type f -exec chmod 666 {} \;
-        find /experiment/charts -type f -exec chmod 666 {} \;
+volumes:
+  angela.cortecchia-volume:
+    external: true
