@@ -1,3 +1,47 @@
+## [1.13.0](https://github.com/angelacorte/fieldVMC/compare/1.12.11...1.13.0) (2025-03-04)
+
+### Features
+
+* add check on difference result ([5cbfae5](https://github.com/angelacorte/fieldVMC/commit/5cbfae5f198c64a2f09bccd38e808636ea947157))
+* add number of leaves extractor ([44d5c95](https://github.com/angelacorte/fieldVMC/commit/44d5c95482da325ce4e4c5b3cc774292d5d27312))
+* add parameters optimization results ([fe71311](https://github.com/angelacorte/fieldVMC/commit/fe7131129abb5c89f10260a860b204ebce3993c7))
+* add termination condition into task definition ([dfe14d3](https://github.com/angelacorte/fieldVMC/commit/dfe14d367661e03c646dfac4dbf2eb0997726e3a))
+* create extractor for number of leaves ([cdbc1f6](https://github.com/angelacorte/fieldVMC/commit/cdbc1f66af512524fe8784fd33cc0284f5ad5866))
+
+### Bug Fixes
+
+* **build:** parameters override in gradle tasks ([a2ac652](https://github.com/angelacorte/fieldVMC/commit/a2ac652be294be94bc37dbe04d9e513905453a81))
+* change time distribution into sparse node-execution ([8624e12](https://github.com/angelacorte/fieldVMC/commit/8624e123ca0309e34c04dec713e5f14abe9dd763))
+* change time trigger for remove nodes ([49120b1](https://github.com/angelacorte/fieldVMC/commit/49120b11a50524d8c29b7ee2d237a7f912a0ed36))
+* **ci:** add env variable to task ([bebadc6](https://github.com/angelacorte/fieldVMC/commit/bebadc6742d1ba8b4a55979f66c2ea7e9b56684f))
+* data plotting ([34148b3](https://github.com/angelacorte/fieldVMC/commit/34148b3798ba3060685cc9250239affe02c77a9d))
+* higher time samples ([1fe208a](https://github.com/angelacorte/fieldVMC/commit/1fe208a02588ad386352f2773faf9e48964aa6c5))
+* longer time before cutting ([7809b3b](https://github.com/angelacorte/fieldVMC/commit/7809b3b8547bbe64d7730721d238977df8010369))
+* objective function into 'geometric mean of the absolute differences' ([715cd6d](https://github.com/angelacorte/fieldVMC/commit/715cd6d287fd189d791b2b9809416d31720164df))
+* remove duplicate terminator ([493b7b3](https://github.com/angelacorte/fieldVMC/commit/493b7b3cd9ab12f013c3ed9bf7c3500aab7d674b))
+* update optimized parameters ([ce3f15f](https://github.com/angelacorte/fieldVMC/commit/ce3f15f58a89b8ce5863e0706fc306690ecd4540))
+* wrong paths ([3fee205](https://github.com/angelacorte/fieldVMC/commit/3fee205dbbf2a3bb57b381000e56958d5e4d2243))
+
+### Build and continuous integration
+
+* restore charts creation ([bc8e58a](https://github.com/angelacorte/fieldVMC/commit/bc8e58ab6b00b767973389a7354b889fdc609f5f))
+* update grale tasks ([2fa620b](https://github.com/angelacorte/fieldVMC/commit/2fa620b8469b91a414b7f577fc3c8bda8fc1074d))
+
+### General maintenance
+
+* add cleaned and mean data ([d48bbd3](https://github.com/angelacorte/fieldVMC/commit/d48bbd387066be71c08efeb826cdf248c6ad5ff1))
+* **release:** update gradle.properties .env versions to 1.12.11 [skip ci] ([b503c1d](https://github.com/angelacorte/fieldVMC/commit/b503c1dbd969062fb8905f366199338300d90813))
+* update data ([cb41cd3](https://github.com/angelacorte/fieldVMC/commit/cb41cd311afca5283e7113153c0f2ff3c970673d))
+
+### Style improvements
+
+* parametrize file name, path and max seed ([43445a4](https://github.com/angelacorte/fieldVMC/commit/43445a4cd2756ff37826d5c23a4c7581a0081845))
+
+### Refactoring
+
+* ACSOS' experiments names into relative self-* property ([9f197eb](https://github.com/angelacorte/fieldVMC/commit/9f197eb7ec2c7b166ee597eb25160aff10b143a0))
+* change molecule name from myParent into parent ([fbf6afa](https://github.com/angelacorte/fieldVMC/commit/fbf6afaadf8f41491915a447febab92d1ca8f63d))
+
 ## [1.12.11](https://github.com/angelacorte/fieldVMC/compare/1.12.10...1.12.11) (2025-03-03)
 
 ### Dependency updates
