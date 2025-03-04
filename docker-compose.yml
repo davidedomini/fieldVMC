@@ -1,5 +1,9 @@
 services:
   fixed-leader-optimizer:
+    deploy:
+      placement:
+        constraints:
+          - node.hostname==andromeda.apice.unibo.it
     image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
     build:
       context: .
