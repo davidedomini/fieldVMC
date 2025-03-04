@@ -12,7 +12,7 @@ class NumberOfLeaves : Extractor<Double> {
     }
 
     override val columnNames: List<String>
-    get() = listOf<String>(NAME)
+        get() = listOf<String>(NAME)
 
     override fun <T> extractData(
         environment: Environment<T, *>,
@@ -28,5 +28,3 @@ class NumberOfLeaves : Extractor<Double> {
             mapOf(NAME to it)
         }
 }
-
-

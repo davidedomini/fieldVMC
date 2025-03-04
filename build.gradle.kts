@@ -142,7 +142,8 @@ File(rootProject.rootDir.path + "/src/main/yaml")
             description = "Launches batch experiments for $capitalizedName"
             maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
             File("data").mkdirs()
-            args("--override",
+            args(
+                "--override",
                 """
                 variables:
                   metrics: &metrics
@@ -169,7 +170,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                 "--verbosity",
                 "error",
             )
-            if(capitalizedName.startsWith("Cutting")) {
+            if (capitalizedName.startsWith("Cutting")) {
                 args(
                     "--override",
                     """
@@ -192,7 +193,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
             }
         }
         runAllBatch.dependsOn(batch)
-        if (capitalizedName == "FixedLeader"){
+        if (capitalizedName == "FixedLeader") {
             val optimizer by basetask("run${capitalizedName}Optimizer") {
                 setDependsOn(listOf("runClassicVMCBatch"))
                 group = alchemistGroupOptimizer
@@ -233,7 +234,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                         equalTimes: 3,
                         metricsToCheck: *metrics,
                       }
-                  
+                    
                     launcher:
                       type: it.unibo.alchemist.boundary.launchers.NelderMeadLauncher
                       parameters: {
