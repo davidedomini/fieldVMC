@@ -1,9 +1,6 @@
 FROM eclipse-temurin:21
-RUN mkdir -p /experiment /data
-VOLUME "angela.cortecchia-volume"
-ENV DATA_DIR=/data
+RUN mkdir -p /experiment
 WORKDIR /experiment
-ENV OWNER=1000:1000
 ENV GRADLE_TASK=runClassicVMCBatch
 ENV MAX_SEED=500
 COPY effects effects
@@ -17,3 +14,4 @@ RUN sed -i '/alias(libs.plugins.gitSemVer)/d' build.gradle.kts
 RUN sed -i '/alias(libs.plugins.multiJvmTesting)/d' build.gradle.kts
 RUN sed -i '/multiJvm {/,/}/d' build.gradle.kts
 CMD MAX_SEED=$MAX_SEED ./gradlew $GRADLE_TASK
+
