@@ -16,9 +16,9 @@ class MetricsForTermination : (Environment<*, *>) -> Map<String, Double> {
                 "nodes" to env.nodeCount.toDouble(),
                 "network-hub-xCoord" to xCoord,
                 "network-hub-yCoord" to yCoord,
-                "network-density" to env.networkDensity().max(),
-                "network-diameter" to env.networkDiameterByHopDistance(),
-                "nodes-degree" to env.nodesDegree(),
+                "network-density[max]" to env.networkDensity().max(),
+                "network-diameter[mean]" to env.networkDiameterByHopDistance(),
+                "nodes-degree[mean]" to env.nodesDegree().average(),
             )
     }
 }
@@ -40,30 +40,25 @@ fun geometricMean(metrics: Collection<Double>): Double =
  * - network diameter;
  * - network degree.
  */
-fun target(experimentName: String): Double {
-    val metrics =
-        listOf(
-            "nodes",
-            "network-hub-xCoord",
-            "network-hub-yCoord",
-            "network-density[max]",
-            "network-diameter[mean]",
-            "nodes-degree[mean]",
-        )
-    return geometricMean(
-        meanOnCleanedData(
-            listOf(experimentName),
-            "data",
-        ).filterKeys { it.removePrefix("$experimentName@") in metrics }
-        .values,
-    )
-}
+fun target(experimentName: String, metrics: List<String> = Goal().metrics): Map<String, Double> = meanOnCleanedData(
+        listOf(experimentName),
+        "data",
+    ).filterKeys { it.removePrefix("$experimentName@") in metrics }
 
 /**
  * The goal for the optimization.
  */
 class Goal : (Environment<*, *>) -> Double {
-    val target = target("classic-vmc")
+    val metrics: List<String> = listOf(
+        "nodes",
+        "network-hub-xCoord",
+        "network-hub-yCoord",
+        "network-density[max]",
+        "network-diameter[mean]",
+        "nodes-degree[mean]",
+    )
+
+    val target = target("classic-vmc", metrics)
 
     override fun invoke(env: Environment<*, *>): Double = env.minimize(target)
 }
@@ -79,20 +74,21 @@ class Goal : (Environment<*, *>) -> Double {
  * - network diameter;
  * - network degree.
  */
-fun Environment<*, *>.minimize(target: Double): Double =
+fun Environment<*, *>.minimize(target: Map<String, Double>): Double =
     networkHub().let { (xCoord, yCoord) ->
-        val current =
-            geometricMean(
-                listOf(
-                    nodeCount.toDouble(),
-                    xCoord,
-                    yCoord,
-                    networkDiameterByHopDistance(),
-                    networkDensity().max(),
-                    nodesDegree(),
-                ),
-            )
-        (target - current).absoluteValue
+        val current =  mapOf(
+            "nodes" to nodeCount.toDouble(),
+            "network-hub-xCoord" to xCoord,
+            "network-hub-yCoord" to yCoord,
+            "network-density[max]" to networkDensity().max(),
+            "network-diameter[mean]" to networkDiameterByHopDistance(),
+            "nodes-degree[mean]" to nodesDegree().average(),
+        )
+        val absoluteDifference = target.map { (metric, target) ->
+            val relative = current[metric.removePrefix("classic-vmc@")] ?: error("Metric $metric not found")
+            (target - relative).absoluteValue + 1 // Add 1 to avoid values as 0
+        }
+        geometricMean(absoluteDifference)
     }
 
 /**
@@ -112,12 +108,12 @@ fun <T> Environment<T, *>.networkHub(): Pair<Double, Double> =
  * The degree of a node is the number of neighbors it has.
  * The result is the average of the degrees of all the nodes in the network.
  */
-fun <T> Environment<T, *>.nodesDegree(): Double =
+fun <T> Environment<T, *>.nodesDegree(): List<Double> =
     nodes
         .map { n ->
             val neighbors = getNeighborhood(n)
             neighbors.size().toDouble()
-        }.average()
+        }
 
 /**
  * The network density.
