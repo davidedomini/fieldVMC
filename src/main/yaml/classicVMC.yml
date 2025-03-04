@@ -1,4 +1,8 @@
 variables:
+  fileName: &fileName
+    "classic-vmc"
+  path: &path
+    "data/classic-vmc"
   cloningRange: &cloningRange
     formula: 5
   constCompetitionRate: &constCompetitionRate
@@ -31,7 +35,9 @@ variables:
     0.9
   seed: &seed
     min: 0
-    max: 500
+    max:
+      formula: System.getenv("MAX_SEED").toDouble() #500
+      language: kotlin
     step: 1
     default: 0
 
@@ -51,9 +57,7 @@ layers:
 incarnation: collektive
 
 _pool: &program
-  - time-distribution:
-      type: DiracComb
-      parameters: [ 0, 1 ]
+  - time-distribution: 1
     type: Event
     actions:
       - type: EvaluateSuccess
@@ -63,7 +67,7 @@ _pool: &program
       - type: FindMax
         parameters: []
       - type: Spawn
-        parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ] #, *minSpawnWait
+        parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ]
 
 deployments:
   - type: Point
@@ -90,9 +94,9 @@ deployments:
 export:
   - type: CSVExporter
     parameters:
-      fileNameRoot: "classic-vmc"
+      fileNameRoot: *fileName
       interval: 1.0
-      exportPath: "data/classic-vmc"
+      exportPath: *path
     data:
       - time
       - type: NumberOfNodes

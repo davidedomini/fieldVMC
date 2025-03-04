@@ -1,4 +1,8 @@
 variables:
+  fileName: &fileName
+    "cutting-classic-vmc"
+  path: &path
+    "data/cutting-classic-vmc"
   cloningRange: &cloningRange
     formula: 5
   constCompetitionRate: &constCompetitionRate
@@ -40,9 +44,11 @@ variables:
     60
   seed: &seed
     min: 0
-    max: 500
+    max:
+      formula: System.getenv("MAX_SEED").toDouble()
+      language: kotlin
     step: 1
-    default: 3
+    default: 0
 
 network-model:
   type: ConnectWithinDistance
@@ -60,9 +66,7 @@ layers:
 incarnation: collektive
 
 _pool: &program
-  - time-distribution:
-      type: DiracComb
-      parameters: [ 0, 1 ]
+  - time-distribution: 1
     type: Event
     actions:
       - type: EvaluateSuccess
@@ -72,7 +76,7 @@ _pool: &program
       - type: FindMax
         parameters: []
       - type: Spawn
-        parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ] #, *minSpawnWait
+        parameters: [ *cloningRange, *resourceLowerBound, *maxChildren ]
   - time-distribution:
       type: Trigger
       parameters: [ 200 ]
@@ -106,9 +110,9 @@ deployments:
 export:
   - type: CSVExporter
     parameters:
-      fileNameRoot: "cutting-classic-vmc"
+      fileNameRoot: *fileName
       interval: 1.0
-      exportPath: "data/cutting-classic-vmc"
+      exportPath: *path
     data:
       - time
       - type: NumberOfNodes
