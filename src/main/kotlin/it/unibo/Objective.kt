@@ -86,7 +86,10 @@ fun Environment<*, *>.minimize(target: Map<String, Double>): Double =
         )
         val absoluteDifference = target.map { (metric, target) ->
             val relative = current[metric.removePrefix("classic-vmc@")] ?: error("Metric $metric not found")
-            (target - relative).absoluteValue + 1 // Add 1 to avoid values as 0
+            // Add 1 to avoid values as 0
+            ((target - relative).absoluteValue + 1).also {
+                require(it >= 1){ "The difference between target and current value should not be less than 1" }
+            }
         }
         geometricMean(absoluteDifference)
     }
