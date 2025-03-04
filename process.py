@@ -197,13 +197,13 @@ if __name__ == '__main__':
     # How to name the summary of the processed data
     pickleOutput = 'data_summary'
     # Experiment prefixes: one per experiment (root of the file name)
-    experiments = ['fixed-leader', 'classic-vmc']
+    experiments = ['fixed-leader', 'classic-vmc'] #, 'cutting-fixed-leader', 'cutting-classic-vmc'
     floatPrecision = '{: 0.3f}'
     # Number of time samples
-    timeSamples = 10
+    timeSamples = 300
     # time management
     minTime = 0
-    maxTime = 500
+    maxTime = 600
     timeColumnName = 'time'
     logarithmicTime = False
     # One or more variables are considered random and "flattened"
@@ -368,6 +368,9 @@ if __name__ == '__main__':
                                 darray = dataset[v]
                                 experimentVars = extractCoordinates(file)
                                 darray.loc[experimentVars] = data[:, idx].A1
+
+                    if experiment.startswith('cutting'):
+                        seedVars.append('origin')
                     # Fold the dataset along the seed variables, producing the mean and stdev datasets
                     mergingVariables = [seed for seed in seedVars if seed in dataset.coords]
                     means[experiment] = dataset.mean(dim=mergingVariables, skipna=True)
