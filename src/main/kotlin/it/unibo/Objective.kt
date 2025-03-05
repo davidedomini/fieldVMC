@@ -2,7 +2,7 @@ package it.unibo
 
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.util.Environments.networkDiameterByHopDistance
-import it.unibo.common.DataRetriever.meanOnCleanedData
+import it.unibo.common.DataRetriever.retrieveData
 import kotlin.Double.Companion.NaN
 import kotlin.math.absoluteValue
 import kotlin.math.pow
@@ -41,7 +41,7 @@ fun target(
     experimentName: String,
     metrics: List<String> = Goal().metrics,
 ): Map<String, Double> =
-    meanOnCleanedData(
+    retrieveData(
         listOf(experimentName),
         "data",
     ).mapKeys { (key, _) -> key.removePrefix("$experimentName@") }
