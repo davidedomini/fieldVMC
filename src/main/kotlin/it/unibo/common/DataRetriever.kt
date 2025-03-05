@@ -127,50 +127,13 @@ object DataRetriever {
                 "$experiment@$column" to meanValue
             }.toMap()
 
-    /**
-     * Computes the mean value for each column in the cleaned data files for the given [experiments] at the specified [path].
-     * The mean value is computed by averaging the values of the last row of each file.
-     */
-    fun meanOnCleanedData(
+    fun exportMeans(
         experiments: List<String>,
         path: String,
     ): Map<String, Double> {
-        val data = mutableMapOf<String, Double>()
-        experiments.forEach { experiment ->
-            // check if so is windows or linux
-            var cleanedFile = File("$path${File.separator}cleaned${File.separator}cleaned_$experiment.csv")
-            if (!cleanedFile.exists()) {
-                try {
-                    retrieveData(listOf(experiment), path)
-                    cleanedFile = File("$path${File.separator}cleaned${File.separator}cleaned_$experiment.csv")
-                } catch (e: IllegalArgumentException) {
-                    if (e.message?.contains("No files found for experiment") == true) {
-                        throw IllegalArgumentException("No cleaned file found for experiment: $experiment")
-                    }
-                }
-            }
-            val lines = cleanedFile.readLines()
-            val dataStartIndex = lines.indexOfFirst { it.startsWith("time") }
-            if (dataStartIndex == -1) {
-                throw IllegalArgumentException("No valid data found in file: ${cleanedFile.name}")
-            }
-            val header =
-                lines
-                    .first()
-                    .split(" ")
-                    .map { it.trim() }
-                    .dropLastWhile { it.isEmpty() }
-            // for each row in the file, compute the mean value for each column
-            val mean = lines.last().split(" ").map { it.trim() }
-            data.putAll(computeMeanValues(experiment, header, listOf(mean)))
-        }
-        return data
-    }
-
-    fun exportMeans(experiments: List<String>, path: String): Map<String, Double> {
         val result = mutableMapOf<String, Double>()
         experiments.forEach { experiment ->
-            val data = meanOnCleanedData(listOf(experiment), path)
+            val data = retrieveData(listOf(experiment), path)
             val outputFile = File("$path${File.separator}means${File.separator}means_$experiment.csv")
             if (!outputFile.parentFile.exists()) { // Ensure the "means" directory exists
                 outputFile.parentFile.mkdirs()
