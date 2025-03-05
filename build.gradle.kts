@@ -189,62 +189,19 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                       
                     terminate: { type: AfterTime, parameters: [1000] }
                     """.trimIndent(),
+                    "--verbosity",
+                    "error",
                 )
             }
         }
         runAllBatch.dependsOn(batch)
-        if (capitalizedName == "FixedLeader") {
-            val optimizer by basetask("run${capitalizedName}Optimizer") {
+        if (capitalizedName == "FixedLeaderOptimizer") {
+            val optimizer by basetask("run${capitalizedName}") {
                 setDependsOn(listOf("runClassicVMCBatch"))
                 group = alchemistGroupOptimizer
                 description = "Launches Nelder Mead parameters optimizer for $capitalizedName"
                 maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
                 File("data").mkdirs()
-                args(
-                    "--override",
-                    """
-                    variables:
-                      fileName: &fileName
-                        "optimizing-field-vmc-fixed-leader"
-                      path: &path
-                        "data/optimizing-field-vmc-fixed-leader"
-                      goal: &goal
-                        formula: |
-                          it.unibo.Goal()
-                        language: kotlin
-                      maxResource: &maxResource
-                        type: ArbitraryVariable
-                        parameters: [ 350.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
-                      maxSuccess: &maxSuccess
-                        type: ArbitraryVariable
-                        parameters: [ 500.0, [ 100.0, 200.0, 300.0, 500.0, 1000.0 ] ]
-                      resourceLowerBound: &resourceLowerBound
-                        type: LinearVariable
-                        parameters: [ 5.0, 1.0, 10.0, 1.0 ]
-                      metrics: &metrics
-                        formula: |
-                          it.unibo.MetricsForTermination()
-                        language: kotlin
-                        
-                    terminate:
-                      type: MetricsStableForTime
-                      parameters: {
-                        stableForTime: 30.0,
-                        timeIntervalToCheck: 2.0,
-                        equalTimes: 3,
-                        metricsToCheck: *metrics,
-                      }
-                    
-                    launcher:
-                      type: it.unibo.alchemist.boundary.launchers.NelderMeadLauncher
-                      parameters: {
-                        objectiveFunction: *goal,
-                        variables: ["maxResource", "resourceLowerBound", "maxSuccess"],
-                        seedName: "seed",
-                        repetitions: 500,
-                      }
-                    """.trimIndent(),
-                )
             }
             runAllOptimizer.dependsOn(optimizer)
         }
