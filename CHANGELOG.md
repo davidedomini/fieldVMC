@@ -1,3 +1,17 @@
+## [1.16.2](https://github.com/angelacorte/fieldVMC/compare/1.16.1...1.16.2) (2025-03-05)
+
+### Bug Fixes
+
+* remove wrong data aggregator ([4ff3c62](https://github.com/angelacorte/fieldVMC/commit/4ff3c6247a71b6efd4d9ca0b39d5eefa2f4a4346))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.16.1 [skip ci] ([5d7f505](https://github.com/angelacorte/fieldVMC/commit/5d7f505fe1c9c7a3cf643549898278a064aaad2d))
+
+### Refactoring
+
+* implement network density without aggregators ([38ae60e](https://github.com/angelacorte/fieldVMC/commit/38ae60e7f5c7011f2cdd525f7f7f00480cd0ad36))
+
 ## [1.16.1](https://github.com/angelacorte/fieldVMC/compare/1.16.0...1.16.1) (2025-03-05)
 
 ### Bug Fixes
