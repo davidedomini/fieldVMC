@@ -1,3 +1,13 @@
+## [1.16.1](https://github.com/angelacorte/fieldVMC/compare/1.16.0...1.16.1) (2025-03-05)
+
+### Bug Fixes
+
+* change function to retrieve mean data ([7036365](https://github.com/angelacorte/fieldVMC/commit/70363656b6ab929d4f4caf88f1340a5a470955ea))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.16.0 [skip ci] ([6a6a00b](https://github.com/angelacorte/fieldVMC/commit/6a6a00b809fa7e23a995668b753cc2586d2d7145))
+
 ## [1.16.0](https://github.com/angelacorte/fieldVMC/compare/1.15.0...1.16.0) (2025-03-05)
 
 ### Features
