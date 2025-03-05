@@ -118,14 +118,11 @@ export:
       - type: NumberOfNodes
       - type: NetworkHub
       - type: NumberOfLeaves
+      - type: NetworkDensity
       - type: NetworkDiameter
         parameters:
           filter: onlyfinite
           aggregators: [ max, mean, median ]
-      - type: NetworkDensity
-        parameters:
-          filter: onlyfinite
-          aggregators: [ max, mean, variance, median, StandardDeviation ]
       - type: NodeDegree
         parameters:
           filter: onlyfinite

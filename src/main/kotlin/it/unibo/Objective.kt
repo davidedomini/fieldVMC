@@ -14,7 +14,7 @@ class MetricsForTermination : (Environment<*, *>) -> Map<String, Double> {
                 "nodes" to env.nodeCount.toDouble(),
                 "network-hub-xCoord" to xCoord,
                 "network-hub-yCoord" to yCoord,
-                "network-density[max]" to env.networkDensity().max(),
+                "network-density" to env.networkDensity().max(),
                 "network-diameter[mean]" to env.networkDiameterByHopDistance(),
                 "nodes-degree[mean]" to env.nodesDegree().average(),
             )
@@ -56,7 +56,7 @@ class Goal : (Environment<*, *>) -> Double {
             "nodes",
             "network-hub-xCoord",
             "network-hub-yCoord",
-            "network-density[max]",
+            "network-density",
             "network-diameter[mean]",
             "nodes-degree[mean]",
         )
@@ -84,7 +84,7 @@ fun Environment<*, *>.minimize(target: Map<String, Double>): Double =
                 "nodes" to nodeCount.toDouble(),
                 "network-hub-xCoord" to xCoord,
                 "network-hub-yCoord" to yCoord,
-                "network-density[max]" to networkDensity().max(),
+                "network-density" to networkDensity().max(),
                 "network-diameter[mean]" to networkDiameterByHopDistance(),
                 "nodes-degree[mean]" to nodesDegree().average(),
             )
