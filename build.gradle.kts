@@ -189,8 +189,6 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                       
                     terminate: { type: AfterTime, parameters: [1000] }
                     """.trimIndent(),
-                    "--verbosity",
-                    "error",
                 )
             }
         }
