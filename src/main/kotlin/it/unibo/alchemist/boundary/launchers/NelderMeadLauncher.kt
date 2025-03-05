@@ -12,10 +12,10 @@ import java.io.File
 import java.nio.file.Paths
 import java.time.LocalDateTime
 import java.util.concurrent.Callable
-import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentLinkedDeque
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.ForkJoinPool
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
@@ -42,7 +42,7 @@ class NelderMeadLauncher
                 "No variables found, can not optimize anything."
             }
             val simplexVertices: List<Map<String, Double>> = generateSymplexVertices(loader.variables)
-            val seeds =
+            val seeds: List<Int> =
                 loader.variables[seedName]
                     ?.stream()
                     ?.map {
@@ -57,11 +57,14 @@ class NelderMeadLauncher
                 }
             val errorQueue = ConcurrentLinkedDeque<Throwable>()
             loader.executeWithNelderMead(simplexVertices, executor) { vertex ->
-                val futureResults = seeds.map { currentSeed ->
+                val futureValues = seeds.map<Int, Future<Double>> { currentSeed ->
                     // associate keys to vertex values
                     val simulationParameters = variables
                         .associateWith { vertex[variables.indexOf(it)] } + (seedName to currentSeed)
-                    executor.submit(
+                    check(loader.variables.keys == simulationParameters.keys) {
+                        "Variables do not match: ${loader.variables.keys} != ${simulationParameters.keys}"
+                    }
+                    executor.submit<Double>(
                         Callable {
                             val simulation = loader.getWith<Any?, Nothing>(simulationParameters)
                             simulation.play()
@@ -73,7 +76,11 @@ class NelderMeadLauncher
                         }
                     )
                 }
-                CompletableFuture.completedFuture(futureResults.map { it.get() }.average())
+                ForkJoinPool.commonPool().submit(
+                    Callable {
+                        futureValues.map { it.get() }.average()
+                    }
+                )
             }.also {
                 // write the result into a csv with as name the variables and the date of execution
                 val outputPath =
