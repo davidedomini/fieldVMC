@@ -1,3 +1,22 @@
+## [1.16.0](https://github.com/angelacorte/fieldVMC/compare/1.15.0...1.16.0) (2025-03-05)
+
+### Features
+
+* add ad-hoc simulation for the optimizer ([07608c2](https://github.com/angelacorte/fieldVMC/commit/07608c27de2612386608a47eea0ef5fa09c4b938))
+* use fork join pool when fetching futures ([92a8c63](https://github.com/angelacorte/fieldVMC/commit/92a8c638714e5d7013c5ad6af0f422cd203e81aa))
+
+### Dependency updates
+
+* **deps:** update alchemist to v40.1.0 ([d496d20](https://github.com/angelacorte/fieldVMC/commit/d496d206c72acd2a23fb27e6088d77546d9cd573))
+
+### Bug Fixes
+
+* **build:** remove use of overrides for optimizer task ([0a73ff0](https://github.com/angelacorte/fieldVMC/commit/0a73ff098ef5e51f79a4ff99fad4b74b825c2f05))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.15.0 [skip ci] ([cb162de](https://github.com/angelacorte/fieldVMC/commit/cb162de305647bcb98a5926974848e63a642d25f))
+
 ## [1.15.0](https://github.com/angelacorte/fieldVMC/compare/1.14.1...1.15.0) (2025-03-04)
 
 ### Features
