@@ -6,8 +6,8 @@ import it.unibo.common.DataRetriever.retrieveData
 import it.unibo.common.NetworkMetrics.networkDensity
 import it.unibo.common.NetworkMetrics.networkHub
 import it.unibo.common.NetworkMetrics.nodesDegree
+import org.apache.commons.math3.stat.descriptive.moment.GeometricMean
 import kotlin.math.absoluteValue
-import kotlin.math.pow
 
 /**
  * The goal for the optimization.
@@ -77,12 +77,5 @@ fun Environment<*, *>.minimize(target: Map<String, Double>): Double =
                     require(it >= 1) { "The difference between target and current value should not be less than 1, but is $it" }
                 }
             }
-        geometricMean(absoluteDifference)
+        GeometricMean().evaluate(absoluteDifference.toDoubleArray())
     }
-
-/**
- * Compute the geometric mean of a collection of [metrics].
- * The geometric mean is the n-th root of the product of the metrics.
- * The n-th root is computed by raising the product to the power of 1/n.
- */
-fun geometricMean(metrics: Collection<Double>): Double = metrics.fold(1.0) { acc, next -> acc * next }.pow(1.0 / metrics.size)
