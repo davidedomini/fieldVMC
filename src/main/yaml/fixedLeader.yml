@@ -13,13 +13,16 @@ variables:
     3.0
   #OPTIMIZED PARAMETERS
   maxResource: &maxResource
-   272.4515051831913
+    262.0612312825236
+#   272.4515051831913
   #    267.8281934253056
   maxSuccess: &maxSuccess
-    323.396898398807
+    358.2929409407814
+#    323.396898398807
     #401.3085404073488
   resourceLowerBound: &resourceLowerBound
-    4.458599742599371
+    4.239466590881137
+#    4.458599742599371
     #4.181794181383088
   range: &range
     formula: cloningRange * 1.01
