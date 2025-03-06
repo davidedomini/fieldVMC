@@ -120,9 +120,6 @@ export:
       - type: NumberOfLeaves
       - type: NetworkDensity
       - type: NetworkDiameter
-        parameters:
-          filter: onlyfinite
-          aggregators: [ max, mean, median ]
       - type: NodeDegree
         parameters:
           filter: onlyfinite

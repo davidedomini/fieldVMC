@@ -32,7 +32,7 @@ variables:
     default: 0
   metrics: &metrics
     formula: |
-      it.unibo.MetricsForTermination()
+      it.unibo.common.TerminationMetrics()
     language: kotlin
 
 network-model:
@@ -100,9 +100,6 @@ export:
       - type: NumberOfLeaves
       - type: NetworkDensity
       - type: NetworkDiameter
-        parameters:
-          filter: onlyfinite
-          aggregators: [ max, mean, median ]
       - type: NodeDegree
         parameters:
           filter: onlyfinite

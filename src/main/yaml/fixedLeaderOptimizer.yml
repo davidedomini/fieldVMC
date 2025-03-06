@@ -24,7 +24,7 @@ variables:
     formula: cloningRange * 1.01
   goal: &goal
     formula: |
-      it.unibo.Goal()
+      it.unibo.common.Goal()
     language: kotlin
   seed: &seed
     min: 0
@@ -35,7 +35,7 @@ variables:
     default: 0
   metrics: &metrics
     formula: |
-      it.unibo.MetricsForTermination()
+      it.unibo.common.TerminationMetrics()
     language: kotlin
 
 network-model:
@@ -112,9 +112,6 @@ export:
       - type: NumberOfLeaves
       - type: NetworkDensity
       - type: NetworkDiameter
-        parameters:
-          filter: onlyfinite
-          aggregators: [ max, mean, median ]
       - type: NodeDegree
         parameters:
           filter: onlyfinite
