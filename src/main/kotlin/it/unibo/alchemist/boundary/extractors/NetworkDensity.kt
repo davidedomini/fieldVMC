@@ -1,12 +1,14 @@
 package it.unibo.alchemist.boundary.extractors
 
-import it.unibo.alchemist.boundary.ExportFilter
 import it.unibo.alchemist.boundary.Extractor
 import it.unibo.alchemist.model.Actionable
 import it.unibo.alchemist.model.Environment
-import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.Time
+import kotlin.Double.Companion.NEGATIVE_INFINITY
 import kotlin.Double.Companion.NaN
+import kotlin.Double.Companion.POSITIVE_INFINITY
+import kotlin.math.max
+import kotlin.math.min
 
 class NetworkDensity() : Extractor<Double> {
     private companion object {
@@ -21,25 +23,22 @@ class NetworkDensity() : Extractor<Double> {
         time: Time,
         step: Long,
     ): Map<String, Double> {
-        var outers: MutableMap<String, Double> =
-            listOf<String>("top", "bottom", "right", "left")
-                .associateWith { NaN }
-                .toMutableMap()
-        environment.forEach { n ->
-            val nodePos = environment.getPosition(n).coordinates.map { it + 10 } // Add 10 to avoid negative positions
-            outers =
-                outers.mapValues { (key, value) ->
-                    when {
-                        key == "right" && (value.isNaN() || nodePos[0] > value) -> nodePos[0]
-                        key == "left" && (value.isNaN() || nodePos[0] < value) -> nodePos[0]
-                        key == "top" && (value.isNaN() || nodePos[1] > value) -> nodePos[1]
-                        key == "bottom" && (value.isNaN() || nodePos[1] < value) -> nodePos[1]
-                        else -> value
-                    }
-                } as MutableMap<String, Double>
-            // Calculate the area of the rectangle given by the outermost nodes
+        data class BoundingBox(
+            val minX: Double = POSITIVE_INFINITY,
+            val maxX: Double = NEGATIVE_INFINITY,
+            val minY: Double = POSITIVE_INFINITY,
+            val maxY: Double = NEGATIVE_INFINITY,
+        )
+        val boundingBox = environment.fold(BoundingBox()) { bb, node ->
+            val (x, y) = environment.getPosition(node).coordinates
+            BoundingBox(
+                min(x, bb.minX),
+                max(x, bb.maxX),
+                min(y, bb.minY),
+                max(y, bb.maxY),
+            )
         }
-        val area = (outers["right"]!! - outers["left"]!!) * (outers["top"]!! - outers["bottom"]!!)
+        val area = (boundingBox.maxX - boundingBox.minX) * (boundingBox.maxY - boundingBox.minY)
         return mapOf(NAME to (environment.nodeCount / area))
     }
 }
