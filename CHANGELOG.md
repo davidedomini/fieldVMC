@@ -1,3 +1,21 @@
+## [1.17.2](https://github.com/angelacorte/fieldVMC/compare/1.17.1...1.17.2) (2025-03-06)
+
+### Bug Fixes
+
+* upate cutting field vmc with optimized pararmeters ([88c48af](https://github.com/angelacorte/fieldVMC/commit/88c48af0c5659ca44e1ed177781627fcefa2f6fb))
+* upate field vmc with optimized pararmeters ([c5b345b](https://github.com/angelacorte/fieldVMC/commit/c5b345b6020df492a5b920b754c7a36dc3c13d5f))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.17.1 [skip ci] ([7aa1692](https://github.com/angelacorte/fieldVMC/commit/7aa16926f550f67d83e34687448e86d5f558821d))
+* update classic vmc data ([adb456f](https://github.com/angelacorte/fieldVMC/commit/adb456f6e253d9c7a4c1342ca4bfea9c87fb150b))
+* update nelder mead data ([ba7f2b6](https://github.com/angelacorte/fieldVMC/commit/ba7f2b6e6e0e9f8469d2a126f946952c970824ac))
+* update optimized field vmc data ([bba287b](https://github.com/angelacorte/fieldVMC/commit/bba287b8ab8cd00f721d8246ab4a8db67a01fa71))
+
+### Style improvements
+
+* remove useless newline ([9c8cadb](https://github.com/angelacorte/fieldVMC/commit/9c8cadbc1c1f1ecbd76c5698c7e85c7116c87ad8))
+
 ## [1.17.1](https://github.com/angelacorte/fieldVMC/compare/1.17.0...1.17.1) (2025-03-06)
 
 ### Bug Fixes
