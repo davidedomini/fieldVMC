@@ -20,4 +20,3 @@ class NetworkDensity() : Extractor<Double> {
         step: Long,
     ): Map<String, Double> = mapOf(NAME to environment.networkDensity())
 }
-
