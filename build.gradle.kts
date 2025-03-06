@@ -148,7 +148,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                 variables:
                   metrics: &metrics
                     formula: |
-                      it.unibo.MetricsForTermination()
+                      it.unibo.common.TerminationMetrics()
                     language: kotlin
                     
                 terminate:
@@ -177,7 +177,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                     variables:
                       metrics: &metrics
                         formula: |
-                          it.unibo.MetricsForTermination()
+                          it.unibo.common.TerminationMetrics()
                         language: kotlin
                     
                     launcher:
