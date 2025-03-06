@@ -1,10 +1,12 @@
 package it.unibo
 
 import it.unibo.alchemist.model.Environment
-import it.unibo.alchemist.model.NetworkDensity.networkDensity
 import it.unibo.alchemist.util.Environments.networkDiameterByHopDistance
 import it.unibo.common.DataRetriever.retrieveData
+import it.unibo.networkDensity
 import kotlin.math.absoluteValue
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.pow
 
 class MetricsForTermination : (Environment<*, *>) -> Map<String, Double> {
@@ -129,27 +131,24 @@ fun <T> Environment<T, *>.nodesDegree(): List<Double> =
  * The area is the rectangle given by the outermost nodes in the network.
  * The result is the average of the network densities of all the nodes in the network.
  */
-//fun <T> Environment<T, *>.networkDensity(): List<Double> {
-//    var outers: MutableMap<String, Double> =
-//        listOf<String>("top", "bottom", "right", "left")
-//            .associateWith { NaN }
-//            .toMutableMap()
-//    return nodes
-//        .map { n ->
-//            val nodePos = getPosition(n).coordinates.map { it + 10 } // Add 10 to avoid negative positions
-//            outers =
-//                outers.mapValues { (key, value) ->
-//                    when {
-//                        key == "right" && (value.isNaN() || nodePos[0] > value) -> nodePos[0]
-//                        key == "left" && (value.isNaN() || nodePos[0] < value) -> nodePos[0]
-//                        key == "top" && (value.isNaN() || nodePos[1] > value) -> nodePos[1]
-//                        key == "bottom" && (value.isNaN() || nodePos[1] < value) -> nodePos[1]
-//                        else -> value
-//                    }
-//                } as MutableMap<String, Double>
-//            // Calculate the area of the rectangle given by the outermost nodes
-//            val area = (outers["right"]!! - outers["left"]!!) * (outers["top"]!! - outers["bottom"]!!)
-//            if (area <= 0) return@map 0.0
-//            nodeCount / area
-//        }.filterNot { it.isNaN() || it.isInfinite() }
-//}
+fun <T : Any> Environment<T, *>.networkDensity(): Double {
+    data class BoundingBox(
+        val minX: Double = Double.Companion.POSITIVE_INFINITY,
+        val maxX: Double = Double.Companion.NEGATIVE_INFINITY,
+        val minY: Double = Double.Companion.POSITIVE_INFINITY,
+        val maxY: Double = Double.Companion.NEGATIVE_INFINITY,
+    )
+
+    val boundingBox = this.fold(BoundingBox()) { bb, node ->
+        val (x, y) = getPosition(node).coordinates
+        BoundingBox(
+            min(x, bb.minX),
+            max(x, bb.maxX),
+            min(y, bb.minY),
+            max(y, bb.maxY),
+        )
+    }
+    val area = (boundingBox.maxX - boundingBox.minX) * (boundingBox.maxY - boundingBox.minY)
+    if (area <= 0 || area.isInfinite()) return Double.Companion.NaN
+    return nodeCount / area
+}
