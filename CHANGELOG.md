@@ -1,3 +1,35 @@
+## [1.17.0](https://github.com/angelacorte/fieldVMC/compare/1.16.2...1.17.0) (2025-03-06)
+
+### Features
+
+* move network metrics into proper object ([79540f8](https://github.com/angelacorte/fieldVMC/commit/79540f8d5b8cf4356a3e6ff8789434176c76df40))
+* move termination metrics into proper class ([7cc380e](https://github.com/angelacorte/fieldVMC/commit/7cc380e94f28902359fa3031b383b8637d890311))
+* update docker compose to run cutting simulations ([d242a20](https://github.com/angelacorte/fieldVMC/commit/d242a2068136eaee3944b406b7dfc4fa2d7c01d1))
+* update optimized parameters ([d5c0ad1](https://github.com/angelacorte/fieldVMC/commit/d5c0ad17ed7bb459931a0b689210677b674fb256))
+* update optimized parameters ([56ecda0](https://github.com/angelacorte/fieldVMC/commit/56ecda0e3923b45d8782fc642428deeb3bc6e039))
+
+### Bug Fixes
+
+* plotter ([cc57351](https://github.com/angelacorte/fieldVMC/commit/cc57351e398a643b7563622fccc22cd4ac1c2b7f))
+* remove aggregator from diameter ([bbf7745](https://github.com/angelacorte/fieldVMC/commit/bbf77454c55cae9349b8bdef63bed4b4ff1bca33))
+* remove double verbosity flag ([a9a774d](https://github.com/angelacorte/fieldVMC/commit/a9a774d2ac2d8b31089956a63f0006ba7bdae344))
+* temporary remove charts from release ([a85d246](https://github.com/angelacorte/fieldVMC/commit/a85d246f257eaf80f600a0d73d0216a6af1fa718))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.16.2 [skip ci] ([e1ae2cd](https://github.com/angelacorte/fieldVMC/commit/e1ae2cdb6358156ae438bac178ec128eed8b4cf6))
+* remove network density aggregators from data ([4a674b8](https://github.com/angelacorte/fieldVMC/commit/4a674b8cbdcb4c345ce8948b2fc64309b88901f1))
+* upate optimized field vmc data ([f78350e](https://github.com/angelacorte/fieldVMC/commit/f78350ec08ef3387a44a616d06a27f231196ae91))
+* update classic vmc data ([05c2853](https://github.com/angelacorte/fieldVMC/commit/05c2853a3fd89b64b8a78d5cc69818d8247ab55d))
+* update nelder mead results ([bfbfc06](https://github.com/angelacorte/fieldVMC/commit/bfbfc06d6cc0d3ea465ad95eb5930b855832beab))
+
+### Refactoring
+
+* improve network density implementation ([31d3bce](https://github.com/angelacorte/fieldVMC/commit/31d3bcec7210b4c54ee6e3b45d4b895ae01fc115))
+* move in outer scope network density ([ae640fa](https://github.com/angelacorte/fieldVMC/commit/ae640fa5aad1d1aaf52278964382186a8e68bd7c))
+* move network density function ([f0dbeb3](https://github.com/angelacorte/fieldVMC/commit/f0dbeb3bec5d68e89ff8ec5f9159609fee78c994))
+* remove aggregators from network diameter ([d62747b](https://github.com/angelacorte/fieldVMC/commit/d62747bed34ef03124cdd49d35b05b93e0e662e8))
+
 ## [1.16.2](https://github.com/angelacorte/fieldVMC/compare/1.16.1...1.16.2) (2025-03-05)
 
 ### Bug Fixes
