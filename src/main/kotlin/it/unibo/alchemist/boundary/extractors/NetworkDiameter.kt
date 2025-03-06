@@ -1,10 +1,8 @@
 package it.unibo.alchemist.boundary.extractors
 
-import it.unibo.alchemist.boundary.ExportFilter
 import it.unibo.alchemist.boundary.Extractor
 import it.unibo.alchemist.model.Actionable
 import it.unibo.alchemist.model.Environment
-import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.Time
 import it.unibo.alchemist.util.Environments.networkDiameterByHopDistance
 

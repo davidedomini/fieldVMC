@@ -4,9 +4,9 @@ import it.unibo.alchemist.boundary.Extractor
 import it.unibo.alchemist.model.Actionable
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Time
-import it.unibo.networkDensity
+import it.unibo.common.NetworkMetrics.networkDensity
 
-class NetworkDensityExtractor() : Extractor<Double> {
+class NetworkDensity() : Extractor<Double> {
     private companion object {
         private const val NAME: String = "network-density"
     }
