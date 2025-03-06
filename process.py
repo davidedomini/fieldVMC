@@ -197,7 +197,7 @@ if __name__ == '__main__':
     # How to name the summary of the processed data
     pickleOutput = 'data_summary'
     # Experiment prefixes: one per experiment (root of the file name)
-    experiments = ['fixed-leader', 'classic-vmc'] #, 'cutting-fixed-leader', 'cutting-classic-vmc'
+    experiments = ['cutting-field-vmc-fixed-leader', 'cutting-classic-vmc'] #'field-vmc-fixed-leader', 'classic-vmc',
     floatPrecision = '{: 0.3f}'
     # Number of time samples
     timeSamples = 300
@@ -315,6 +315,9 @@ if __name__ == '__main__':
                 # Collect all files for the experiment of interest
                 import fnmatch
 
+                if experiment.startswith('cutting'):
+                    maxTime = 1000
+                    seedVars.append('origin')
                 allfiles = filter(lambda file: fnmatch.fnmatch(file, experiment + '_*.csv'), os.listdir(f'{directory}/{experiment}'))
                 allfiles = [directory + f'/{experiment}/' + name for name in allfiles]
                 allfiles.sort()
@@ -369,8 +372,7 @@ if __name__ == '__main__':
                                 experimentVars = extractCoordinates(file)
                                 darray.loc[experimentVars] = data[:, idx].A1
 
-                    if experiment.startswith('cutting'):
-                        seedVars.append('origin')
+
                     # Fold the dataset along the seed variables, producing the mean and stdev datasets
                     mergingVariables = [seed for seed in seedVars if seed in dataset.coords]
                     means[experiment] = dataset.mean(dim=mergingVariables, skipna=True)
@@ -478,7 +480,7 @@ if __name__ == '__main__':
             "number-of-leaves",
             "network-hub-yCoord",
             "network-diameter[mean]",
-            "network-density[max]",
+            "network-density",
             "nodes-degree[mean]",
             'children-count[mean]',
             'success[mean]',
