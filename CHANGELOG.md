@@ -1,3 +1,13 @@
+## [1.18.0](https://github.com/angelacorte/fieldVMC/compare/1.17.2...1.18.0) (2025-03-06)
+
+### Features
+
+* update objective function with nodes metric power 2 ([3bef05c](https://github.com/angelacorte/fieldVMC/commit/3bef05c521683fdcc88eada00614449861aadbbe))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.17.2 [skip ci] ([c81381c](https://github.com/angelacorte/fieldVMC/commit/c81381c5b89f05e81bcba8c77d864874a44a4ff5))
+
 ## [1.17.2](https://github.com/angelacorte/fieldVMC/compare/1.17.1...1.17.2) (2025-03-06)
 
 ### Bug Fixes
