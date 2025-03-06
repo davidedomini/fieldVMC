@@ -1,5 +1,20 @@
 services:
-#  fixed-leader-optimizer:
+  fixed-leader-optimizer:
+    deploy:
+      placement:
+        constraints:
+          - node.hostname==andromeda.apice.unibo.it
+    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
+    build:
+      context: .
+      dockerfile: ./docker/fixedLeaderOptimizer/Dockerfile
+    volumes:
+      - angela.cortecchia-volume:/experiment/data
+    environment:
+      - MAX_SEED=500
+      - GRADLE_TASK=runFixedLeaderOptimizer
+
+#  cutting-classic-vmc-batch:
 #    deploy:
 #      placement:
 #        constraints:
@@ -12,36 +27,22 @@ services:
 #      - angela.cortecchia-volume:/experiment/data
 #    environment:
 #      - MAX_SEED=500
-#      - GRADLE_TASK=runFixedLeaderOptimizer
-  cutting-classic-vmc-batch:
-    deploy:
-      placement:
-        constraints:
-          - node.hostname==andromeda.apice.unibo.it
-    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
-    build:
-      context: .
-      dockerfile: ./docker/fixedLeaderOptimizer/Dockerfile
-    volumes:
-      - angela.cortecchia-volume:/experiment/data
-    environment:
-      - MAX_SEED=500
-      - GRADLE_TASK=runCuttingClassicVMCBatch
+#      - GRADLE_TASK=runCuttingClassicVMCBatch
 
-  cutting-field-vmc-batch:
-    deploy:
-      placement:
-        constraints:
-          - node.hostname==andromeda.apice.unibo.it
-    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
-    build:
-      context: .
-      dockerfile: ./docker/fixedLeaderOptimizer/Dockerfile
-    volumes:
-      - angela.cortecchia-volume:/experiment/data
-    environment:
-      - MAX_SEED=500
-      - GRADLE_TASK=runCuttingFixedLeaderBatch
+#  cutting-field-vmc-batch:
+#    deploy:
+#      placement:
+#        constraints:
+#          - node.hostname==andromeda.apice.unibo.it
+#    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
+#    build:
+#      context: .
+#      dockerfile: ./docker/fixedLeaderOptimizer/Dockerfile
+#    volumes:
+#      - angela.cortecchia-volume:/experiment/data
+#    environment:
+#      - MAX_SEED=500
+#      - GRADLE_TASK=runCuttingFixedLeaderBatch
 
 volumes:
   angela.cortecchia-volume:
