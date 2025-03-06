@@ -1,3 +1,14 @@
+## [1.17.1](https://github.com/angelacorte/fieldVMC/compare/1.17.0...1.17.1) (2025-03-06)
+
+### Bug Fixes
+
+* use apache geometric mean ([1c37d2c](https://github.com/angelacorte/fieldVMC/commit/1c37d2c94f0e21525e14e8d2c8af1a15aee60131))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.17.0 [skip ci] ([d07d158](https://github.com/angelacorte/fieldVMC/commit/d07d15864c5356931b6ab79ec10bed3e0ffef620))
+* update services in docker compose ([b2494a8](https://github.com/angelacorte/fieldVMC/commit/b2494a8cb1b01fae90f1d15dfed8561c720c3c97))
+
 ## [1.17.0](https://github.com/angelacorte/fieldVMC/compare/1.16.2...1.17.0) (2025-03-06)
 
 ### Features
