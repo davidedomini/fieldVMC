@@ -479,7 +479,7 @@ if __name__ == '__main__':
             "network-hub-xCoord",
             "number-of-leaves",
             "network-hub-yCoord",
-            "network-diameter[mean]",
+            "network-diameter",
             "network-density",
             "nodes-degree[mean]",
             'children-count[mean]',
