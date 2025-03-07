@@ -1,3 +1,20 @@
+## [1.18.1](https://github.com/angelacorte/fieldVMC/compare/1.18.0...1.18.1) (2025-03-07)
+
+### Dependency updates
+
+* **deps:** update alchemist to v40.1.2 ([a0e7d8a](https://github.com/angelacorte/fieldVMC/commit/a0e7d8aaf31f7acb6e6107cf571da0ac405fab57))
+
+### Bug Fixes
+
+* rollback to objective function without weight on nodes ([2316c05](https://github.com/angelacorte/fieldVMC/commit/2316c0558bdb65295df0e07f0f0808f076cd3d0b))
+* rollback to previous set of optimized parameters ([f0f7932](https://github.com/angelacorte/fieldVMC/commit/f0f79328541c260b5016c2945587bf7ff0f5a18a))
+* update docker compose services ([bcb280f](https://github.com/angelacorte/fieldVMC/commit/bcb280f8c3fa533387c0841029ca2a35f98c17da))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.18.0 [skip ci] ([3eb2875](https://github.com/angelacorte/fieldVMC/commit/3eb2875401696388eeb7731122521a7da1d0d6fa))
+* update fixed-leader data ([6e88ed4](https://github.com/angelacorte/fieldVMC/commit/6e88ed4c5021c0a78a8dab8223a84c9e283786c7))
+
 ## [1.18.0](https://github.com/angelacorte/fieldVMC/compare/1.17.2...1.18.0) (2025-03-06)
 
 ### Features
