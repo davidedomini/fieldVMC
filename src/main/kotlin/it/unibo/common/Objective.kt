@@ -73,10 +73,8 @@ fun Environment<*, *>.minimize(target: Map<String, Double>): Double =
         val absoluteDifference =
             target.map { (metric, target) ->
                 val relative = current[metric] ?: error("Metric $metric not found")
-                // nodes have more influence in the evaluation
-                val difference = if(metric == "nodes") (target.pow(2) - relative.pow(2)) else (target - relative)
                 // Add 1 to avoid values as 0
-                (difference.absoluteValue + 1).also {
+                ((target - relative).absoluteValue + 1).also {
                     require(it >= 1) { "The difference between target and current value should not be less than 1, but is $it" }
                 }
             }
