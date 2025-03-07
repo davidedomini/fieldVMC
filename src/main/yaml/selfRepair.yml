@@ -1,4 +1,8 @@
 variables:
+  fileName: &fileName
+    "self-repair"
+  path: &path
+    "data/self-repair"
   seed: &seed
     min: 0
     max: 20
@@ -76,3 +80,41 @@ deployments:
         parameters: [ *leaderRadius ]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
         parameters: [ *resourceLowerBound, *maxResource ]
+
+export:
+  - type: CSVExporter
+    parameters:
+      fileNameRoot: *fileName
+      interval: 1.0
+      exportPath: *path
+    data:
+      - time
+      - type: NumberOfNodes
+      - type: NetworkHub
+      - type: NumberOfLeaves
+      - type: NetworkDensity
+      - type: NetworkDiameter
+      - type: NodeDegree
+        parameters:
+          filter: onlyfinite
+          aggregators: [ max, mean, variance, median, StandardDeviation ]
+      - molecule: children-count
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: local-success
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: resource
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: success
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: local-resource
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
+        value-filter: onlyfinite
+        precision: 3
