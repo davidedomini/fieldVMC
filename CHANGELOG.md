@@ -1,3 +1,21 @@
+## [1.19.0](https://github.com/angelacorte/fieldVMC/compare/1.18.1...1.19.0) (2025-03-07)
+
+### Features
+
+* add exports to self repair simulation ([ba9874d](https://github.com/angelacorte/fieldVMC/commit/ba9874dc018310fded4720aeacbaf7bf9f062df6))
+
+### Dependency updates
+
+* **deps:** update alchemist to v40.1.3 ([062e533](https://github.com/angelacorte/fieldVMC/commit/062e533a40a1d689154fe2b569ed75be6c785a51))
+
+### Bug Fixes
+
+* adapt effects name to relative yaml ([b461e66](https://github.com/angelacorte/fieldVMC/commit/b461e6607c1796acfc480e6969851c0b686aae5a))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.18.1 [skip ci] ([8f4947c](https://github.com/angelacorte/fieldVMC/commit/8f4947c65a170e278cfc0278c9e329e7216f668d))
+
 ## [1.18.1](https://github.com/angelacorte/fieldVMC/compare/1.18.0...1.18.1) (2025-03-07)
 
 ### Dependency updates
