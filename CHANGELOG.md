@@ -1,3 +1,19 @@
+## [1.20.0](https://github.com/angelacorte/fieldVMC/compare/1.19.0...1.20.0) (2025-03-10)
+
+### Features
+
+* add assignment to molecule local resource ([013421f](https://github.com/angelacorte/fieldVMC/commit/013421fd282c2f0fc1b0cc4d69700f4f878b1e40))
+* add extractors ([ba002b6](https://github.com/angelacorte/fieldVMC/commit/ba002b61b91e298c078ec529a53ba2eb9dd9f268))
+* add subnetworks diameter extractor ([44840ba](https://github.com/angelacorte/fieldVMC/commit/44840bab56302f708b29bce3170e86d6137f8f42))
+
+### Dependency updates
+
+* **deps:** update plugin tasktree to v4.0.1 ([7ca5c32](https://github.com/angelacorte/fieldVMC/commit/7ca5c32704b8d7c4a0c4466ab31ace8496c6c62a))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.19.0 [skip ci] ([30e313a](https://github.com/angelacorte/fieldVMC/commit/30e313ad4495b56bda45988b028a9153ecd9c18a))
+
 ## [1.19.0](https://github.com/angelacorte/fieldVMC/compare/1.18.1...1.19.0) (2025-03-07)
 
 ### Features
