@@ -33,5 +33,6 @@ fun Aggregate<Int>.withoutSpawning(
     val localSuccess = obtainLocalSuccess(successS)
     val success = convergeSuccess(successS, potential, localSuccess)
     val localResource = spreadResource(env, resourceS, potential, success)
+        .also { env["local-resource"] = it }
     return localResource
 }
