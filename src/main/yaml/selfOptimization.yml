@@ -1,4 +1,8 @@
 variables:
+  fileName: &fileName
+    "self-optimization"
+  path: &path
+    "data/self-optimization"
   seed: &seed
     min: 0
     max: 20
@@ -31,7 +35,8 @@ variables:
   gaussianShape: &gaussianShape
     5
   initialNodes: &initialNodes
-    50
+    type: ArbitraryVariable
+    parameters: [ 45.0, [ 1.0, 10.0, 100.0, 1000.0, 10000.0 ] ]
   cloningRange: &cloningRange
     3
 
@@ -93,3 +98,44 @@ deployments:
         parameters: [ *resourceLowerBound, *maxResource ]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
         parameters: [ *cloningRange, *maxChildren, *minSpanWait ]
+
+export:
+  - type: CSVExporter
+    parameters:
+      fileNameRoot: *fileName
+      interval: 1.0
+      exportPath: *path
+    data:
+      - time
+      - type: NumberOfNodes
+      - type: NetworkHub
+      - type: NumberOfLeaves
+      - type: NetworkDensity
+      - type: SubnetworksDiameter
+        parameters:
+          filter: onlyfinite
+          aggregators: [ min, max, mean, variance, median, StandardDeviation ]
+          precision: 3
+      - type: NodeDegree
+        parameters:
+          filter: onlyfinite
+          aggregators: [ max, mean, variance, median, StandardDeviation ]
+      - molecule: local-success
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: resource
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: success
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: local-resource
+        aggregators: [ max, mean, variance, median, StandardDeviation ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: leader
+        aggregators: [ Sum ]
+        property: if(it) 1 else 0
