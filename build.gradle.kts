@@ -191,6 +191,21 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                     """.trimIndent(),
                 )
             }
+            if (capitalizedName.startsWith("Self")) {
+                args(
+                    "--override",
+                    """
+                    launcher:
+                      type: DefaultLauncher
+                      parameters: {
+                        batch: ["seed", "initialNodes"],
+                        autoStart: true,
+                      }
+                      
+                    terminate: { type: AfterTime, parameters: [1000] }
+                    """.trimIndent(),
+                )
+            }
         }
         runAllBatch.dependsOn(batch)
         if (capitalizedName == "FixedLeaderOptimizer") {
