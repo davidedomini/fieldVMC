@@ -5,17 +5,13 @@ variables:
     "data/self-segmentation"
   seed: &seed
     min: 0
-    max: 20
+    max:
+      formula: System.getenv("MAX_SEED").toDouble()
+      language: kotlin
     step: 1
     default: 0
   radius: &leaderRadius
     7.5
-  maxResource: &maxResource
-    1000.0
-  resourceLowerBound: &resourceLowerBound
-    1.0
-  initialNodes: &initialNodes
-    45
   movingRange: &movingRange
     3.0
   layerX: &layerX
@@ -30,6 +26,13 @@ variables:
     20
   minY: &minY
     0
+  maxResource: &maxResource
+    1000.0
+  resourceLowerBound: &resourceLowerBound
+    1.0
+  initialNodes: &initialNodes
+    type: ArbitraryVariable
+    parameters: [ 45.0, [ 1.0, 5.0, 50.0, 500.0, 5000.0 ] ]
   maxSuccess: &maxSuccess
     formula: *maxResource
   gaussianShape: &gaussianShape
@@ -121,9 +124,6 @@ export:
         parameters:
           filter: onlyfinite
           aggregators: [ max, mean, variance, median, StandardDeviation ]
-      - molecule: children-count
-        aggregators: [ max, mean, variance, median, StandardDeviation ]
-        value-filter: onlyfinite
         precision: 3
       - molecule: local-success
         aggregators: [ max, mean, variance, median, StandardDeviation ]

@@ -5,7 +5,9 @@ variables:
     "data/self-integration"
   seed: &seed
     min: 0
-    max: 20
+    max:
+      formula: System.getenv("MAX_SEED").toDouble()
+      language: kotlin
     step: 1
     default: 0
   radius: &leaderRadius
@@ -29,7 +31,8 @@ variables:
   gaussianShape: &gaussianShape
     5
   initialNodes: &initialNodes
-    45
+    type: ArbitraryVariable
+    parameters: [ 45.0, [ 1.0, 5.0, 50.0, 500.0, 5000.0 ] ]
   movingRange: &movingRange
     3.0
   resourceLowerBound: &resourceLowerBound
@@ -121,10 +124,6 @@ export:
         parameters:
           filter: onlyfinite
           aggregators: [ max, mean, variance, median, StandardDeviation ]
-      - molecule: children-count
-        aggregators: [ max, mean, variance, median, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
       - molecule: local-success
         aggregators: [ max, mean, variance, median, StandardDeviation ]
         value-filter: onlyfinite

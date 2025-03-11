@@ -5,7 +5,9 @@ variables:
     "data/self-repair"
   seed: &seed
     min: 0
-    max: 20
+    max:
+      formula: System.getenv("MAX_SEED").toDouble()
+      language: kotlin
     step: 1
     default: 0
   radius: &leaderRadius
@@ -15,13 +17,16 @@ variables:
   resourceLowerBound: &resourceLowerBound
     1.0
   initialNodes: &initialNodes
-    100
-  killingRange: &killingRange
-    5.0
+    type: ArbitraryVariable
+    parameters: [ 45.0, [ 1.0, 5.0, 50.0, 500.0, 5000.0 ] ]
+  movingRange: &movingRange
+    -5.0
   layerX: &layerX
     10
   width: &width
-    20
+    10
+  leftStart: &leftStart
+    0
   height: &height
     20
   maxY: &maxY
@@ -56,18 +61,35 @@ _pool: &program
     type: Event
     actions:
       - type: RunCollektiveProgram
-        parameters: [ it.unibo.collektive.vmc.VMCWithoutSpawningKt.withoutSpawning ]
+        parameters: [ it.unibo.collektive.vmc.VMCWithoutSpawningKt.withoutSpawning]
+
+_divide: &divide
   - time-distribution:
       type: Trigger
-      parameters: [ 500 ]
+      parameters: [ 200 ]
     type: Event
     actions:
-      - type: RemoveNodes
-        parameters: [ *killingRange, 0, *width, *height ]
+      - type: MoveCluster
+        parameters: [ *movingRange ]
 
 deployments:
   - type: Rectangle
-    parameters: [*initialNodes, 0, 0, *width, *height]
+    parameters: [*initialNodes, *leftStart, 0, *width, *height]
+    programs:
+      - *program
+      - *divide
+    properties:
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
+        parameters: [ *maxSuccess ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LeaderSensorProperty
+        parameters: [ *leaderRadius ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
+        parameters: [*resourceLowerBound, *maxResource]
+  - type: Rectangle
+    parameters: [*initialNodes, *width, 0, *width, *height]
     programs:
       - *program
     properties:
@@ -93,15 +115,15 @@ export:
       - type: NetworkHub
       - type: NumberOfLeaves
       - type: NetworkDensity
-      - type: NetworkDiameter
+      - type: SubnetworksDiameter
+        parameters:
+          filter: onlyfinite
+          aggregators: [ min, max, mean, variance, median, StandardDeviation ]
+          precision: 3
       - type: NodeDegree
         parameters:
           filter: onlyfinite
           aggregators: [ max, mean, variance, median, StandardDeviation ]
-      - molecule: children-count
-        aggregators: [ max, mean, variance, median, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
       - molecule: local-success
         aggregators: [ max, mean, variance, median, StandardDeviation ]
         value-filter: onlyfinite
@@ -118,3 +140,6 @@ export:
         aggregators: [ max, mean, variance, median, StandardDeviation ]
         value-filter: onlyfinite
         precision: 3
+      - molecule: leader
+        aggregators: [ Sum ]
+        property: if(it) 1 else 0
