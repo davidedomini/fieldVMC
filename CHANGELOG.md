@@ -1,3 +1,24 @@
+## [1.21.0](https://github.com/angelacorte/fieldVMC/compare/1.20.0...1.21.0) (2025-03-11)
+
+### Features
+
+* add exporter for self optimization simulation ([0191309](https://github.com/angelacorte/fieldVMC/commit/01913098e986528dfde08e11e104daca9050099c))
+* add services for self-* simulations ([0b5a388](https://github.com/angelacorte/fieldVMC/commit/0b5a388721ab9ca13b10108ac40d713553a879f7))
+* **build:** add batch override for self-* experiments on initial nodes ([9f26311](https://github.com/angelacorte/fieldVMC/commit/9f2631115e7f4c365066e1b4c1f969c01ded9ed8))
+* initial nodes ad arbitrary variable ([b11328c](https://github.com/angelacorte/fieldVMC/commit/b11328c1fc33fbe7b7fc198737b2b08de79a0f85))
+
+### Dependency updates
+
+* **deps:** update alchemist to v42 ([46cbcc2](https://github.com/angelacorte/fieldVMC/commit/46cbcc245da510ec8dcf30f3e52f20a744eba6fa))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.20.0 [skip ci] ([7130461](https://github.com/angelacorte/fieldVMC/commit/713046124b0310da84362921fdbebf6e3164ac2c))
+
+### Style improvements
+
+* remove unused import ([a490cfe](https://github.com/angelacorte/fieldVMC/commit/a490cfe73ff9441fc1af844eafb5ca6c682e1311))
+
 ## [1.20.0](https://github.com/angelacorte/fieldVMC/compare/1.19.0...1.20.0) (2025-03-10)
 
 ### Features
