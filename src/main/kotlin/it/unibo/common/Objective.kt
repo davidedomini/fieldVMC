@@ -8,7 +8,6 @@ import it.unibo.common.NetworkMetrics.networkHub
 import it.unibo.common.NetworkMetrics.nodesDegree
 import org.apache.commons.math3.stat.descriptive.moment.GeometricMean
 import kotlin.math.absoluteValue
-import kotlin.math.pow
 
 /**
  * The goal for the optimization.
