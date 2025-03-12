@@ -122,7 +122,9 @@ fun Aggregate<Int>.vmc(
     val potential = findPotential(distanceSensor, isLeader)
     val localSuccess = obtainLocalSuccess(successSensor)
     val success = convergeSuccess(successSensor, potential, localSuccess)
-    val localResource = spreadResource(env, resourceSensor, potential, success)
+    val localResource = spreadResource(env, resourceSensor, potential, success).also {
+        env["local-resource"] = it
+    }
     spawner(devSpawn, locationSensor, potential, localSuccess, success, localResource)
     return localResource
 }
