@@ -48,7 +48,7 @@ variables:
     5
   initialNodes: &initialNodes
     type: ArbitraryVariable
-    parameters: [ 100.0, [ 1.0, 10.0, 100.0, 1000.0, 10000.0 ] ]
+    parameters: [ 1000.0, [ 1.0, 10.0, 100.0, 1000.0, 10000.0 ] ]
   cloningRange: &cloningRange
     3
 
@@ -78,7 +78,7 @@ _pool: &program
         parameters: [ it.unibo.collektive.vmc.VMCSpawningKt.withSpawning]
 
 deployments:
-  - type: OuterRectangle
+  - type: ConcentricRectangles
     parameters: [*initialNodes, *outerStartX, *outerStartY, *outerWidth, *outerHeight, *innerStartX, *innerStartY, *innerWidth, *innerHeight]
     programs:
       - *program
