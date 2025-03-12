@@ -70,7 +70,7 @@ fun Aggregate<Int>.determineStability(
             && childrenCount == 0
             && localResource < resourceS.resourceLowerBound
             && everyoneIsDestroyStable -> {
-//            devSpawn.selfDestroy()
+            devSpawn.selfDestroy()
             Stability(spawnStable = false, destroyStable = false)
         }
         neighborPositions.isEmpty() ||
