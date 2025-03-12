@@ -5,38 +5,50 @@ variables:
     "data/self-optimization"
   seed: &seed
     min: 0
-    max: 20
+    max:
+      formula: System.getenv("MAX_SEED").toDouble()
+      language: kotlin
     step: 1
     default: 0
   radius: &leaderRadius
     100.0
   maxResource: &maxResource
     1000.0
+  maxSuccess: &maxSuccess
+    formula: *maxResource
   resourceLowerBound: &resourceLowerBound
     1.0
   maxChildren: &maxChildren
     5
   minSpanWait: &minSpanWait
     20.0
+  outerStartX: &outerStartX
+    -30
+  outerStartY: &outerStartY
+    -35
+  outerWidth: &outerWidth
+    80
+  outerHeight: &outerHeight
+    90
+  innerStartX: &innerStartX
+    -10
+  innerStartY: &innerStartY
+    -15
+  innerWidth: &innerWidth
+    40
+  innerHeight: &innerHeight
+    50
   layerX: &layerX
     10
-  width: &width
-    10
-  leftStart: &leftStart
-    -4
-  height: &height
+  maxLayerY: &maxLayerY
     20
-  maxY: &maxY
-    20
-  minY: &minY
+  minLayerY: &minLayerY
     0
-  maxSuccess: &maxSuccess
-    formula: *maxResource
   gaussianShape: &gaussianShape
     5
   initialNodes: &initialNodes
     type: ArbitraryVariable
-    parameters: [ 45.0, [ 1.0, 10.0, 100.0, 1000.0, 10000.0 ] ]
+    parameters: [ 100.0, [ 1.0, 10.0, 100.0, 1000.0, 10000.0 ] ]
   cloningRange: &cloningRange
     3
 
@@ -50,11 +62,11 @@ seeds:
 
 layers:
   - type: BidimensionalGaussianLayer
-    parameters: [*layerX, *minY, *maxSuccess, *gaussianShape]
-    molecule: successSource
-  - type: BidimensionalGaussianLayer
-    parameters: [*layerX, *maxY, *maxResource, *gaussianShape]
+    parameters: [*layerX, *minLayerY, *maxSuccess, *gaussianShape]
     molecule: localResource
+  - type: BidimensionalGaussianLayer
+    parameters: [*layerX, *maxLayerY, *maxResource, *gaussianShape]
+    molecule: successSource
 
 incarnation: collektive
 
@@ -66,8 +78,8 @@ _pool: &program
         parameters: [ it.unibo.collektive.vmc.VMCSpawningKt.withSpawning]
 
 deployments:
-  - type: Rectangle
-    parameters: [*initialNodes, *leftStart, 0, *width, *height]
+  - type: OuterRectangle
+    parameters: [*initialNodes, *outerStartX, *outerStartY, *outerWidth, *outerHeight, *innerStartX, *innerStartY, *innerWidth, *innerHeight]
     programs:
       - *program
     properties:
@@ -80,22 +92,6 @@ deployments:
         parameters: [ *leaderRadius ]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
         parameters: [*resourceLowerBound, *maxResource]
-      - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
-        parameters: [ *cloningRange, *maxChildren, *minSpanWait ]
-  - type: Rectangle
-    parameters: [*initialNodes, *width, 0, *width, *height]
-    programs:
-      - *program
-    properties:
-      - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
-      - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
-      - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
-      - type: it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
-        parameters: [ *maxSuccess ]
-      - type: it.unibo.collektive.alchemist.device.sensors.impl.LeaderSensorProperty
-        parameters: [ *leaderRadius ]
-      - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
-        parameters: [ *resourceLowerBound, *maxResource ]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
         parameters: [ *cloningRange, *maxChildren, *minSpanWait ]
 
