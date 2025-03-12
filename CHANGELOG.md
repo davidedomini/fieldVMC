@@ -1,3 +1,23 @@
+## [1.22.0](https://github.com/angelacorte/fieldVMC/compare/1.21.0...1.22.0) (2025-03-12)
+
+### Features
+
+* add deployment to create nodes into specific area of two concentric rectangles ([753a0c7](https://github.com/angelacorte/fieldVMC/commit/753a0c7b34445a5024882301dfaacfa90a93b391))
+* add local-resource molecule assignment ([4acde72](https://github.com/angelacorte/fieldVMC/commit/4acde72f159e661805ea79c3e51deb9b2f412365))
+* change deployment into "outerRectangle" ([c884be7](https://github.com/angelacorte/fieldVMC/commit/c884be7f2a0b9d10f3eb2fc1555a89fe51b41058))
+
+### Bug Fixes
+
+* restore destruction of nodes in spawning logic ([5bccae0](https://github.com/angelacorte/fieldVMC/commit/5bccae0a36e09aa22733f8fefadabe54cbb0c574))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.21.0 [skip ci] ([e8abc82](https://github.com/angelacorte/fieldVMC/commit/e8abc8264b4557ec2e5d6482b9127500e0b1784e))
+
+### Style improvements
+
+* invert position success-resource sources ([1187dc1](https://github.com/angelacorte/fieldVMC/commit/1187dc1dd0cbe8a7f8470f71aced205842c2de11))
+
 ## [1.21.0](https://github.com/angelacorte/fieldVMC/compare/1.20.0...1.21.0) (2025-03-11)
 
 ### Features
