@@ -49,10 +49,10 @@ seeds:
 layers:
   - type: BidimensionalGaussianLayer
     parameters: [*layerX, *minY, *maxSuccess, *gaussianShape]
-    molecule: successSource
+    molecule: localResource
   - type: BidimensionalGaussianLayer
     parameters: [*layerX, *maxY, *maxResource, *gaussianShape]
-    molecule: localResource
+    molecule: successSource
 
 incarnation: collektive
 
