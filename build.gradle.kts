@@ -25,6 +25,7 @@ sourceSets {
             implementation(kotlin("reflect"))
             implementation(libs.caffeine)
             implementation(libs.rrmxmx)
+            implementation(libs.symmetric.matrix)
         }
     }
 }
