@@ -1,3 +1,22 @@
+## [1.23.0](https://github.com/angelacorte/fieldVMC/compare/1.22.0...1.23.0) (2025-03-14)
+
+### Features
+
+* add faster alchemist environment ([1666fcc](https://github.com/angelacorte/fieldVMC/commit/1666fcc33ac581f2fb7155ec824c30b120110cbf))
+
+### Dependency updates
+
+* **deps:** add symmetric matrix dependency ([a12d8e6](https://github.com/angelacorte/fieldVMC/commit/a12d8e649eb4cf9f4a40a60c0286951608ef79f8))
+* **deps:** update alchemist to v42.0.1 ([09567f0](https://github.com/angelacorte/fieldVMC/commit/09567f0d70a2160d243db758da739c8c783907b4))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.22.0 [skip ci] ([bab7c1d](https://github.com/angelacorte/fieldVMC/commit/bab7c1de0156978d0f2d5ff07b35a6e984f36523))
+
+### Refactoring
+
+* adapt deployment name ([aced94b](https://github.com/angelacorte/fieldVMC/commit/aced94b7f45fc0a5ca54ff47566a55fad3649d52))
+
 ## [1.22.0](https://github.com/angelacorte/fieldVMC/compare/1.21.0...1.22.0) (2025-03-12)
 
 ### Features
