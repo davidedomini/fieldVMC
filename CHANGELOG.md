@@ -1,3 +1,13 @@
+## [1.24.0](https://github.com/angelacorte/fieldVMC/compare/1.23.2...1.24.0) (2025-03-16)
+
+### Features
+
+* add self optimization service launcher ([25653d0](https://github.com/angelacorte/fieldVMC/commit/25653d04fdb5af153f8aed42b522a1ea247e4155))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.23.2 [skip ci] ([366648d](https://github.com/angelacorte/fieldVMC/commit/366648d9162e0cfe735b4ce97e0800623bcea611))
+
 ## [1.23.2](https://github.com/angelacorte/fieldVMC/compare/1.23.1...1.23.2) (2025-03-16)
 
 ### Bug Fixes
