@@ -1,3 +1,17 @@
+## [1.23.1](https://github.com/angelacorte/fieldVMC/compare/1.23.0...1.23.1) (2025-03-16)
+
+### Performance improvements
+
+* optimized network diameter evaluation ([196c14d](https://github.com/angelacorte/fieldVMC/commit/196c14d80aefb2c87c4e6d20bb12b343c9e66d75))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.23.0 [skip ci] ([0ce6c81](https://github.com/angelacorte/fieldVMC/commit/0ce6c8110656a1409ca17ba86362258339069037))
+
+### Style improvements
+
+* remove commeted code ([bbaf903](https://github.com/angelacorte/fieldVMC/commit/bbaf9032a85d4a471a20f6b48e559ea42cdfbca5))
+
 ## [1.23.0](https://github.com/angelacorte/fieldVMC/compare/1.22.0...1.23.0) (2025-03-14)
 
 ### Features
