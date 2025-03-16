@@ -72,18 +72,19 @@ object Environments {
         // Update all the subnetworks with the last evaluated; that is the most complete
         val toVisit = nodes.toMutableSet()
         while (toVisit.isNotEmpty()) {
-            val current = toVisit.last()
+            val current = toVisit.first()
             val indexOfCurrent = nodes.indexOf(current)
+            toVisit -= current
             val valuesInColumn = paths.column(indexOfCurrent)
-            val subNetwork: List<Node<T>> = valuesInColumn.foldIndexed(emptyList<Node<T>>()) { index, accumulator, checking ->
+            val subNetwork: Pair<Double, List<Node<T>>> = valuesInColumn.foldIndexed(0.0 to emptyList<Node<T>>()) { index, accumulator, checking ->
                 if (checking.isFinite()) {
                     val node = nodes[index]
+                    val checkingColumn = paths.column(index)
                     toVisit -= node
-                    accumulator.plus<Node<T>>(node)
+                    max(accumulator.first, checkingColumn.filter { it.isFinite()}.max()) to accumulator.second.plus<Node<T>>(node)
                 } else accumulator
             }
-            val subnetDiameter = valuesInColumn.filter { it.isFinite() }.max()
-            subnetworks.add(SubNetwork<T>(subnetDiameter, subNetwork))
+            subnetworks.add(SubNetwork<T>(subNetwork.first, subNetwork.second))
         }
         return subnetworks.toSet()
     }
@@ -183,8 +184,6 @@ object Environments {
         constructor(diameter: Double, vararg nodes: Node<T>) : this(diameter, nodes.toSet())
 
         constructor(diameter: Double, nodes: Collection<Node<T>>) : this(diameter, nodes.toSet())
-
-        constructor(node: Node<T>) : this(0.0, mutableSetOf(node))
 
         override fun plus(otherNetwork: Network<T>): Network<T> {
             val ns =  nodes.toList() + otherNetwork.nodes.toList()
