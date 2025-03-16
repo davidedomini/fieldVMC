@@ -1,3 +1,13 @@
+## [1.23.2](https://github.com/angelacorte/fieldVMC/compare/1.23.1...1.23.2) (2025-03-16)
+
+### Bug Fixes
+
+* network diameter evaluation as per alchemist PR ([4b169c3](https://github.com/angelacorte/fieldVMC/commit/4b169c3c42769e4cf9cb272261c4919c7e80e355))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.23.1 [skip ci] ([baf2694](https://github.com/angelacorte/fieldVMC/commit/baf269416c6f9aeff0fa0d08ad6893c464316489))
+
 ## [1.23.1](https://github.com/angelacorte/fieldVMC/compare/1.23.0...1.23.1) (2025-03-16)
 
 ### Performance improvements
