@@ -38,6 +38,13 @@ constructor(
         step: Long,
     ): Map<Node<T>, Double> =
         environment
-            .allSubNetworksByNode { n1, n2 -> if (n1.parent == n2.id) 1.0 else 0.0 }
+            .allSubNetworksByNode { n1, n2 ->
+                val (p1, p2) = n1.parent to n2.parent
+                when {
+                    n1 == n2 -> 0.0
+                    p1 == n2.id || p2 == n1.id -> 1.0
+                    else -> Double.POSITIVE_INFINITY
+                }
+            }
             .mapValues { (_, subnet) -> subnet.diameter }
 }
