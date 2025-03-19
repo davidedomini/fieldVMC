@@ -1,3 +1,13 @@
+## [1.25.1](https://github.com/angelacorte/fieldVMC/compare/1.25.0...1.25.1) (2025-03-19)
+
+### Bug Fixes
+
+* get parent as int ([bb3d5f3](https://github.com/angelacorte/fieldVMC/commit/bb3d5f3e75e611aed47eac2da14583b31f7d33c4))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.25.0 [skip ci] ([c2d9185](https://github.com/angelacorte/fieldVMC/commit/c2d91854aca37cfa2a33828d014cadb0a32e56c2))
+
 ## [1.25.0](https://github.com/angelacorte/fieldVMC/compare/1.24.0...1.25.0) (2025-03-19)
 
 ### Features
