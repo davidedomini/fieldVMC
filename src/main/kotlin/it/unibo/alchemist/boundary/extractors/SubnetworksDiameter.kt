@@ -19,11 +19,13 @@ constructor(
         private const val NAME: String = "subnetworks-diameter"
         private operator fun Node<*>.get(name: String) = getConcentration(SimpleMolecule(name))
         private val Node<*>.parent: Int
-            get() = when (val parent: Any? = get("parent")) {
+            get() = when (val parent = get("parent")) {
                 is Int -> parent
+                is Double -> parent.toInt()
                 is Number -> parent.toInt()
                 is String -> parent.toInt()
-                else -> error("Parent value not yet supported.")
+                is Unit -> Double.NaN.toInt()
+                else -> error("Parent type not yet supported, found ${parent!!::class}")
             }
     }
 
