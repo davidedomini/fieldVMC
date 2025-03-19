@@ -1,3 +1,14 @@
+## [1.25.2](https://github.com/angelacorte/fieldVMC/compare/1.25.1...1.25.2) (2025-03-19)
+
+### Bug Fixes
+
+* distance evaluation metric ([6e92e35](https://github.com/angelacorte/fieldVMC/commit/6e92e35f14c3c965d52ccae867a4ab0d90c44314))
+* initial nodes to arbitrary variable ([f6a74ac](https://github.com/angelacorte/fieldVMC/commit/f6a74acf13cd89a375c63a5692b4571bae40afff))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.25.1 [skip ci] ([6da9750](https://github.com/angelacorte/fieldVMC/commit/6da9750da10a0d102f46b4dae05c3bce3b2218ff))
+
 ## [1.25.1](https://github.com/angelacorte/fieldVMC/compare/1.25.0...1.25.1) (2025-03-19)
 
 ### Bug Fixes
