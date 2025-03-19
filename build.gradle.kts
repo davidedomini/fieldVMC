@@ -59,7 +59,7 @@ val heap: Long =
         14 * 1024L
     }
 val taskSizeFromProject: Int? by project
-val taskSize = taskSizeFromProject ?: 512
+val taskSize = taskSizeFromProject ?: 5120000
 val alchemistGroupBatch = "Run batch simulations"
 val alchemistGroupGraphic = "Run graphic simulations with Alchemist"
 val alchemistGroupOptimizer = "Run optimizer simulations with Alchemist"
