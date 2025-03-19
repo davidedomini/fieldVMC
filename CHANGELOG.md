@@ -1,3 +1,30 @@
+## [1.25.0](https://github.com/angelacorte/fieldVMC/compare/1.24.0...1.25.0) (2025-03-19)
+
+### Features
+
+* add custom network interface ([edd493e](https://github.com/angelacorte/fieldVMC/commit/edd493ebeefd3db607fa4206dcd66fa080db8e68))
+
+### Bug Fixes
+
+* change initial nodes into smaller geometric variable ([b09e384](https://github.com/angelacorte/fieldVMC/commit/b09e38493fb73612577508616c3604a776bb5cef))
+* increase tasksize ([f76e199](https://github.com/angelacorte/fieldVMC/commit/f76e199a46399ae3c48f9a2fead346102604134e))
+
+### Performance improvements
+
+* improve subnetwork diameter evaluation by checking whether a node is the father of another node ([cb93cb3](https://github.com/angelacorte/fieldVMC/commit/cb93cb3fa650bef41495747fb2082efed5ea7dcf))
+
+### Build and continuous integration
+
+* **deps:** update actions/setup-node action to v4.3.0 ([2de00b8](https://github.com/angelacorte/fieldVMC/commit/2de00b8ce012a2a30df86d86eb677e264f44fbd6))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.24.0 [skip ci] ([73c10c5](https://github.com/angelacorte/fieldVMC/commit/73c10c55a90b313902cca889c250889d8f69a50a))
+
+### Style improvements
+
+* improve code readability ([39d19e5](https://github.com/angelacorte/fieldVMC/commit/39d19e51d3a3323cd7a03583ab01825682c7e5c7))
+
 ## [1.24.0](https://github.com/angelacorte/fieldVMC/compare/1.23.2...1.24.0) (2025-03-16)
 
 ### Features
