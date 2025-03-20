@@ -1,94 +1,70 @@
 services:
   fixed-leader-optimizer:
-    deploy:
-      placement:
-        constraints:
-          - node.hostname==andromeda.apice.unibo.it
-    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
+    image: angelacortecchia/field-vmc-simulation:1.25.2
     build:
       context: .
       dockerfile: docker/simulationLauncher/Dockerfile
     volumes:
-      - angela.cortecchia-volume:/experiment/data
+      - davide.domini-volume:/experiment/data
     environment:
       - MAX_SEED=500
       - GRADLE_TASK=runFixedLeaderOptimizer
 
   cutting-classic-vmc-batch:
-    deploy:
-      placement:
-        constraints:
-          - node.hostname==andromeda.apice.unibo.it
-    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
+    image: angelacortecchia/field-vmc-simulation:1.25.2
     build:
       context: .
       dockerfile: docker/simulationLauncher/Dockerfile
     volumes:
-      - angela.cortecchia-volume:/experiment/data
+      - davide.domini-volume:/experiment/data
     environment:
       - MAX_SEED=500
       - GRADLE_TASK=runCuttingClassicVMCBatch
 
   cutting-field-vmc-batch:
-    deploy:
-      placement:
-        constraints:
-          - node.hostname==andromeda.apice.unibo.it
-    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
+    image: angelacortecchia/field-vmc-simulation:1.25.2
     build:
       context: .
       dockerfile: docker/simulationLauncher/Dockerfile
     volumes:
-      - angela.cortecchia-volume:/experiment/data
+      - davide.domini-volume:/experiment/data
     environment:
       - MAX_SEED=500
       - GRADLE_TASK=runCuttingFixedLeaderBatch
 
   self-integration-batch:
-    deploy:
-      placement:
-        constraints:
-          - node.hostname==andromeda.apice.unibo.it
-    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
+    image: angelacortecchia/field-vmc-simulation:1.25.2
     build:
       context: .
       dockerfile: docker/simulationLauncher/Dockerfile
     volumes:
-      - angela.cortecchia-volume:/experiment/data
+      - davide.domini-volume:/experiment/data
     environment:
       - MAX_SEED=500
       - GRADLE_TASK=runSelfIntegrationBatch
 
   self-repair-batch:
-    deploy:
-      placement:
-        constraints:
-          - node.hostname==andromeda.apice.unibo.it
-    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
+    image: angelacortecchia/field-vmc-simulation:1.25.2
     build:
       context: .
       dockerfile: docker/simulationLauncher/Dockerfile
     volumes:
-      - angela.cortecchia-volume:/experiment/data
+      - davide.domini-volume:/experiment/data
     environment:
       - MAX_SEED=500
       - GRADLE_TASK=runSelfRepairBatch
 
   self-optimization-batch:
-    deploy:
-      placement:
-        constraints:
-          - node.hostname==andromeda.apice.unibo.it
-    image: angelacortecchia/field-vmc-simulation:${VERSION:-latest}
+    image: angelacortecchia/field-vmc-simulation:1.25.2
     build:
       context: .
       dockerfile: docker/simulationLauncher/Dockerfile
     volumes:
-      - angela.cortecchia-volume:/experiment/data
+      - davide.domini-volume:/experiment/data
     environment:
       - MAX_SEED=500
       - GRADLE_TASK=runSelfOptimizationBatch
 
 volumes:
-  angela.cortecchia-volume:
+  davide.domini-volume:
     external: true
